@@ -37,14 +37,14 @@ print("Hai! I iz teh dirty Tkacz builder. I iz a sekret!\n")
 
 run(["buildutil/dir2qrc.py", '-multi', 'resources/qrc'], "Assembling QRC files: ")
 
-run(["qmake", "-project", "-o", "Tkacz.pro"])
+run(["qmake", "-project", "-o", "Tkacz.pri"])
 
 # This is dirty, but we can't just append the template to the generated file, because
 # we need our directives to come first.
-with open("Tkacz.pro", 'a') as out:
-	with open("tkacz.pro.tpl", 'r') as in_:
-		for line in in_:
-			out.write(line)
+# with open("Tkacz.pro", 'a') as out:
+# 	with open("tkacz.pro.tpl", 'r') as in_:
+# 		for line in in_:
+# 			out.write(line)
 		
 print("\nAll done, seemingly successfully.")
 print("Now run qmake")
