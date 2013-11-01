@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PageView</class>
+ <widget class="QWidget" name="PageView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>605</width>
+    <height>525</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="PagesList" name="pagesList" native="true"/>
+     <widget class="PageEditor" name="pageEditor" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>1</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+     <widget class="PagePropertiesEditor" name="properties" native="true"/>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PagePropertiesEditor</class>
+   <extends>QWidget</extends>
+   <header>tkacz.gui.mainwindow.pagePropertiesEditor</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PageEditor</class>
+   <extends>QWidget</extends>
+   <header>tkacz.gui.mainwindow.pageEditor</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PagesList</class>
+   <extends>QWidget</extends>
+   <header>tkacz.gui.mainwindow.pagesList</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

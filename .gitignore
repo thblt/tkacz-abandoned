@@ -5,6 +5,7 @@
 .externalToolBuilders/
 *.pydevproject
 .metadata
+.settings/**
 
 # Build files
 build/**

@@ -1,0 +1,28 @@
+<RCC>
+	<qresource prefix="actions">
+		<file alias="_next">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/_next.svg</file>
+		<file alias="_previous">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/_previous.svg</file>
+		<file alias="collectionCreateFromRules-off">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/collectionCreateFromRules-off.svg</file>
+		<file alias="collectionCreateFromRules-on">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/collectionCreateFromRules-on.svg</file>
+		<file alias="formatCharacterEmphasis">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/formatCharacterEmphasis.svg</file>
+		<file alias="formatCharacterStrongEmphasis">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/formatCharacterStrongEmphasis.svg</file>
+		<file alias="pageCreatePopup">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/pageCreatePopup.svg</file>
+		<file alias="repositoryConfigure-off">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/repositoryConfigure-off.svg</file>
+		<file alias="repositoryConfigure-on">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/repositoryConfigure-on.svg</file>
+		<file alias="searchFind">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/searchFind.svg</file>
+		<file alias="viewCollections-off">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/viewCollections-off.svg</file>
+		<file alias="viewCollections-on">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/viewCollections-on.svg</file>
+		<file alias="windowFullscreen">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/actions/windowFullscreen.svg</file>
+	</qresource>
+	<qresource prefix="collections">
+		<file alias="books">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/collections/books.svg</file>
+		<file alias="collection-dynamic">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/collections/collection-dynamic.svg</file>
+		<file alias="collection-static">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/collections/collection-static.svg</file>
+		<file alias="persons">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/collections/persons.svg</file>
+	</qresource>
+	<qresource prefix="types">
+		<file alias="book">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/types/book.svg</file>
+		<file alias="box">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/types/box.svg</file>
+		<file alias="person">/Users/thblt/Documents/Coderies/workspace/tkacz/resources/qrc/icons/types/person.svg</file>
+	</qresource>
+</RCC>

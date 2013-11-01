@@ -1,0 +1,34 @@
+<states>
+	<state id="tkacz" parallel="true" initial="true">
+		<state id="repository" parallel="true">
+			<state id="modification">
+				<state id="modified" />
+				<state id="unmodified" initial="true" />
+			</state>
+			<state id="saving">
+				<state id="saved" />
+				<state id="unsaved" initial="true" />
+			</state>
+		</state>
+		<state id="modes">
+			<state id="configure" />
+			<state id="page" initial="true">
+				<assign object="target.views" property="currentIndex"
+					value="1" />
+					
+				<state id="browse" initial="true" />
+				<state id="edit">
+					<assign object="target.pageView.pageEditor" property="visible"
+						value="True" />
+					<state id="meta" initial="true" />
+					<state id="contents" />
+				</state>
+			</state>
+			<state id="collection">
+				<state id="browse" initial="true" transitions="page.browse" />
+				<state id="edit">
+				</state>
+			</state>
+		</state>
+	</state>
+</states>

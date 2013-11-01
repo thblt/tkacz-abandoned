@@ -1,0 +1,13 @@
+<menubar id="main" file="mainMenubar">
+    <menu name="file">
+        <action id="workspace-new" />
+        <action id="workspace-open" />
+        <separator />
+        <title name="Add page" />
+        <action id="page-create" />
+        <action id="page-createTemplated" />
+        <separator />
+        <title name="Add collection" />
+        <action id="collection-create" />
+    </menu>
+</menubar>

@@ -1,0 +1,75 @@
+<actions locale="en">
+	<prefix id="repository" name="Repository actions">
+		<action id="create" shortcut="Ctrl+Alt+Shift+N">_New repository…</action>
+		<action id="open" shortcut="Open">_Open…</action>
+		<action id="save" shortcut="Save" inStates="modified">_Save</action>
+		<action id="saveAs" shortcut="SaveAs">Save _as…</action>
+		<action id="close" shortcut="Close">_Close</action>
+		<action id="configure" role="NoRole" enterStates="configure">Configure repository</action>
+		<action id="export">E_xport…</action>
+	</prefix>
+
+	<prefix id="page" name="Page actions">
+		<prefix id="create" name="Create a page">
+			<action id="simple" shortcut="New"  enterStates="page">S_imple</action>
+			<action id="templated" enterStates="page">From _template…</action>
+			<action id="popup" icon="simple"></action>
+		</prefix>
+		<action id="delete" inStates="page">Delete page</action>
+		<action id="print" inStates="page" shortcut="Print">Print</action>
+
+		<action id="categorize" inStates="page.edit" shortcut="Ctrl+K">Ca_tegorize
+		</action>
+	</prefix>
+
+	<prefix id="collection" name="Collection actions">
+		<prefix id="create" name="Create a collection">
+			<action id="empty" shortcut="Meta+C">Empty</action>
+			<action id="fromRules" shortcut="Meta+Shift+C">From current rules</action>
+			<action id="withPages" shortcut="Meta+Ctrl+N">With currently visible pages
+			</action>
+		</prefix>
+	</prefix>
+
+	<prefix id="edition" name="General edition actions">
+		<action id="undo" shortcut="Undo">_Undo</action>
+		<action id="redo" shortcut="Redo">_Redo</action>
+		<action id="cut" shortcut="Cut">_Cut</action>
+		<action id="copy" shortcut="Copy">C_opy</action>
+		<action id="paste" shortcut="Paste">_Paste</action>
+		<action id="pasteSpecial" shortcut="Ctrl+Shift+V">Pa_ste special…</action>
+		<action id="selectAll" shortcut="SelectAll">Select _all</action>
+	</prefix>
+
+	<prefix id="format">
+		<prefix id="character">
+			<action id="emphasis" shortcut="Italic">_Emphasis</action>
+			<action id="strongEmphasis" shortcut="Bold">_Strong emphasis</action>
+		</prefix>
+		<prefix id="block">
+			<action id="title1" shortcut="Italic">_Emphasis</action>
+		</prefix>
+	</prefix>
+
+	<prefix id="search">
+		<action id="find" shortcut="Find">_Find…</action>
+		<action id="replace" shortcut="Replace">_Replace</action>
+		<action id="findNext" shortcut="FindNext">Find _next</action>
+		<action id="findPrevious" shortcut="FindPrevious">Find _previous</action>
+	</prefix>
+
+	<prefix id="app">
+		<action id="about">About Tkacz</action>
+		<action id="preferences"></action>
+		<action id="quit" shortcut="Quit">_Quit</action>
+		<action id="documentation" shortcut="HelpContents">Tkacz _documentation
+		</action>
+		<action id="reportbug">_Report a bug…</action>
+	</prefix>
+
+	<prefix id="window">
+		<action id="fullscreen" togglable="true" shortcut="Ctrl+Shift+F"
+			icon="simple">_Full screen</action>
+		<action id="locationbar" shortcut="Ctrl+L"></action>
+	</prefix>
+</actions>
