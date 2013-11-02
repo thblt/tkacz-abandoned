@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QStyleFactory>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QSplashScreen>
 

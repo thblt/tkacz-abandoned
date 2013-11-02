@@ -1,8 +1,6 @@
-
-
 #include "loader.h"
 
-#include <xercesc/util/PlatformUtils.hpp>
+//#include <xercesc/util/PlatformUtils.hpp>
 
 namespace tkacz {
 

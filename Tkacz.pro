@@ -1,17 +1,18 @@
 cache()
 
-CONFIG += qt c++11
-QT += core widgets
+CONFIG += debug_and_release qt c++11  
+QT += gui widgets core
 ICON = platform/osx/app.icns
 
-release: DESTDIR = build/release
-debug:   DESTDIR = build/debug
+release:DESTDIR = build/release
+debug:DESTDIR = build/debug
 
-OBJECTS_DIR = $$DESTDIR/obj
-MOC_DIR = $$DESTDIR/moc
-RCC_DIR = $$DESTDIR/qrc
-UI_DIR = $$DESTDIR/ui
+#OBJECTS_DIR = $$DESTDIR/intermediates
+#MOC_DIR = $$DESTDIR/intermediates
+#RCC_DIR = $$DESTDIR/intermediates
+#UI_DIR = $$DESTDIR/intermediates
+
+#debug: INCLUDEPATH+=/usr/local/include
+#release: INCLUDEPATH+=/usr/local/include
 
 include("Tkacz.pri")
-
-debug: INCLUDEPATH=/usr/local/include
