@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tkacz version="0.1.0">
+	<entity name="person" schema="core" card="true">
+
+		<taxonomy name="subtype">
+			<taxon name="physical" mutex="collective" />
+			<taxon name=collective ">
+				<taxon name="society" />
+				<taxon name="organization" />
+				<taxon name="corporation" />
+			</taxon>
+		</taxonomy>
+
+		<subtype taxonomy="personTypes" />
+
+		<entity name="name">
+
+			<attribute name="informal" type="boolean" in="true" out="true">
+				<name>Informal name</name>
+				<doc>Whether this name is “informal”, and should be represented only
+					as a string instead of being analized as title + first + middle
+					etc.
+					This applies to organizations of any form as well as to some
+					aliases.
+				</doc>
+			</attribute>
+
+			<attribute name="first" type="string" in="true" out="true">
+				<name>First name</name>
+				<enabled if="condition" />
+			</attribute>
+			<attribute name="middle" type="string" in="true" out="true">
+				<name>Middle name</name>
+				<enabled if="condition" />
+			</attribute>
+			<attribute name="von" type="string" in="true" out="true">
+				<name>Von part</name>
+				<enabled if="condition" />
+			</attribute>
+			<attribute name="last" type="string" in="true" out="true">
+				<name>Last name</name>
+				<enabled if="condition" />
+			</attribute>
+			<attribute name="von" type="string" in="true" out="true">
+				<name>Suffix</name>
+				<enabled if="condition" />
+			</attribute>
+
+			<attribute name="name" type="string" in="true" out="true" />
+		</entity>
+
+		<ui>
+			<editor>
+				<field for="name" size="large" />
+			</editor>
+		</ui>
+	</entity>
+</tkacz>
