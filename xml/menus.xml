@@ -1,59 +1,59 @@
 <menubar locale="en">
 	<menu text="&amp;File">
-		<action id="repository.create" />
-		<action id="repository.open" />
+		<action name="repository.create" />
+		<action name="repository.open" />
 		<separator />
 		<title text="Add page" />
-		<action id="page.create.simple" />
-		<action id="page.create.templated" />
+		<action name="page.create.simple" />
+		<action name="page.create.templated" />
 		<separator />
 		<title text="Add collection" />
-		<action id="collection.create.empty" />
-		<action id="collection.create.fromRules" />
-		<action id="collection.create.withPages" />
+		<action name="collection.create.empty" />
+		<action name="collection.create.fromRules" />
+		<action name="collection.create.withPages" />
 		<separator />
-		<action id="repository.close" />
-		<action id="repository.save" />
-		<action id="repository.saveAs" />
-		<action id="repository.export" />
+		<action name="repository.close" />
+		<action name="repository.save" />
+		<action name="repository.saveAs" />
+		<action name="repository.export" />
 		<separator />
-		<action id="repository.configure" />
+		<action name="repository.configure" />
 		<separator />
-		<action id="page.print" />
+		<action name="page.print" />
 		<separator />
-		<action id="app.quit" />
+		<action name="app.quit" />
 	</menu>
 
 	<menu text="&amp;Edit">
-		<action id="edition.undo" />
-		<action id="edition.redo" />
+		<action name="edition.undo" />
+		<action name="edition.redo" />
 		<separator />
-		<action id="edition.cut" />
-		<action id="edition.copy" />
-		<action id="edition.paste" />
-		<action id="edition.pasteSpecial" />
+		<action name="edition.cut" />
+		<action name="edition.copy" />
+		<action name="edition.paste" />
+		<action name="edition.pasteSpecial" />
 		<separator />
-		<action id="search.find" states="page" />
-		<action id="search.replace" states="edition" />
-		<action id="search.findNext" states="page" />
-		<action id="search.findPrevious" states="page" />
+		<action name="search.find" states="page" />
+		<action name="search.replace" states="edition" />
+		<action name="search.findNext" states="page" />
+		<action name="search.findPrevious" states="page" />
 	</menu>
 
 	<menu text="&amp;Format" inStates="page.edit.contents">
-		<action id="format.character.emphasis" />
-		<action id="format.character.strongEmphasis" />
-		<action id="format.character.strongEmphasis" />
+		<action name="format.character.emphasis" />
+		<action name="format.character.strongEmphasis" />
+		<action name="format.character.strongEmphasis" />
 	</menu>
 
 	<menu text="&amp;View">
-		<action id="window.fullscreen" />
+		<action name="window.fullscreen" />
 	</menu>
 
 	<menu text="&amp;Help">
-		<action id="app.documentation" />
+		<action name="app.documentation" />
 		<separator />
-		<action id="app.reportbug" />
+		<action name="app.reportbug" />
 		<separator />
-		<action id="app.about" />
+		<action name="app.about" />
 	</menu>
 </menubar>

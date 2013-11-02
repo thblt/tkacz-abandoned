@@ -1,23 +1,25 @@
 #pragma once
 
+#include <string>
+
 namespace tkacz {
 
+/**
+ * A Primitive holds a simple value, such as an integer, a string or a float.
+ */
 template <typename T>
-class Primitive {
+class TZPrimitive {
 public:
-	virtual void operator=(std::string input) = 0;
-	virtual void operator=(T input) = 0;
+	virtual T& getValue();
 
 protected:
 	T value;
 
-//	virtual Primitive();
-//	virtual ~Primitive();
+	TZPrimitive();
+	virtual ~TZPrimitive();
 };
 
-class TZPInteger : public Primitive<int> {
-
-};
-
-
+class TZString: public TZPrimitive<std::string> {};
+class TZInteger : public TZPrimitive<long long int> {};
+class TZFloat: public TZPrimitive<long double> {};
 }

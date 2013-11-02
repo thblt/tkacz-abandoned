@@ -1,11 +1,6 @@
-/*
- * TZIO.h
- *
- *  Created on: 1 nov. 2013
- *      Author: thblt
- */
-
 #pragma once
+
+#include "types.h"
 
 namespace tkacz {
 

@@ -35,7 +35,7 @@ print("Hai! I iz teh dirty Tkacz builder. I iz a sekret!\n")
 #=======================================================================================================================
 
 
-run(["buildutil/dir2qrc.py", '-multi', 'resources/qrc'], "Assembling QRC files: ")
+run(["builders/dir2qrc.py", '-multi', 'resources/qrc'], "Assembling QRC files: ")
 
 run(["qmake", "-project", "-o", "Tkacz.pri"])
 

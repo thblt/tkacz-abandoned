@@ -3,16 +3,20 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QStyleFactory>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QSplashScreen>
 
 #include "ui_dlgCollectionEditor.h"
 
 int main(int argc, char* argv[]) {
-	std::cout << "Tkacz starting up 2.";
 	QApplication app(argc, argv);
-	app.setStyle(QStyleFactory::create("Fusion"));
+
+	QPixmap pixmap("/Users/thblt/Temporaire/tkacz.png");
+	QSplashScreen splash(pixmap);
+	splash.show();
+	app.processEvents();
 	QDialog dlg;
-	Ui_CollectionEditor ce;
-	ce.setupUi(&dlg);
+	Ui_CollectionEditor().setupUi(&dlg);
 	dlg.show();
+	splash.finish(&dlg);
 	app.exec();
 }
