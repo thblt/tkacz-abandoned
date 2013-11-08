@@ -124,12 +124,20 @@ connaissances
 \begin_layout Author
 Thibault Polge
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Doctorant contractuel et enseignant en philosophie (PhiCo/EXeCO, ED 280,
  EA 3562, Paris 1 Panthéon Sorbonne).
  
+\begin_inset CommandInset href
+LatexCommand href
+name "thibault.polge@univ-paris1.fr"
+target "mailto:thibault.polge@univ-paris1.fr"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -143,6 +151,43 @@ Ce document présente les fonctions fondamentales d'un outil d'organisation
  Ce logiciel, en cours de conception, est écrit dans le cadre de ma thèse,
  c'est-à-dire qu'il vise à couvrir tout particulièrement les besoins d'un
  historien des sciences qui travaille sur la période moderne.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/thblt/Documents/Coderies/workspace/tkacz/resources/icons/app.png
+	lyxscale 25
+	width 2in
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -181,6 +226,13 @@ makeatletter
 
 \begin_layout Plain Layout
 
+%	
+\backslash
+tableofcontents
+\end_layout
+
+\begin_layout Plain Layout
+
 
 \backslash
 makeatother
@@ -206,52 +258,6 @@ Présentation générale
 
 \begin_layout Section
 Introduction
-\end_layout
-
-\begin_layout Standard
-\begin_inset Wrap figure
-lines 0
-placement O
-overhang 0in
-width "2in"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-center 
-\end_layout
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename /Users/tehboii/Documents/Coderies/workspace/tkacz-ui/images/icon_full.png
-	lyxscale 25
-	width 2in
-
-\end_inset
-
-
-\begin_inset Caption
-
-\begin_layout Plain Layout
-Le logo Tkacz
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -407,8 +413,6 @@ al
 \emph default
 \bar default
 .
-\lang french
-
 \begin_inset ERT
 status open
 

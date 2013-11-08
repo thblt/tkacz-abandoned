@@ -2,17 +2,17 @@
 
 import os, sys
 
-def mkalias(name):
-	name = os.path.split(name)[1]
-	if name.startswith("."): return False
-	return os.path.splitext(name)[0]
+def mkalias( name ):
+	name = os.path.split( name )[1]
+	if name.startswith( "." ): return False
+	return os.path.splitext( name )[0]
 
 def dir2qrc( root, qrc, aliaser=mkalias ):
 	'''
 	Creates a Qt QRC files out of resources in dir
 	:param root: The directory to take files from.
 	:type root: str
-	:param qrc: The file to write QRC XML. This must be the name of the file, and not a file object.
+	:param qrc: The QRC file to write. This must be the name of the file, and not a file object.
 	:type qrc: string
 	:param aliaser: A function to call for each file to calculate its alias. The default simply returns the file name without extension. If the method returns False, Null or an empty string, the file is ignored. 
 	:type aliaser function
@@ -52,18 +52,17 @@ if __name__ == '__main__':
 		name = path.split( sys.argv[0] )[-1]
 		print( "Creates Qt QRC files from file filesystem resources.\n" )
 		print( "Usage:" )
-		print( "\t{0} [-multi] directory qrc".format( name ) )
-		print( "\t{0} [-multi] directory [directory...]\n".format( name ) )
+		print( "\t{0} directory qrc".format( name ) )
+		print( "\t{0} -multi target_dir source_directory [source_directory...]\n".format( name ) )
 		print( "Options:" )
 		print( "-multi\tCreates a QRC file for every subdirectory of dir,\n" +
 		"\tgiving the directory's name with a .qrc extension. With this\n" +
 		"          option, QRC files are created at the directory's root" )
 		exit( -1 )
 	if sys.argv[1] == '-multi':
-		for input in sys.argv[2:]:
+		for input in sys.argv[3:]:
 			for dir in os.listdir( input ):
 				path = os.path.join( input, dir )
 				absPath = os.path.abspath( path )
 				if os.path.isdir( absPath ):
-# 					print( "{0} > {1}".format( path, path + ".qrc" ) )
-					dir2qrc( absPath, absPath + ".qrc" )
+					dir2qrc( absPath, os.path.join( sys.argv[2], os.path.split( path )[1] + ".qrc" ) )

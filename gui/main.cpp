@@ -4,18 +4,14 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QSplashScreen>
 
-#include "ui_dlgCollectionEditor.h"
+#include "TZMainWindow.h"
+
+using namespace tzgui;
 
 int main(int argc, char* argv[]) {
 	QApplication app(argc, argv);
 
-	QPixmap pixmap("/Users/thblt/Temporaire/tkacz.png");
-	QSplashScreen splash(pixmap);
-	splash.show();
-	app.processEvents();
-	QDialog dlg;
-	Ui_CollectionEditor().setupUi(&dlg);
-	dlg.show();
-	splash.finish(&dlg);
+	MainWindow mw;
+	mw.show();
 	app.exec();
 }

@@ -82,3 +82,9 @@ Operators priorities are as follow : intersection, union, then difference. Paren
 	 (Ignore the long “WARNING: Could not find any external (...) before trying again.”
 3. cp /Developer/Applications/Qt/plugins/imageformats/libqsvg.dylib dist/Tkacz.app/Contents/PlugIns/imageformats/
 4. macdeployqt dist/Tkacz.app (Yes, again. That's because I haven't found a way to make it aware of the need to embed the SVG lib, but the app crashes after manual embedding. The second run seems to fix that.
+
+# Naming conventions (C++)
+
+**some_file.h** is for files in core/, part of the core api. Each file 
+contains a set of classes logically assembled for a single purpose.
+**CamelCase.h** is for files who contain only a single class, mostly in gui/

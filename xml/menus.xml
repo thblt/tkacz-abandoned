@@ -1,13 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <menubar locale="en">
-	<menu text="&amp;File">
+	<menu title="&amp;File">
 		<action name="repository.create" />
 		<action name="repository.open" />
 		<separator />
-		<title text="Add page" />
+		<title title="Add page" />
 		<action name="page.create.simple" />
 		<action name="page.create.templated" />
 		<separator />
-		<title text="Add collection" />
+		<title title="Add collection" />
 		<action name="collection.create.empty" />
 		<action name="collection.create.fromRules" />
 		<action name="collection.create.withPages" />
@@ -24,7 +25,7 @@
 		<action name="app.quit" />
 	</menu>
 
-	<menu text="&amp;Edit">
+	<menu title="&amp;Edit">
 		<action name="edition.undo" />
 		<action name="edition.redo" />
 		<separator />
@@ -37,19 +38,21 @@
 		<action name="search.replace" states="edition" />
 		<action name="search.findNext" states="page" />
 		<action name="search.findPrevious" states="page" />
+		<separator />
+		<action name="app.preferences" />
 	</menu>
 
-	<menu text="&amp;Format" inStates="page.edit.contents">
+	<menu title="&amp;Format" inStates="page.edit.contents">
 		<action name="format.character.emphasis" />
 		<action name="format.character.strongEmphasis" />
 		<action name="format.character.strongEmphasis" />
 	</menu>
 
-	<menu text="&amp;View">
+	<menu title="&amp;View">
 		<action name="window.fullscreen" />
 	</menu>
 
-	<menu text="&amp;Help">
+	<menu title="&amp;Help">
 		<action name="app.documentation" />
 		<separator />
 		<action name="app.reportbug" />

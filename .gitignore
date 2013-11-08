@@ -32,3 +32,6 @@ build/**
 
 # OS stuff
 .DS_Store
+
+# Doxygen files
+doc/api/**/*

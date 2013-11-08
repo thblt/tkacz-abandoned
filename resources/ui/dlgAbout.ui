@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>483</height>
+    <width>613</width>
+    <height>550</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -75,7 +75,7 @@ QToolButton { border: none; background: rgba(255,255,255,128); border-right : 1p
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../qrc/common.qrc">:/tkacz/splash</pixmap>
+          <pixmap>../../../../../../Downloads/Classic_shot_of_the_ENIAC_(full_resolution) (1).jpg</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

@@ -22,7 +22,7 @@
 					as a string instead of being analized as title + first + middle
 					etc.
 					This applies to organizations of any form as well as to some
-					aliases.
+					aliases/nicknames.
 				</doc>
 			</attribute>
 

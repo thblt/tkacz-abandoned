@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <actions locale="en">
 	<prefix name="repository" description="Repository actions">
 		<action name="create" shortcut="Ctrl+Alt+Shift+N">_New repository…</action>
@@ -60,7 +61,7 @@
 
 	<prefix name="app">
 		<action name="about">About Tkacz</action>
-		<action name="preferences"></action>
+		<action name="preferences" role="PreferencesRole">Preferences…</action>
 		<action name="quit" shortcut="Quit">_Quit</action>
 		<action name="documentation" shortcut="HelpContents">Tkacz _documentation
 		</action>
