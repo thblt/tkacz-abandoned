@@ -12,8 +12,8 @@
 Makefile
 Makefile.*
 Tkacz.app/**
-CMakeFiles/**
-*/CMakeFiles/**
+CMakeFiles/**/*
+**/CMakeFiles/**
 CMakeCache.txt
 
 # Compiled Object files
