@@ -9,32 +9,32 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
-#include "TZObject.h"
-#include "TZCard.h"
-#include "TZEntityTemplate.h"
+#include "TZNode.h"
 
 namespace tkacz {
+
+class Card;
+class EntitySchema;
+class Schema;
 
 /**
  * @brief
  * @ingroup data
  */
-class Entity : public Object {
+class EntityNode : public Node {
 public:
-	Entity(EntityTemplate &tpl);
-	virtual ~Entity();
-//
-//	Entity & operator[](std::string attr) {
-//		return this;
-//	};
+	EntityNode(EntityNode &parent, EntitySchema &schema);
+	virtual ~EntityNode();
+
+	void set(std::string name, Node &value);
+	void operator[](std::string name);
 
 protected:
-	std::map<std::string, Entity> dEntities;
-	std::map<std::string, long int> dIntegers;
-	std::map<std::string, long float> dFloats;
-	std::map<std::string, Card*> dRelationships;
-	const Template &tpl;
+	EntityNode &parent;
+	EntitySchema &schema;
+	std::map <std::string, Node> attributes;
+	std::vector<std::string> disabledAttributes;
 };
-
 }

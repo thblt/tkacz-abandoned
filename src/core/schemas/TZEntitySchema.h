@@ -1,20 +1,27 @@
-/*
- * TZEntityTemplate.h
- *
- *  Created on: 7 nov. 2013
- *      Author: thblt
- */
-
 #pragma once
 
-#include "TZTemplate.h"
+#include <map>
+#include <string>
+
+#include "TZSchema.h"
 
 namespace tkacz {
 
-class EntityTemplate : public Template {
+class Node;
+
+class EntitySchema: public Schema {
 public:
-	EntityTemplate();
-	virtual ~EntityTemplate();
+	EntitySchema(std::string name);
+	~EntitySchema();
+
+	bool insertAttribute(std::string name, Node &value);
+	bool removeAttribute(std::string name, Node &value);
+	bool updateAttribute(std::string name, Node &value);
+	bool move(std::string name, Node &value);
+	bool remove(std::string name, Node &value);
+
+protected:
+	std::map<std::string, Schema*> tplData;
 };
 
 } /* namespace tkacz */

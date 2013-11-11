@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>613</width>
-    <height>550</height>
+    <width>800</width>
+    <height>676</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -75,7 +75,7 @@ QToolButton { border: none; background: rgba(255,255,255,128); border-right : 1p
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>../../../../../../Downloads/Classic_shot_of_the_ENIAC_(full_resolution) (1).jpg</pixmap>
+          <pixmap resource="../../build/common.qrc">:/tkacz/splash@2x</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -133,15 +133,15 @@ QToolButton { border: none; background: rgba(255,255,255,128); border-right : 1p
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="100,0">
      <property name="spacing">
-      <number>0</number>
+      <number>12</number>
      </property>
      <property name="leftMargin">
       <number>12</number>
      </property>
      <property name="topMargin">
-      <number>6</number>
+      <number>12</number>
      </property>
      <property name="rightMargin">
       <number>12</number>
@@ -152,11 +152,11 @@ QToolButton { border: none; background: rgba(255,255,255,128); border-right : 1p
      <item>
       <widget class="QLabel" name="versionLabel">
        <property name="text">
-        <string>&lt;html&gt;&lt;p&gt;Tkacz {version}{maturity}.&lt;/p&gt;
-&lt;p&gt;&lt;small&gt;Copyright © 2012–2013 Thibault Polge &lt;a href=&quot;others&quot;&gt;and contributors&lt;/a&gt;. All rights reserved. &lt;br/&gt;Tkacz is free software, under the terms of the &lt;a href=&quot;license&quot;&gt;GNU Affero General Public License&lt;/a&gt;.&lt;/small&gt;&lt;/p&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;p&gt;&lt;b&gt;Tkacz 0.1 alpha.&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;&lt;small&gt;Copyright © 2012–2013 Thibault Polge. All rights reserved.&lt;br/&gt;Tkacz is free software, under the terms of the &lt;a href=&quot;license&quot;&gt;GNU Affero General Public License&lt;/a&gt;.&lt;/small&gt;&lt;/p&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -166,10 +166,10 @@ QToolButton { border: none; background: rgba(255,255,255,128); border-right : 1p
      <item>
       <widget class="QLabel" name="linkLabel">
        <property name="text">
-        <string>&lt;a href=&quot;http://tkacz.thb.lt/&quot;&gt;http://tkacz.thb.lt&lt;/a&gt;</string>
+        <string>&lt;a href=&quot;http://tkacz.app/&quot;&gt;http://tkacz.app&lt;/a&gt;</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
        </property>
       </widget>
      </item>
@@ -178,9 +178,9 @@ QToolButton { border: none; background: rgba(255,255,255,128); border-right : 1p
   </layout>
  </widget>
  <resources>
-  <include location="../qrc/common.qrc"/>
-  <include location="../qrc/icons.qrc"/>
-  <include location="../qrc/common.qrc"/>
+  <include location="../../build/common.qrc"/>
+  <include location="../../build/icons.qrc"/>
+  <include location="../../build/common.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "TZTemplate.h"
+#include "TZSchema.h"
 
 namespace tkacz {
 
@@ -10,7 +10,7 @@ namespace tkacz {
  * A Primitive holds a simple value, such as an integer, a string or a float.
  */
 template<typename T>
-class PrimitiveTemplate: public Template {
+class PrimitiveTemplate: public Schema {
 public:
 	virtual T& getValue();
 

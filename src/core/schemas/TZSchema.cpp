@@ -1,15 +1,9 @@
-#include "TZTemplate.h"
+#include "TZSchema.h"
 
 namespace tkacz {
 
-/**
- * A type defines the structure and constraints of an
- */
-Template::Template() {
-}
-
-Template::~Template() {
-	// TODO Auto-generated destructor stub
+Schema::~Schema() {
 }
 
 }
+

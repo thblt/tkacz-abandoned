@@ -1,5 +1,5 @@
 #include <string>
-#include "TZPrimitiveTemplate.h"
+#include "TZPrimitiveSchema.h"
 
 namespace tkacz {
 

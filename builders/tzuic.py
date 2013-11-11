@@ -406,6 +406,7 @@ except IOError:
 	usage( 'Can\'t open "{0}" file for writing.' % sys.argv[2] )
 
 tpl = CPPFile("tzgui")
+tpl.addInclude( "QtCore/QVariant" )
 tpl.addInclude( "QtWidgets/QMainWindow" )
 tpl.addInclude( "QtWidgets/QAction" )
 tpl.addInclude( "QtWidgets/QMenuBar" )

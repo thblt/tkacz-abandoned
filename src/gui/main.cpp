@@ -1,8 +1,5 @@
-#include <iostream>
-
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
-#include <QtWidgets/QSplashScreen>
 
 #include "TZMainWindow.h"
 

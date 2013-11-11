@@ -62,6 +62,8 @@
 	<prefix name="app">
 		<action name="about">About Tkacz</action>
 		<action name="preferences" role="PreferencesRole">Preferences…</action>
+		<action name="shConsole" magic="showhide">console</action>
+		<action name="update" magic="aqua:inAppMenu" role="PreferencesRole">Check for updates…</action>
 		<action name="quit" shortcut="Quit">_Quit</action>
 		<action name="documentation" shortcut="HelpContents">Tkacz _documentation
 		</action>

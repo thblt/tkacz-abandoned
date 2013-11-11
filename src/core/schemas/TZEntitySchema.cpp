@@ -5,17 +5,17 @@
  *      Author: thblt
  */
 
-#include "TZEntityTemplate.h"
+#include "TZEntitySchema.h"
 
 namespace tkacz {
 
-EntityTemplate::EntityTemplate() {
+EntitySchema::EntitySchema(std::string name) : Schema(name){
 	// TODO Auto-generated constructor stub
 
 }
 
-EntityTemplate::~EntityTemplate() {
+EntitySchema::~EntitySchema() {
 	// TODO Auto-generated destructor stub
 }
 
-} /* namespace tkacz */
+}

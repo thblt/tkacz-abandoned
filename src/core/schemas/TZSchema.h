@@ -1,23 +1,29 @@
 #pragma once
 
+#include <string>
+
 namespace tkacz {
 
+class Node;
+
 /**
- * @brief A Template is a constraint for an \ref Object.
+ * @brief A Schema is a constraint for a Node.
  *
- * Template itself is a purely virtual class. There is a one-to-one relationship between
- * the Template class hierarchy and the Object hierarchy, ie, every Primitive uses a
- * PrimitiveTemplate object and every Entity and Card uses an EntityTemplate.
+ * Schema itself is a purely virtual class. There is a one-to-one relationship between
+ * the Template class hierarchy and the Node hierarchy, ie, every ValueNode uses a
+ * ValueSchema object, every EntityNode uses an EntityTemplate, and so on.
  *
- * @ingroup data
+ * @ingroup schemas
  */
-class Template {
+class Schema {
 public:
-	virtual bool isEntity() = 0;
-	virtual bool isPrimitive() = 0;
-	virtual bool isCard() = 0;
-	Template();
-	virtual ~Template();
+	const std::string name;
+
+	/** @brief Builds a new Node with this Schema **/
+	template<typename args> Node make(args...);
+
+	Schema(std::string name) : name(name) {};
+	virtual ~Schema();
 };
 
 }

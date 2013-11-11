@@ -9,9 +9,10 @@
 
 #include <string>
 #include <vector>
-#include "TZCard.h"
 
 namespace tkacz {
+
+class Card;
 
 class Taxon {
 public:

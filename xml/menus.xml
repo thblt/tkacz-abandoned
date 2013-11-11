@@ -55,8 +55,10 @@
 	<menu title="&amp;Help">
 		<action name="app.documentation" />
 		<separator />
+		<action name="app.shConsole" />
 		<action name="app.reportbug" />
 		<separator />
+		<action name="app.update" />
 		<action name="app.about" />
 	</menu>
 </menubar>

@@ -5,16 +5,19 @@
  *      Author: thblt
  */
 
-#include "TZEntity.h"
+#include <iostream>
+
+#include "TZNode.h"
+#include "TZEntityNode.h"
+#include "TZEntitySchema.h"
 
 namespace tkacz {
 
-Entity::Entity(EntityTemplate &tpl) : tpl(tpl) {
+EntityNode::EntityNode(EntityNode &parent, EntitySchema &schema) : parent(parent), schema(schema) {
 	// TODO Auto-generated constructor stub
 }
 
-Entity::~Entity() {
-	// TODO Auto-generated destructor stub
+EntityNode::~EntityNode() {
 }
 
-} /* namespace tkacz */
+}

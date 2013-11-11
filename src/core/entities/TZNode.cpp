@@ -5,17 +5,15 @@
  *      Author: thblt
  */
 
-#include "TZObject.h"
+#include "TZNode.h"
 
 namespace tkacz {
 
-Object::Object() {
-	// TODO Auto-generated constructor stub
+Node::Node() {
+}
+
+Node::~Node() {
+}
 
 }
 
-Object::~Object() {
-	// TODO Auto-generated destructor stub
-}
-
-} /* namespace tkacz */
