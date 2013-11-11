@@ -11,7 +11,9 @@
 .qmake.cache
 Makefile
 Makefile.*
-build/**
+Tkacz.app/**/*
+CMakeFiles/**/*
+CmakeCache.txt
 
 # Compiled Object files
 *.slo
