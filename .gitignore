@@ -12,9 +12,7 @@
 Makefile
 Makefile.*
 Tkacz.app/**
-CMakeFiles/**/*
-**/CMakeFiles/**
-CMakeCache.txt
+build/**/*
 
 # Compiled Object files
 *.slo
