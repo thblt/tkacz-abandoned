@@ -1,13 +1,15 @@
 #pragma once
 
-#include "TZAppVersion.h"
 #include <string>
 
 namespace tkacz {
 
+class Version;
+
 class Tkacz {
 public:
-	static const AppVersion version;
+	/** @brief The program's version number **/
+	static const Version version;
 
 	Tkacz();
 	virtual ~Tkacz();

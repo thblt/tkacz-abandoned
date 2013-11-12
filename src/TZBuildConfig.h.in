@@ -1,6 +1,8 @@
 #define TZ_VERSION_MAJOR @Tkacz_VERSION_MAJOR@
 #define TZ_VERSION_MINOR @Tkacz_VERSION_MINOR@
 #define TZ_VERSION_RELEASE @Tkacz_VERSION_RELEASE@
+#define TZ_VERSION_MATURITY @Tkacz_VERSION_MATURITY@
+#define TZ_VERSION_NAME @Tkacz_VERSION_NAME@
 
 /**
  * @defgroup core Core framework
@@ -8,6 +10,9 @@
  * @{
  * @defgroup data Data 
  * @brief Internal representation of user data according to schemas.
+ *
+ * @defgroup repositories Repositories
+ * @brief Classes and methods for accessing Tkacz repositories.
  *
  * @defgroup schemas Schemas
  * @brief Type definitions, constraints and factories.

@@ -8,11 +8,11 @@ namespace tkacz {
  * @brief A simple class for storing and comparing version numbers.
  * @ingroup core
  */
-class AppVersion {
+class Version {
 
 public:
 	enum Maturity {
-		ALPHA, BETA, STABLE
+		Alpha, Beta, Stable
 	};
 
 	const int major, minor, revision;
@@ -20,14 +20,15 @@ public:
 	const std::string name;
 
 	/**
-	 * Creates a new AppVersion.
+	 * @brief Creates a new AppVersion object.
+	 *
 	 * @param major The major version number
 	 * @param minor The minor version number
 	 * @param revision The revision number.
 	 * @param maturity The maturity level.
 	 * @param name A code name for this version.
 	 */
-	AppVersion(int major, int minor, int revision, Maturity maturity,
+	Version(int major, int minor=0, int revision=0, Maturity maturity=Stable,
 			std::string name = "") :
 			major(major), minor(minor), revision(revision), maturity(maturity), name(
 					name) {
@@ -37,7 +38,7 @@ public:
 //		return "%s %i.%i.%i %s";
 //	}
 
-	bool operator==(AppVersion &o) {
+	bool operator==(Version &o) {
 		return major == o.major && minor == o.minor && revision == o.revision
 				&& maturity == o.maturity;
 	}
@@ -46,7 +47,7 @@ public:
 //		return this == o;
 //	}
 
-	bool operator>(AppVersion &o) {
+	bool operator>(Version &o) {
 		if (major > o.major)
 			return true;
 		if (minor > o.minor)
@@ -58,7 +59,7 @@ public:
 		return false;
 	}
 
-	bool operator<(AppVersion &o) {
+	bool operator<(Version &o) {
 		if (major < o.major)
 			return true;
 		if (minor < o.minor)
@@ -70,7 +71,7 @@ public:
 		return false;
 	}
 
-	bool operator<=(AppVersion &o) {
+	bool operator<=(Version &o) {
 		if (major <= o.major)
 			return true;
 		if (minor <= o.minor)
@@ -82,7 +83,7 @@ public:
 		return false;
 	}
 
-	bool operator>=(AppVersion &o) {
+	bool operator>=(Version &o) {
 		if (major >= o.major)
 			return true;
 		if (minor >= o.minor)
