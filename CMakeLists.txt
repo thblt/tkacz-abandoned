@@ -3,7 +3,7 @@ project (Tkacz)
 
 set (Tkacz_VERSION_MAJOR 0)
 set (Tkacz_VERSION_MINOR 1)
-set (Tkacz_VERSION_RELEASE 0)
+set (Tkacz_VERSION_PATCH 0)
 set (Tkacz_VERSION_MATURITY "Alpha")
 set (Tkacz_VERSION_NAME "Avogadro")
 
@@ -23,8 +23,8 @@ include_directories ( "${PROJECT_SOURCE_DIR}/gui" ,
 )
  
 configure_file (
-  "${PROJECT_SOURCE_DIR}/TZBuildConfig.h.in"
-  "${PROJECT_BINARY_DIR}/TZBuildConfig.h"
+  "${PROJECT_SOURCE_DIR}/TZGlobals.h.in"
+  "${PROJECT_BINARY_DIR}/TZGlobals.h"
   )
 
 file(
@@ -33,16 +33,30 @@ file(
         ${PROJECT_SOURCE_DIR}/*
 )
 
+IF(APPLE)
+    set(CMAKE_INSTALL_PREFIX . )
+    # set how it shows up in the Info.plist file
+    SET(MACOSX_BUNDLE_ICON_FILE app.icns) 
+    # set where in the bundle to put the icns file
+    SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/platform/osx/app.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+    # include the icns file in the target
+    SET(source_files ${source_files} ${CMAKE_CURRENT_SOURCE_DIR}/platform/osx/app.icns)
+ENDIF(APPLE)    
+
 SET(MACOSX_BUNDLE_BUNDLE_NAME Tkacz)
 ADD_EXECUTABLE(Tkacz MACOSX_BUNDLE ${source_files})
 
 include_directories("${PROJECT_BINARY_DIR}")
 
+###### Modules ######
+
+SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/;${CMAKE_MODULE_PATH}")
+
 ####################
 # Qt               #
 ####################
 
-FIND_PACKAGE(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 
 foreach(_USE_FILE ${Qt5_USE_FILES})
     include(${_USE_FILE})
@@ -53,6 +67,7 @@ target_link_libraries(Tkacz Qt5::Gui Qt5::Widgets Qt5::Core )
 ####################
 # Boost            #
 ####################
+# No need to ask for format (include only lib)
 
 IF(APPLE)
     set(Boost_USE_STATIC_LIBS ON) 
@@ -62,7 +77,7 @@ ENDIF()
 set(Boost_USE_MULTITHREADED ON)  
 set(Boost_USE_STATIC_RUNTIME OFF)
 
-FIND_PACKAGE(Boost COMPONENTS system filesystem REQUIRED )
+find_package(Boost COMPONENTS system filesystem REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
@@ -72,23 +87,21 @@ target_link_libraries(Tkacz ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
 # Xerces           #
 ####################
 
-#FIND_PACKAGE(Xerces REQUIRED)
+find_package(XercesC REQUIRED)
+
+####################
+# MongoDB          #
+####################
+
+find_package(MongoDB REQUIRED)
+
+include_directories(${MongoDB_INCLUDE_DIR})
+target_link_libraries(Tkacz ${MongoDB_LIBRARIES})
  
-####################
-# OSX bundle       #
-####################
-
-IF(APPLE)
-    set(CMAKE_INSTALL_PREFIX . )
-    # TODO Invoke macdeployqt
-ENDIF(APPLE)
-
 ####################
 # Install          #
 ####################
 
-# Install the Tkacz application, on Apple, the bundle is at the root of the
-# install tree, and on other platforms it'll go into the bin directory.
 INSTALL(TARGETS Tkacz 
     BUNDLE DESTINATION . COMPONENT Runtime 
     RUNTIME DESTINATION bin COMPONENT Runtime

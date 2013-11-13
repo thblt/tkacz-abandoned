@@ -13,6 +13,8 @@ Makefile
 Makefile.*
 Tkacz.app/**
 build/**/*
+Base_*.*
+*.qrc
 
 # Compiled Object files
 *.slo

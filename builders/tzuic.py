@@ -414,7 +414,7 @@ tpl.addInclude( "QtGui/QKeySequence" )
 tpl.addInclude( "QtCore/QObject" )
 tpl.addInclude( "unordered_map" )
 
-clazz = tpl.mkClass( "TZMainWindow_Base", ["public QMainWindow"] )
+clazz = tpl.mkClass( "Base_MainWindow", ["public QMainWindow"] )
 
 clazz.beginMethod( "void", "tzSetupUi", {}, CPPClass.PUBLIC )
 compilerS = StatesCompiler( os.path.join( xmlpath, "states.xml" ), clazz )

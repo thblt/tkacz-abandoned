@@ -1,7 +1,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 
-#include "TZMainWindow.h"
+#include "MainWindow.hpp"
 
 using namespace tzgui;
 
