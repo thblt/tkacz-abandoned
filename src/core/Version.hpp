@@ -43,8 +43,8 @@ public:
 	 * @param maturity The maturity level.
 	 * @param name A code name for this version.
 	 */
-	Version(int major, int minor = 0, int patch = 0, Maturity maturity =
-			Stable, std::string name = "");
+	Version(int major, int minor = 0, int patch = 0, Maturity maturity = Stable,
+			std::string name = "");
 
 	bool operator==(Version &o) const;
 	bool operator!=(Version &o) const;

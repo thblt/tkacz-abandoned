@@ -9,7 +9,6 @@ namespace tkacz {
 Version::Version(int major, int minor, int patch, Maturity maturity,
 		std::string name) :
 		major(major), minor(minor), patch(patch), maturity(maturity), name(name) {
-	std::cout << boost::format("%i.%i.%i") % major % minor % patch;
 }
 
 bool Version::operator==(Version &o) const {

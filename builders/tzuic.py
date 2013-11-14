@@ -36,7 +36,7 @@ class ActionsCompiler( AbstractCompiler ):
 				"Undo", "UnknownKey", "WhatsThis", "ZoomIn", "ZoomOut" )
 
 	ACTION_DECLARE = u"QAction *{name};"
-	ACTION_INIT = u'{name} = new QAction(QStringLiteral("{id}"), this);'
+	ACTION_INIT = u'{name} = new QAction(QStringLiteral("{id}"), this);\n{name}->setObjectName("{objName}");'
 	ACTION_REGISTER = u'actionStore["{id}"] = {name};'
 	ACTION_SHORTCUT_LITT = u"{action}->setShortcut(QKeySequence(this->trUtf8(\"{shortcut}\", \"{disamb}\")));"
 	ACTION_SHORTCUT_STD = u"{action}->setShortcut(QKeySequence::{shortcut});"
@@ -54,12 +54,13 @@ class ActionsCompiler( AbstractCompiler ):
 		if tag == "action":
 			path = self._prefixes + [attrs['name']]
 			id = ".".join(path)
+			objName = "_".join(path)
 			name = mkName("action", path)
 			self._lastActionObjectName = name
 			self._lastActionId = attrs['name']
 			self._output.addAttribute( self.ACTION_DECLARE.format( name=name ), CPPClass.PUBLIC)
 			self._output.appendLine("// "+">".join(path) )
-			self._output.appendLine( self.ACTION_INIT.format( name=name, id=name, disamb=disambiguationString ))
+			self._output.appendLine( self.ACTION_INIT.format( name=name, objName=objName, id=name, disamb=disambiguationString ))
 			self._output.appendLine( self.ACTION_REGISTER.format( name=name, id=id ) )
 			if "shortcut" in attrs.keys():
 				sc = attrs["shortcut"]

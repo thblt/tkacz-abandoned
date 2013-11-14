@@ -35,7 +35,7 @@ def dir2qrc( root, qrc, aliaser=mkalias ):
 			for file2 in os.listdir( absFile1 ):
 				absFile2 = os.path.join( absFile1, file2 )
 				if os.path.isdir( absFile2 ):
-					raise( Exception( "Nesting not allowed: ".format( absFile2 ) ) )
+					raise( Exception( "Prefix nesting not allowed: {0}.".format( absFile2 ) ) )
 				alias = aliaser( absFile2 )
 				if alias: qrc.write( "\t\t<file alias=\"{alias}\">{file}</file>\n".format( alias=alias, file=absFile2 ) )
 			qrc.write( "\t</qresource>\n".format( dir ) )

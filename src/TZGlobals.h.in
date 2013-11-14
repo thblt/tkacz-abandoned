@@ -33,4 +33,8 @@
  *
  * @defgroup gui
  * @brief The Qt-based graphical user interface
+ * @{
+ * @defgroup forms
+ * @brief Standard UI forms.
+ * @}
  */
