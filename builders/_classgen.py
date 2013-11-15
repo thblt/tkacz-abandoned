@@ -89,7 +89,7 @@ class CPPBase( Template ):
 			assert type( parameters ) is dict
 			for ptype, pname in parameters.items():
 					if type( pname ) is str:
-						params.append( "{0} {1}={2}".format( ptype, pname, pname[1] ) )
+						params.append( "{0} {1}".format( ptype, pname) )
 					else:  # We have a default value.
 						assert ( type ( pname ) is tuple or type( pname ) is list ) and len( pname ) == 2
 						params.append( "{0} {1}={2}".format( ptype, pname[0], pname[1] ) )

@@ -14,9 +14,13 @@
 namespace tzgui {
 
 MainWindow::MainWindow() {
-	tzSetupUi();
-	setMenuBar(menuBar);
+	tzSetupUi(this);
+	setMenuBar(mainMenu);
 	QMetaObject::connectSlotsByName(this);
+}
+
+MainWindow::~MainWindow() {
+
 }
 
 void MainWindow::on_app_about_triggered() {

@@ -7,8 +7,9 @@
 namespace tkacz {
 
 Version::Version(int major, int minor, int patch, Maturity maturity,
-		std::string name) :
-		major(major), minor(minor), patch(patch), maturity(maturity), name(name) {
+		int preversion, std::string name) :
+		major(major), minor(minor), patch(patch), preversion(preversion), maturity(
+				maturity), name(name) {
 }
 
 bool Version::operator==(Version &o) const {
@@ -21,50 +22,34 @@ bool Version::operator!=(Version &o) const {
 }
 
 bool Version::operator>(Version &o) const {
-	if (major > o.major)
-		return true;
-	if (minor > o.minor)
-		return true;
-	if (patch > o.patch)
-		return true;
-	if (maturity > o.maturity)
-		return true;
+	if (major > o.major) return true;
+	if (minor > o.minor) return true;
+	if (patch > o.patch) return true;
+	if (maturity > o.maturity) return true;
 	return false;
 }
 
 bool Version::operator<(Version &o) const {
-	if (major < o.major)
-		return true;
-	if (minor < o.minor)
-		return true;
-	if (patch < o.patch)
-		return true;
-	if (maturity < o.maturity)
-		return true;
+	if (major < o.major) return true;
+	if (minor < o.minor) return true;
+	if (patch < o.patch) return true;
+	if (maturity < o.maturity) return true;
 	return false;
 }
 
 bool Version::operator<=(Version &o) const {
-	if (major <= o.major)
-		return true;
-	if (minor <= o.minor)
-		return true;
-	if (patch <= o.patch)
-		return true;
-	if (maturity <= o.maturity)
-		return true;
+	if (major <= o.major) return true;
+	if (minor <= o.minor) return true;
+	if (patch <= o.patch) return true;
+	if (maturity <= o.maturity) return true;
 	return false;
 }
 
 bool Version::operator>=(Version &o) const {
-	if (major >= o.major)
-		return true;
-	if (minor >= o.minor)
-		return true;
-	if (patch >= o.patch)
-		return true;
-	if (maturity >= o.maturity)
-		return true;
+	if (major >= o.major) return true;
+	if (minor >= o.minor) return true;
+	if (patch >= o.patch) return true;
+	if (maturity >= o.maturity) return true;
 	return false;
 }
 
@@ -79,4 +64,24 @@ bool Version::isCompatible(Version &o) const {
 		return major == o.major;
 }
 
+Version::operator std::string() const {
+	std::string f;
+	if (maturity == Stable)
+		return boost::str(boost::format("%i.%i.%i") % major % minor % patch);
+	else
+		return boost::str(
+				boost::format("%i.%i.%i-%s%i") % major % minor % patch % "alpha"
+						% preversion);
+
+}
+
+//std::ostream & operator<<(std::ostream &os, Version &v) {
+//	os << (std::string) v;
+//	return os;
+//}
+
+std::ostream & operator<<(std::ostream &os, const Version &v) {
+	os << (std::string) v;
+	return os;
+}
 }

@@ -1,8 +1,9 @@
 #pragma once
 
-namespace tkacz {
+#include <Version.hpp>  // Better not to forward declaration to make users of Tkacz.hpp
+						// aware of the stream operators
 
-class Version;
+namespace tkacz {
 
 /**
  * @brief The main application class.

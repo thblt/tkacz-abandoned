@@ -36,17 +36,19 @@ class ActionsCompiler( AbstractCompiler ):
 				"Undo", "UnknownKey", "WhatsThis", "ZoomIn", "ZoomOut" )
 
 	ACTION_DECLARE = u"QAction *{name};"
-	ACTION_INIT = u'{name} = new QAction(QStringLiteral("{id}"), this);\n{name}->setObjectName("{objName}");'
-	ACTION_REGISTER = u'actionStore["{id}"] = {name};'
-	ACTION_SHORTCUT_LITT = u"{action}->setShortcut(QKeySequence(this->trUtf8(\"{shortcut}\", \"{disamb}\")));"
+	ACTION_INIT = u'{name} = new QAction(QStringLiteral("{id}"), mainWindow);\n{name}->setObjectName("{objName}");'
+	#ACTION_REGISTER = u'actionStore["{id}"] = {name};'
+	ACTION_SHORTCUT_LITT = u"{action}->setShortcut(QKeySequence(mainWindow->trUtf8(\"{shortcut}\", \"{disamb}\")));"
 	ACTION_SHORTCUT_STD = u"{action}->setShortcut(QKeySequence::{shortcut});"
-	ACTION_TEXT = u"{action}->setText(this->trUtf8(\"{text}\", \"{disamb}\"));"
+	ACTION_TEXT = u"{action}->setText(mainWindow->trUtf8(\"{text}\", \"{disamb}\"));"
 	ACTION_ROLE = u'{action}->setMenuRole(QAction::{role});'
 	ACTION_TOGGLABLE = u'{action}->setCheckable({value});'
 	ICON_SIMPLE = u'{action}->setIcon(QIcon(QPixmap(":/actions/{iconName}")));'
 
 	def startDocument( self ):
-		self._output.addAttribute("std::unordered_map<std::string, QAction*> actionStore;", CPPClass.PUBLIC)
+		pass
+		# This was a map to store actions by name.
+		#self._output.addAttribute("std::unordered_map<std::string, QAction*> actionStore;", CPPClass.PUBLIC)
 
 	def startElement( self, tag, attrs ):
 		if tag == "prefix":
@@ -61,7 +63,7 @@ class ActionsCompiler( AbstractCompiler ):
 			self._output.addAttribute( self.ACTION_DECLARE.format( name=name ), CPPClass.PUBLIC)
 			self._output.appendLine("// "+">".join(path) )
 			self._output.appendLine( self.ACTION_INIT.format( name=name, objName=objName, id=name, disamb=disambiguationString ))
-			self._output.appendLine( self.ACTION_REGISTER.format( name=name, id=id ) )
+			#self._output.appendLine( self.ACTION_REGISTER.format( name=name, id=id ) )
 			if "shortcut" in attrs.keys():
 				sc = attrs["shortcut"]
 				if sc in self.stdShortcuts:
@@ -112,15 +114,15 @@ class MenuCompiler( AbstractCompiler ):
 	disambiguationString = "Generated menu code"
 
 	MENU_INSERT = "{parent}->addAction({menu}->menuAction());"
-	MENU = 'QMenu* {menu} = new QMenu(menuBar);\n{menu}->setObjectName(QStringLiteral("{menu}")); {menu}->setTitle(this->trUtf8("{title}","{disamb}"));'
+	MENU = 'QMenu* {menu} = new QMenu(mainMenu);\n{menu}->setObjectName(QStringLiteral("{menu}")); {menu}->setTitle(mainWindow->trUtf8("{title}","{disamb}"));'
 	ACTION = '{menu}->addAction({id});'
-	TITLE = 'QAction *title{number} = new QAction(this->trUtf8("{title}", "{disamb}"), this); title{number}->setEnabled(false); {menu}->addAction(title{number});'
+	TITLE = 'QAction *title{number} = new QAction(mainWindow->trUtf8("{title}", "{disamb}"), mainWindow); title{number}->setEnabled(false); {menu}->addAction(title{number});'
 	SEPARATOR = '{menu}->addSeparator();'
 
 	def startDocument( self ):
-		self._output.addAttribute("QMenuBar* menuBar;", CPPClass.PUBLIC)
-		self._output.appendLine("menuBar = new QMenuBar(this);")
-		self._menus.append( "menuBar" )
+		self._output.addAttribute("QMenuBar* mainMenu;", CPPClass.PUBLIC)
+		self._output.appendLine("mainMenu = new QMenuBar(mainWindow);")
+		self._menus.append( "mainMenu" )
 
 	def startElement( self, name, attrs ):
 		parentMenu = self._menus[-1]
@@ -407,17 +409,17 @@ except IOError:
 	usage( 'Can\'t open "{0}" file for writing.' % sys.argv[2] )
 
 tpl = CPPFile("tzgui")
+tpl.addInclude( "QtCore/QObject" )
+tpl.addInclude( "QtCore/QString" )
 tpl.addInclude( "QtCore/QVariant" )
-tpl.addInclude( "QtWidgets/QMainWindow" )
 tpl.addInclude( "QtWidgets/QAction" )
 tpl.addInclude( "QtWidgets/QMenuBar" )
 tpl.addInclude( "QtGui/QKeySequence" )
-tpl.addInclude( "QtCore/QObject" )
-tpl.addInclude( "unordered_map" )
+tpl.addInclude( "QtWidgets/QMainWindow" )
 
-clazz = tpl.mkClass( "Base_MainWindow", ["public QMainWindow"] )
+clazz = tpl.mkClass( "Base_MainWindow", [] )
 
-clazz.beginMethod( "void", "tzSetupUi", {}, CPPClass.PUBLIC )
+clazz.beginMethod( "void", "tzSetupUi", {"QMainWindow" : "*mainWindow"}, CPPClass.PUBLIC )
 compilerS = StatesCompiler( os.path.join( xmlpath, "states.xml" ), clazz )
 compilerA = ActionsCompiler( os.path.join( xmlpath, "actions.xml" ), clazz )
 compilerM = MenuCompiler( os.path.join( xmlpath, "menus.xml" ), clazz )

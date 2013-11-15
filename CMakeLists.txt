@@ -5,6 +5,7 @@ set (Tkacz_VERSION_MAJOR 0)
 set (Tkacz_VERSION_MINOR 1)
 set (Tkacz_VERSION_PATCH 0)
 set (Tkacz_VERSION_MATURITY "Alpha")
+set (Tkacz_VERSION_PREVERSION 1)
 set (Tkacz_VERSION_NAME "Avogadro")
 
 set ( PROJECT_SOURCE_DIR src ) 

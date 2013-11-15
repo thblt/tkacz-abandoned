@@ -6,6 +6,8 @@
 #include <QtGui/QDesktopServices>
 #include <QtCore/QString>
 
+#include <Tkacz.hpp>
+
 #include "ui_dlgAbout.h"
 
 namespace tzgui {
@@ -22,6 +24,10 @@ public:
 		setupUi(this);
 		setModal(true);
 		setWindowFlags(Qt::Popup);
+		versionLabel->setText(
+				versionLabel->text().arg(
+						QString(((std::string) tkacz::Tkacz::version).c_str()),
+						tkacz::Tkacz::version.name.c_str()));
 	}
 	virtual ~AboutDialog() {
 	}

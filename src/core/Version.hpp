@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <map>
 
 namespace tkacz {
 
@@ -26,7 +27,9 @@ public:
 	/** @brief Minor version number */
 	minor,
 	/** @brief Patch number */
-	patch;
+	patch,
+	/** @brief preversion (as in x.y.z-beta{preversion}. This is not taken into account when comparing. */
+	preversion;
 	/** Version maturity **/
 	const Maturity maturity;
 	/** Version codename */
@@ -44,7 +47,7 @@ public:
 	 * @param name A code name for this version.
 	 */
 	Version(int major, int minor = 0, int patch = 0, Maturity maturity = Stable,
-			std::string name = "");
+			int preversion=0, std::string name = "");
 
 	bool operator==(Version &o) const;
 	bool operator!=(Version &o) const;
@@ -54,5 +57,10 @@ public:
 	bool operator>=(Version &o) const;
 
 	bool isCompatible(Version &o) const;
+
+	operator std::string() const;
 };
+
+//std::ostream & operator<<(std::ostream &os, Version &v);
+std::ostream & operator<<(std::ostream &os, const Version &v);
 }
