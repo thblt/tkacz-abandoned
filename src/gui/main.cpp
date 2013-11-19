@@ -1,10 +1,8 @@
 #include <iostream>
-
-#include <QtWidgets/QSplashScreen>
-
 #include "Tkacz.hpp"
-
 #include "MainWindow.hpp"
+
+#include "FSRepository.hpp"
 
 using namespace tzgui;
 
@@ -14,17 +12,12 @@ int main(int argc, char* argv[]) {
 
 	QApplication app(argc, argv);
 
-	app.setAttribute(Qt::AA_UseHighDpiPixmaps);
-	app.setAttribute(Qt::AA_DontUseNativeMenuBar);
+	tkacz::FSRepository repo { "/Users/thblt/Temoraire/repo.tkacz" };
 
-	QPixmap pixmap(":/tkacz/splash");
-	QSplashScreen splash(pixmap);
-	splash.show();
+	app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
 	MainWindow mw;
 	mw.showMaximized();
 
-	splash.finish(&mw);
-
-	return app.exec();
+//	return app.exec();
 }

@@ -19,7 +19,7 @@ class Version {
 
 public:
 	enum Maturity {
-		Alpha, Beta, Stable
+		Alpha, Beta, RC, Stable
 	};
 
 	/** @brief Major version number */
@@ -30,11 +30,11 @@ public:
 	patch,
 	/** @brief preversion (as in x.y.z-beta{preversion}. This is not taken into account when comparing. */
 	preversion;
-	/** Version maturity **/
+	/** @brief Version maturity **/
 	const Maturity maturity;
-	/** Version codename */
+	/** @brief Version codename */
 	const std::string name,
-	/** Full version number as as string */
+	/** @brief Full version number as string */
 	signature;
 
 	/**
@@ -44,10 +44,11 @@ public:
 	 * @param minor The minor version number
 	 * @param patch The patch number.
 	 * @param maturity The maturity level.
+	 * @param preversion The pre-version number (as in alpha1). Unused if maturity = Stable.
 	 * @param name A code name for this version.
 	 */
-	Version(int major, int minor = 0, int patch = 0, Maturity maturity = Stable,
-			int preversion=0, std::string name = "");
+	Version(const int major, const int minor = 0, const int patch = 0, const Maturity maturity = Stable,
+			const int preversion=0, const std::string name = "");
 
 	bool operator==(Version &o) const;
 	bool operator!=(Version &o) const;

@@ -1,6 +1,18 @@
 #!/usr/bin/env python
 # ! -*- coding: utf-8 -*-
 
+##
+## \defgroup builders Build utilities
+##
+
+## @package tzuic
+## A compiler which reads XML files and produces a MainWindow template with menus, actions
+## and a state machine.
+
+## @addtogroup builders
+## @{
+## @addtogroup builders 
+
 from _classgen import *
 import sys
 
@@ -11,8 +23,10 @@ def mkName(typeName, path):
 		path = path.split(".")
 	return typeName + camelCase(path, True)
 
+"""
+@ingroup building
+"""
 class ActionsCompiler( AbstractCompiler ):
-
 	_prefixes = None  # The stack of action prefixes
 	_lastActionObjectName = None  # The name of the last created action.
 	_lastActionId = None  # The id of the last created action (name without prefixes)

@@ -1,39 +1,41 @@
 #pragma once 
 
-#include <stdexcept>
+#include "tzcommon.hpp"
 
 namespace tkacz {
 
-/**
- * @brief This exception is thrown whenever a children class of Repository
- * is unable to find the repository its supposed to open.
- * @ingroup repositories
- */
-class RepositoryNotFoundException: std::runtime_error {
-};
-/**
- * @brief This exception is thrown whenever a children class of Repository was
- * asked to create a new repository where one already exists.
- * @ingroup repositories
- */
-class RepositoryDoesExistException: std::runtime_error {
-};
+class Card;
+class EntityTemplate;
 
 /**
  * @brief This exception is thrown whenever a children class of Repository was
- * asked to open a repository and was able to open something that either doesn't
- * look like a Tkacz repository or can't be accessed.
+ * asked to open a repository and got something that either doesn't look like
+ * a Tkacz repository or seemed damaged.
  *
- * This exception may be subclassed to distinguish between problems.
+ * This exception may be subclassed if different types of problems should be reported.
+ * @ingroup repositories
+ * @ingroup exceptions
+ */
+class MalformedRepositoryException: public TZException {
+};
+
+/**
+ * @brief This exception is thrown whenever a children class of Repository was
+ * asked to open something that definitely doesn't look like a Tkacz repository.
+ * This exception should be preferred over MalformedRepositoryException when there
+ * doesn't seem to be any way to get any data from the given location.
+ *
+ * This exception may be subclassed if different types of problems should be reported.
+ * @ingroup repositories
+ * @ingroup exceptions
+ */
+class NotARepositoryException: public TZException  {
+};
+
+/**
+ * @brief A base interface for Tkacz repositories.
  * @ingroup repositories
  */
-class MalformedRepositoryException: std::runtime_error {
-};
-
 class Repository {
-public:
-	Repository();
-	virtual ~Repository();
 };
-
-} /* namespace tkacz */
+}

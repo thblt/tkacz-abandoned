@@ -2,7 +2,7 @@
 #error Tkacz requires a C++11 compliant compiler
 #endif
 
-#include "TZGlobals.h"
+#include "tzcommon.hpp"
 #include "Version.hpp"
 #include "Tkacz.hpp"
 

@@ -65,12 +65,17 @@ bool Version::isCompatible(Version &o) const {
 }
 
 Version::operator std::string() const {
-	std::string f;
+	std::string mat;
 	if (maturity == Stable)
 		return boost::str(boost::format("%i.%i.%i") % major % minor % patch);
 	else
+		switch (maturity) {
+			case Alpha: { mat = "alpha"; break; }
+			case Beta: { mat = "beta"; break; }
+			case RC: { mat = "rc"; break; }
+		}
 		return boost::str(
-				boost::format("%i.%i.%i-%s%i") % major % minor % patch % "alpha"
+				boost::format("%i.%i.%i-%s%i") % major % minor % patch % mat
 						% preversion);
 
 }

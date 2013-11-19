@@ -1,38 +1,58 @@
 #pragma once 
 
 #include <string>
-#include <stdexcept>
 
-#include <boost/filesystem.hpp>
+#include "Repository.hpp"
+
+namespace boost {
+namespace filesystem {
+class path;
+}
+}
 
 namespace tkacz {
 
 /**
- * @brief Accesses a Tkacz repository stored as a filesystem repository.
+ * @brief Accesses a Tkacz repository stored as a directory.
  * @ingroup repositories
  */
-class FSRepository {
+class FSRepository: public Repository {
+
 public:
 	/**
-	 * @param path
-	 * @param create
-	 *
-	 * @throws runtime_error If !create, then a runtime_error is thrown
+	 * @param path The path of the repository to open.
+	 * @param create Whether or no
 	 */
-	FSRepository(std::string path, bool create=false) throw(std::runtime_error);
-	virtual ~FSRepository();
+	FSRepository(const std::string & path) throw (NotARepositoryException,
+			MalformedRepositoryException, FileNotFoundException);
+
+	~FSRepository();
+
+	/**
+	 * Creates a new repository on filesystem. Please notice that this will
+	 * overwrite any existing contents.
+	 *
+	 * @param path Where to create the repository.
+	 * @param zipped If true, creates a zipped bundle instead of a directory.
+	 * @return A FSRepository object representing the newly created repository.
+	 *
+	 */
+	static FSRepository & initialize(const std::string &path,
+			const bool zipped = false) throw (FileExistsException);
 
 protected:
-	static const std::string
+	/**
+	 * Whether this repository was loaded from a zipped bundle file.
+	 */
+	bool isZipBundle = false;
 	/**
 	 * The path to the data directory
 	 */
-	dataPath[],
+	static const boost::filesystem::path dataPath,
 	/**
 	 * The path to the manifest file
 	 */
-	manifestPath[];
-
+	manifestFile;
 };
 
 }

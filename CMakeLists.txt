@@ -16,17 +16,19 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O0 -g -Wa
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O4 -DNDEBUG -Wall -std=c++11")
 
 include_directories (  
+"${PROJECT_SOURCE_DIR}" 
 "${PROJECT_SOURCE_DIR}/core" 
 "${PROJECT_SOURCE_DIR}/core/entities" 
 "${PROJECT_SOURCE_DIR}/core/io" 
+"${PROJECT_SOURCE_DIR}/core/repositories" 
 "${PROJECT_SOURCE_DIR}/core/schemas"
 "${PROJECT_SOURCE_DIR}/gui" 
 "${PROJECT_SOURCE_DIR}/gui/forms"
 )
  
 configure_file (
-  "${PROJECT_SOURCE_DIR}/TZGlobals.h.in"
-  "${PROJECT_BINARY_DIR}/TZGlobals.h"
+  "${PROJECT_SOURCE_DIR}/tzbuild.h.in"
+  "${PROJECT_BINARY_DIR}/tzbuild.h"
   )
 
 file(
@@ -38,11 +40,11 @@ file(
 IF(APPLE)
     set(CMAKE_INSTALL_PREFIX . )
     # set how it shows up in the Info.plist file
-    SET(MACOSX_BUNDLE_ICON_FILE app.icns) 
+    SET(MACOSX_BUNDLE_ICON_FILE Tkacz.icns) 
     # set where in the bundle to put the icns file
-    SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/platform/osx/app.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+    SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/Tkacz.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     # include the icns file in the target
-    SET(Tkacz_SOURCES ${Tkacz_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/platform/osx/app.icns)
+    SET(Tkacz_SOURCES ${Tkacz_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/Tkacz.icns)
 ENDIF(APPLE)    
 
 SET(MACOSX_BUNDLE_BUNDLE_NAME Tkacz)

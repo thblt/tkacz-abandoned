@@ -5,19 +5,39 @@
  *      Author: thblt
  */
 
+#include <iostream>
+
+#include <boost/filesystem.hpp>
+
 #include "FSRepository.hpp"
-#include <stdexcept>
+
+namespace bfs = boost::filesystem;
 
 namespace tkacz {
 
-FSRepository::FSRepository(std::string path, bool create)
-		throw (std::runtime_error) {
-	// TODO Auto-generated constructor stub
+const bfs::path FSRepository::dataPath = ".tkacz",
+FSRepository::manifestFile = "manifest";
+
+FSRepository::FSRepository(const std::string & path)
+		throw (NotARepositoryException, MalformedRepositoryException,
+		FileNotFoundException) {
+
+	std::cout << "Creating FSRepository from " << path << std::endl;
+
+	if (!bfs::exists(path))
+		throw FileNotFoundException();
+
+	if (bfs::is_regular_file(path)) {
+		isZipBundle = true;
+	} else if (bfs::is_directory(path)) {
+		isZipBundle = false;
+	} else {
+		throw NotARepositoryException();
+	}
 
 }
 
 FSRepository::~FSRepository() {
-	// TODO Auto-generated destructor stub
 }
 
-} /* namespace tkacz */
+}
