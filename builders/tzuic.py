@@ -1,19 +1,28 @@
 #!/usr/bin/env python
-# ! -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-##
-## \defgroup builders Build utilities
-##
+#                                                                 [licblock]
+# This file is part of Tkacz. 
+# Copyright (c) 2012-2013 Thibault Polge. All rights reserved.
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+# 
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#                                                                [/licblock]
 
-## @package tzuic
-## A compiler which reads XML files and produces a MainWindow template with menus, actions
-## and a state machine.
+## @file
+## @brief A compiler which reads XML files and produces a MainWindow template with menus, actions and a state machine.
 
-## @addtogroup builders
-## @{
-## @addtogroup builders 
-
-from _classgen import *
+from classgen import *
 import sys
 
 disambiguationString = "Core actions and menus (generated from XML)"
@@ -404,7 +413,8 @@ class StatesCompiler( AbstractCompiler ):
 def usage( error=None ):
 	if error:
 		print( "ERROR: {0}\n".format( error ) )
-	print( "Usage: {command} in out".format( command=sys.argv[0] ) )
+	print( "Usage:\n\t{command} in out".format( command=sys.argv[0] ) )
+	print("Parameters:")
 	print( "\tin\tPath to the the XML files directory." )
 	print( "\tout\tPath to the .h file to generate. If exists, will be overwritten." )
 	exit( 1 )

@@ -1,3 +1,21 @@
+/*                                                                 [licblock]
+ * This file is part of Tkacz. 
+ * Copyright (c) 2012-2013 Thibault Polge. All rights reserved.
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *                                                                [/licblock] */
+
 #include <string>
 #include <iostream>
 #include <boost/format.hpp>
@@ -7,8 +25,8 @@
 namespace tkacz {
 
 Version::Version(int major, int minor, int patch, Maturity maturity,
-		int preversion, std::string name) :
-		major(major), minor(minor), patch(patch), preversion(preversion), maturity(
+		int preversion, std::string name)
+		: major(major), minor(minor), patch(patch), preversion(preversion), maturity(
 				maturity), name(name) {
 }
 
@@ -22,34 +40,50 @@ bool Version::operator!=(Version &o) const {
 }
 
 bool Version::operator>(Version &o) const {
-	if (major > o.major) return true;
-	if (minor > o.minor) return true;
-	if (patch > o.patch) return true;
-	if (maturity > o.maturity) return true;
+	if (major > o.major)
+		return true;
+	if (minor > o.minor)
+		return true;
+	if (patch > o.patch)
+		return true;
+	if (maturity > o.maturity)
+		return true;
 	return false;
 }
 
 bool Version::operator<(Version &o) const {
-	if (major < o.major) return true;
-	if (minor < o.minor) return true;
-	if (patch < o.patch) return true;
-	if (maturity < o.maturity) return true;
+	if (major < o.major)
+		return true;
+	if (minor < o.minor)
+		return true;
+	if (patch < o.patch)
+		return true;
+	if (maturity < o.maturity)
+		return true;
 	return false;
 }
 
 bool Version::operator<=(Version &o) const {
-	if (major <= o.major) return true;
-	if (minor <= o.minor) return true;
-	if (patch <= o.patch) return true;
-	if (maturity <= o.maturity) return true;
+	if (major <= o.major)
+		return true;
+	if (minor <= o.minor)
+		return true;
+	if (patch <= o.patch)
+		return true;
+	if (maturity <= o.maturity)
+		return true;
 	return false;
 }
 
 bool Version::operator>=(Version &o) const {
-	if (major >= o.major) return true;
-	if (minor >= o.minor) return true;
-	if (patch >= o.patch) return true;
-	if (maturity >= o.maturity) return true;
+	if (major >= o.major)
+		return true;
+	if (minor >= o.minor)
+		return true;
+	if (patch >= o.patch)
+		return true;
+	if (maturity >= o.maturity)
+		return true;
 	return false;
 }
 
@@ -66,18 +100,22 @@ bool Version::isCompatible(Version &o) const {
 
 Version::operator std::string() const {
 	std::string mat;
-	if (maturity == Stable)
+	switch (maturity) {
+	case Stable:
 		return boost::str(boost::format("%i.%i.%i") % major % minor % patch);
-	else
-		switch (maturity) {
-			case Alpha: { mat = "alpha"; break; }
-			case Beta: { mat = "beta"; break; }
-			case RC: { mat = "rc"; break; }
-		}
-		return boost::str(
-				boost::format("%i.%i.%i-%s%i") % major % minor % patch % mat
-						% preversion);
-
+	case Alpha:
+		mat = "alpha";
+		break;
+	case Beta:
+		mat = "beta";
+		break;
+	case RC:
+		mat = "rc";
+		break;
+	}
+	return boost::str(
+			boost::format("%i.%i.%i-%s%i") % major % minor % patch % mat
+					% preversion);
 }
 
 //std::ostream & operator<<(std::ostream &os, Version &v) {
