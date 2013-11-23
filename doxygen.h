@@ -18,7 +18,6 @@
 
 #error "This file is for Doxygen inly. Do not include."
 
-
 /**
  * @file
  * @brief This file declares stuff for Doxygen and shouldn't be part of the build.
