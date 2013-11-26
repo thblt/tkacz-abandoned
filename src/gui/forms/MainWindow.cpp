@@ -16,28 +16,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                                                                [/licblock] */
 
-/*
- * TZMainWindow.cpp
- *
- *  Created on: 6 nov. 2013
- *      Author: thblt
- */
-
 #include <iostream>
 
 #include "MainWindow.hpp"
 
 #include <QtCore/QMetaObject>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QToolBar>
+#include <QtWidgets/QStackedWidget>
+#include <QtWidgets/QVBoxLayout>
+
+#include "ViewPerspective.hpp"
+
 namespace tzgui {
 
 MainWindow::MainWindow() {
 	tzSetupUi(this);
-	setMenuBar(mainMenu);
-	QMetaObject::connectSlotsByName(this);
-}
 
-MainWindow::~MainWindow() {
+	setMenuBar(mainMenu);
+
+	// Build main toolbar
+	toolBar = new QToolBar();
+	toolBar->setMovable(false);
+	this->addToolBar(toolBar);
+	toolBar->addAction(actionPageCreatePopup);
+	toolBar->addAction(actionCollectionCreateFromrules);
+	toolBar->addWidget(addressBar= new QLineEdit());
+	toolBar->addAction(actionWindowFullscreen);
+
+	// Init views
+	setCentralWidget(container = new QStackedWidget());
+	viewPersp = new ViewPerspective();
+	container->addWidget(viewPersp);
+	container->setCurrentIndex(0);
+
+	QMetaObject::connectSlotsByName(this);
 
 }
 

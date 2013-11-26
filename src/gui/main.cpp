@@ -29,16 +29,15 @@ int main(int argc, char* argv[]) {
 	tzlog() << "Tkacz " << Tkacz::version << " “"
 			<< Tkacz::version.name << "“" << std::endl;
 
-//	QApplication app(argc, argv);
-//	app.setAttribute(Qt::AA_UseHighDpiPixmaps);
+	QApplication app(argc, argv);
+	app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
-//	MainWindow mw;
-//	mw.showMaximized();
+	MainWindow mw;
+	mw.showMaximized();
 
-	// Force initialization
 	tzlog("Initializing core");
-	Tkacz::getInstance();
+	Tkacz::getInstance(); // Forces core initialization
 
 	Tkacz::log("Running application");
-	//return app.exec();
+	return app.exec();
 }

@@ -25,4 +25,5 @@ protected:
 private:
 	SchemaLoader();
 };
+
 } /* namespace tkacz */

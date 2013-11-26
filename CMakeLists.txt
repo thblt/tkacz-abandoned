@@ -10,8 +10,8 @@ set (Tkacz_VERSION_NAME "Avogadro")
 
 set ( PROJECT_SOURCE_DIR src ) 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g -Wall -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g -Wextra -std=c++11")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O0 -g -Wall -std=c++11")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O4 -DNDEBUG -Wall -std=c++11")
 
@@ -25,6 +25,8 @@ include_directories (
 "${PROJECT_SOURCE_DIR}/core/schemas/loader"
 "${PROJECT_SOURCE_DIR}/gui" 
 "${PROJECT_SOURCE_DIR}/gui/forms"
+"${PROJECT_SOURCE_DIR}/gui/widgets"
+"${PROJECT_SOURCE_DIR}/gui/perspectives"
 )
  
 configure_file (
@@ -50,17 +52,15 @@ file(
         ${PROJECT_SOURCE_DIR}/core/*.hpp
 )
 
-message("***SCHEMA ${CMAKE_CURRENT_SOURCE_DIR} :::::: ${Tkacz_SCHEMA}")
-
 IF(APPLE)
     # set(CMAKE_INSTALL_PREFIX "/Applications" )
     set(CMAKE_INSTALL_PREFIX "." )
     # set how it shows up in the Info.plist file
-    SET(MACOSX_BUNDLE_ICON_FILE Tkacz.ADD_CUSTOM_COMMAND) 
+    SET(MACOSX_BUNDLE_ICON_FILE Tkacz.icns) 
     # set where in the bundle to put the icns file
-    SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/Tkacz.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+    SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/icons/Tkacz.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     # include the icns file in the target
-    SET(Tkacz_SOURCES ${Tkacz_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/Tkacz.icns)
+    SET(Tkacz_SOURCES ${Tkacz_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/icons/Tkacz.icns)
     
     # copy schemas in bundle
     # @fixme potentially buggy…
@@ -100,15 +100,15 @@ file(
         ${PROJECT_SOURCE_DIR}/gui/forms/*.hpp
 )
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS widgets webkit webkitwidgets  REQUIRED)
 
 QT5_WRAP_UI(Tkacz_FORMS_HEADERS ${Tkacz_FORMS})
 QT5_WRAP_CPP(Tkacz_MOC_HEADERS ${Tkacz_HEADERS_MOC})
 QT5_ADD_RESOURCES(Tkacz_RESOURCES_RCC ${Tkacz_RESOURCES})
 
-foreach(_USE_FILE ${Qt5_USE_FILES})
-    include(${_USE_FILE})
-endforeach()
+#foreach(_USE_FILE ${Qt5_USE_FILES})
+#    include(${_USE_FILE})
+#endforeach()
 
 SET(Tkacz_SOURCES ${Tkacz_SOURCES} ${Tkacz_FORMS_HEADERS} ${Tkacz_RESOURCES_RCC}  ${Tkacz_MOC_HEADERS})
 
@@ -158,14 +158,14 @@ endif()
 ####################
 
 add_library(Tkacz ${Tkacz_CORE_SOURCES} ${Tkacz_CORE_INCLUDES})
-ADD_EXECUTABLE(TkaczExe MACOSX_BUNDLE ${Tkacz_SOURCES})
+ADD_EXECUTABLE(TkaczGui MACOSX_BUNDLE ${Tkacz_SOURCES})
 
-SET_TARGET_PROPERTIES(TkaczExe PROPERTIES OUTPUT_NAME "Tkacz")
+SET_TARGET_PROPERTIES(TkaczGui PROPERTIES OUTPUT_NAME "Tkacz")
 
-target_link_libraries(TkaczExe Tkacz)
-target_link_libraries(TkaczExe Qt5::Gui Qt5::Widgets Qt5::Core )
-target_link_libraries(TkaczExe ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
-target_link_libraries(TkaczExe ${EXPAT_LIBRARY} )
+target_link_libraries(TkaczGui Tkacz)
+target_link_libraries(TkaczGui Qt5::Gui Qt5::Widgets Qt5::WebKitWidgets)
+target_link_libraries(TkaczGui ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
+target_link_libraries(TkaczGui ${EXPAT_LIBRARY} )
 target_link_libraries(Tkacz ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
 target_link_libraries(Tkacz ${MongoDB_LIBRARIES})
 
@@ -173,7 +173,7 @@ target_link_libraries(Tkacz ${MongoDB_LIBRARIES})
 # Install          #
 ####################
 
-INSTALL(TARGETS TkaczExe 
+INSTALL(TARGETS TkaczGui 
     BUNDLE DESTINATION . COMPONENT Runtime 
     RUNTIME DESTINATION bin COMPONENT Runtime
     )
