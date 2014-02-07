@@ -18,16 +18,48 @@
 
 #include <iostream>
 
+#include <boost/python.hpp>
+#include <boost/python/module_init.hpp>
+
+
+
 #include "Tkacz.hpp"
 #include "MainWindow.hpp"
 #include "FSRepository.hpp"
 
 using namespace tzgui;
 using namespace tkacz;
+using namespace boost::python;
+
+void greet() {
+	// Retrieve the main module.
+	object main = import("__main__");
+
+	// Retrieve the main module's namespace
+	object global(main.attr("__dict__"));
+
+	// Define greet function in Python.
+	object result = exec("def greet():\n"
+			"\timport sys \n"
+			"\tprint(sys.version_info)\n"
+			"\treturn 'Hello from Python!' \n", global, global);
+
+	// Create a reference to it.
+	object greet = global["greet"];
+
+	// Call it.
+	std::string message = extract < std::string > (greet());
+	std::cout << message << std::endl;
+}
 
 int main(int argc, char* argv[]) {
-	tzlog() << "Tkacz " << Tkacz::version << " “"
-			<< Tkacz::version.name << "“" << std::endl;
+
+	Py_Initialize();
+
+	greet();
+
+	tzlog() << "Tkacz " << Tkacz::version << " “" << Tkacz::version.name << "“"
+			<< std::endl;
 
 	QApplication app(argc, argv);
 	app.setAttribute(Qt::AA_UseHighDpiPixmaps);
@@ -39,5 +71,6 @@ int main(int argc, char* argv[]) {
 	Tkacz::getInstance(); // Forces core initialization
 
 	Tkacz::log("Running application");
-	return app.exec();
+	return (app.exec());
+//	return 0;
 }

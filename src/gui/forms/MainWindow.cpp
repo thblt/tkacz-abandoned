@@ -16,9 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                                                                [/licblock] */
 
-#include <iostream>
-
-#include "MainWindow.hpp"
+#include <string>
 
 #include <QtCore/QMetaObject>
 #include <QtWidgets/QHBoxLayout>
@@ -27,6 +25,7 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
 
+#include "MainWindow.hpp"
 #include "ViewPerspective.hpp"
 
 namespace tzgui {

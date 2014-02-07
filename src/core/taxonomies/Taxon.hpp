@@ -2,26 +2,32 @@
 
 #include <initializer_list>
 #include <string>
-#include <vector>
+#include <set>
 
 namespace tkacz {
 
-class Card;
+class RootNode;
 
 class Taxon {
 public:
 	Taxon& getParent();
-	std::vector<Card*>& getContents();
+	std::set<RootNode*>& getContents() const;
+
 	Taxon(std::string name);
 	Taxon(std::string name, Taxon* parent, const std::initializer_list<Taxon*> children);
 	virtual ~Taxon();
 	const bool root = false;
 
+	void add(RootNode * a);
+	void remove(RootNode * a);
+
+	int size() const;
+
 protected:
 	std::string name;
 	Taxon &parent;
-	std::vector<Taxon*> children;
-	std::vector<Card*> contents;
+	std::set<Taxon*> children;
+	std::set<RootNode*> contents;
 };
 
 } /* namespace tkacz */

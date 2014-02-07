@@ -80,7 +80,7 @@ QToolButton { border: none; background: #ddd; border-right : 1px solid rgba(0,0,
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../../build/common.qrc">:/tkacz/splash</pixmap>
+          <pixmap resource="../build/common.qrc">:/tkacz/splash</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -105,7 +105,7 @@ QToolButton { border: none; background: #ddd; border-right : 1px solid rgba(0,0,
 &lt;p&gt;
 &lt;span style=&quot;font-weight : bold;&quot;&gt; Tkacz &lt;/span&gt;&lt;br /&gt;
 &lt;span style=&quot;font-size : small;&quot;&gt;Version %1 “%2”.&lt;br /&gt;
-Copyright © 2012–2013 Thibault Polge &lt;a href=&quot;qrc:///tkacz/acknowledgements&quot;&gt;and others&lt;/a&gt;. All rights reserved.&lt;br/&gt;
+Copyright © 2012–2014 Thibault Polge &lt;a href=&quot;qrc:///tkacz/acknowledgements&quot;&gt;and others&lt;/a&gt;. All rights reserved.&lt;br/&gt;
 Tkacz is free software, under the terms of the &lt;a href=&quot;qrc:///tkacz/license&quot;&gt;GNU Affero General Public License version 3&lt;/a&gt;.&lt;/html&gt;</string>
            </property>
            <property name="alignment">
@@ -191,6 +191,7 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources>
+  <include location="../build/common.qrc"/>
   <include location="../../build/common.qrc"/>
  </resources>
  <connections/>

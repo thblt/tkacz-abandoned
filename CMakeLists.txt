@@ -23,6 +23,7 @@ include_directories (
 "${PROJECT_SOURCE_DIR}/core/repositories" 
 "${PROJECT_SOURCE_DIR}/core/schemas"
 "${PROJECT_SOURCE_DIR}/core/schemas/loader"
+"${PROJECT_SOURCE_DIR}/core/taxonomies"
 "${PROJECT_SOURCE_DIR}/gui" 
 "${PROJECT_SOURCE_DIR}/gui/forms"
 "${PROJECT_SOURCE_DIR}/gui/widgets"
@@ -100,7 +101,7 @@ file(
         ${PROJECT_SOURCE_DIR}/gui/forms/*.hpp
 )
 
-find_package(Qt5 COMPONENTS widgets webkit webkitwidgets  REQUIRED)
+find_package(Qt5 COMPONENTS widgets REQUIRED)
 
 QT5_WRAP_UI(Tkacz_FORMS_HEADERS ${Tkacz_FORMS})
 QT5_WRAP_CPP(Tkacz_MOC_HEADERS ${Tkacz_HEADERS_MOC})
@@ -113,19 +114,33 @@ QT5_ADD_RESOURCES(Tkacz_RESOURCES_RCC ${Tkacz_RESOURCES})
 SET(Tkacz_SOURCES ${Tkacz_SOURCES} ${Tkacz_FORMS_HEADERS} ${Tkacz_RESOURCES_RCC}  ${Tkacz_MOC_HEADERS})
 
 ####################
+# Python           #
+####################
+
+# @FIXME Remove absolute paths.
+set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.3/include/python3.3m/")
+set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.3/lib/libpython3.3.dylib")
+set(PythonLibs_FIND_VERSION 3.3)
+find_package(PythonLibs REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIRS})
+
+#message("-- Python version: ${PYTHONLIBS_VERSION_STRING}")
+#message("-- Python library: ${PYTHON_LIBRARIES} (${PYTHONLIBS_VERSION_STRING})")
+ 
+####################
 # Boost            #
 ####################
 # No need to ask for format (include only lib)
 
-IF(APPLE)
-    set(Boost_USE_STATIC_LIBS ON) 
+IF(APPLE) 
+	set(Boost_USE_STATIC_LIBS ON) 
 ELSE()
     set(Boost_USE_STATIC_LIBS OFF) 
 ENDIF()
 set(Boost_USE_MULTITHREADED ON)  
 set(Boost_USE_STATIC_RUNTIME OFF)
 
-find_package(Boost COMPONENTS system filesystem log REQUIRED)
+find_package(Boost COMPONENTS system filesystem log python python3 REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
@@ -141,9 +156,9 @@ find_package(EXPAT REQUIRED)
 # MongoDB          #
 ####################
 
-find_package(MongoDB REQUIRED)
+#find_package(MongoDB REQUIRED)
 
-include_directories(${MongoDB_INCLUDE_DIR})
+#include_directories(${MongoDB_INCLUDE_DIR})
  
 ####################
 # Linker           #
@@ -154,20 +169,32 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 endif()
 
 ####################
-# Executable       #
+# Library          #
 ####################
 
 add_library(Tkacz ${Tkacz_CORE_SOURCES} ${Tkacz_CORE_INCLUDES})
+target_link_libraries(Tkacz ${PYTHON_LIBRARIES})
+target_link_libraries(Tkacz  ${Boost_PYTHON3_LIBRARY} ) 
+# Include-only: ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY})
+#target_link_libraries(Tkacz ${MongoDB_LIBRARIES})
+target_link_libraries(Tkacz ${EXPAT_LIBRARY} )
+
+####################
+# Executable       #
+####################
+
 ADD_EXECUTABLE(TkaczGui MACOSX_BUNDLE ${Tkacz_SOURCES})
 
 SET_TARGET_PROPERTIES(TkaczGui PROPERTIES OUTPUT_NAME "Tkacz")
 
 target_link_libraries(TkaczGui Tkacz)
-target_link_libraries(TkaczGui Qt5::Gui Qt5::Widgets Qt5::WebKitWidgets)
-target_link_libraries(TkaczGui ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
-target_link_libraries(TkaczGui ${EXPAT_LIBRARY} )
-target_link_libraries(Tkacz ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
-target_link_libraries(Tkacz ${MongoDB_LIBRARIES})
+target_link_libraries(TkaczGui Qt5::Gui Qt5::Widgets)# Qt5::WebKitWidgets)
+
+## Testing only!
+target_link_libraries(TkaczGui ${Boost_PYTHON3_LIBRARY} ) 
+target_link_libraries(TkaczGui ${PYTHON_LIBRARIES})
+## /Testing
+#target_link_libraries(TkaczGui ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
 
 ####################
 # Install          #

@@ -37,3 +37,4 @@ Base_*.*
 
 # Doxygen files
 doc/api/**/*
+/Debug

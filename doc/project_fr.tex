@@ -1,0 +1,683 @@
+\documentclass[11pt,french]{article}
+\usepackage{charter}
+\usepackage{berasans}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\lstset{basicstyle={\ttfamily\small},
+frame=none,
+numbers=left,
+numberstyle={\ttfamily\small},
+tabsize=4}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=3cm,rmargin=3cm}
+\setcounter{tocdepth}{2}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{babel}
+\makeatletter
+\addto\extrasfrench{%
+   \providecommand{\og}{\leavevmode\flqq~}%
+   \providecommand{\fg}{\ifdim\lastskip>\z@\unskip\fi~\frqq}%
+}
+
+\makeatother
+\usepackage{varioref}
+\usepackage{refstyle}
+\usepackage{float}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\PassOptionsToPackage{normalem}{ulem}
+\usepackage{ulem}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+
+\makeatletter
+\usepackage{microtype}
+\usepackage[runin]{abstract}
+\usepackage[compact]{titlesec}
+\usepackage[lof,toc]{multitoc}
+\setlength{\columnseprule}{0.5pt}
+\usepackage{setspace}
+\usepackage{dirtree}
+\usepackage{datetime}
+\usepackage[os=mac, mackeys=symbols]{menukeys}
+
+\usepackage{framed,color}
+\definecolor{shadecolor}{gray}{0.80}
+
+\newcommand\tzcard[1]{%
+\begin{minipage}[t]{1\columnwidth}%
+\begin{shaded}%
+\sffamily #1
+\end{shaded}%
+\end{minipage}
+}
+
+\reversemarginpar
+\usepackage{inconsolata}
+
+\makeatother
+
+\begin{document}
+
+\title{Tkacz: un~système de~gestion de~connaissances}
+
+
+\author{Thibault Polge%
+\thanks{Doctorant contractuel et enseignant en philosophie (PhiCo/EXeCO, ED
+280, EA 3562, Paris 1 Panthéon Sorbonne). \protect\href{http://mailto:thibault.polge@univ-paris1.fr}{thibault.polge@univ-paris1.fr}%
+}}
+\maketitle
+\begin{abstract}
+Ce document présente les fonctions fondamentales d'un outil d'organisation
+de données en recherche en histoire. Ce logiciel, en cours de conception,
+est écrit dans le cadre de ma thèse, c'est-à-dire qu'il vise à couvrir
+tout particulièrement les besoins d'un historien des sciences qui
+travaille sur la période moderne.
+\end{abstract}
+\begin{center}\includegraphics[width=2in,bb = 0 0 200 100, draft, type=eps]{/Users/thblt/Documents/Coderies/workspace/tkacz/resources/icons/app1024.png}\end{center}
+
+\bigskip\begin{spacing}{.7}
+%\setcounter{tocdepth}{4}
+\makeatletter
+	\@starttoc{toc}
+%	\tableofcontents
+\makeatother
+\end{spacing}\clearpage
+
+
+\part{Présentation générale}
+
+
+\section{Introduction}
+
+Tkacz veut modéliser les différentes activités d'organisation des
+données trouvées en bibliothèque ou aux archives. Il présuppose que
+ces activités consistent principalement en la prise en notes d'informations
+trouvées sur des sources papier ou numérisées. Il suppose que la prise
+de notes sur des livres ou des documents d'archives s'organise selon
+un flux de travail à (au moins) deux temps : 1) La prise rapide de
+notes peu structurées, directement à la lecture du document. Ces notes
+peuvent porter sur le document lui-même s'il constitue une source
+primaire, mais aussi potentiellement renvoyer vers d'autres sources
+à consulter, apporter des informations sur un objet tiers (une personne,
+un évènement, un autre document…), etc. Elles peuvent donc prendre
+différentes formes, comme une référence bibliographique, une citation,
+un évènement ou toute autre forme. Ensuite, 2) l'organisation et la
+mise au propre des points importants, et notamment la recopie de certaines
+informations sur des fiches spécifiques. Ces informations peuvent
+être une liste de sources à consulter citées ou évoquées dans le document,
+des données nouvelles sur une personne, etc.
+
+Tkacz a pour objectifs:
+\begin{enumerate}
+\item De faciliter la manipulation de données sémantiquement structurées,
+sans que cette structure ne soit un obstacle à l'enregistrement d'informations
+complexes.
+\item De réduire la nécessité d'une reprise (temps 2) des informations acquises
+sur un document sur de nouveaux supports, en facilitant l'orga
+\item De maintenir vivant le graphe des relations entre informations, autrement
+dit de ne pas disposer que de fiches isolées mais toujours un \og répertoire \fg{}
+vivant et organisé.
+\end{enumerate}
+
+\section{L'objet fondamental : la fiche}
+
+
+\subsection{L'objet fiche}
+
+La \textbf{fiche} est l'unité atomique de Tkacz. Une fiche a un \textbf{type}
+(cf. \vref{sub:Types}); la liste complète des types n'est pas fixée
+\emph{a priori}. Chaque fiche a un \textbf{titre}, permet la prise
+de notes, et est identifiée par un numéro unique attribué séquententiellement
+à la création. 
+
+Le titre devrait être unique et identifie la fiche de façon pour l'utilisateur.
+Sa forme est par défaut libre, mais peut être imposée par certains
+types. Par exemple, une fiche d'entrée bibliographique produit son
+titre automatiquement (mais de façon configurable) par rapport aux
+données structurées qu'elle contient. Un tel titre peut prendre la
+forme:
+
+\tzcard{\textbf{The efficacy of AZT in the treatment of patients
+with AIDS…}\hfill1987
+
+\textsc{\uline{Fischl}}\textsc{, }\textsc{\uline{Richman}}\textsc{,
+}\textsc{\uline{Grieco}} \emph{et }\emph{\uline{al}}.\hfill \uline{N
+Engl J Med}}
+
+Automatiquement calculée à partir des noms des auteurs, de l'année
+et du titre (éventuellement, comme ici, abrégé) d'une entrée bibliographique.
+Le titre d'une fiche personne prendra une forme du type:
+
+\tzcard{\textbf{FOUCAULT, Michel}\hfill1926--1984}
+
+Des notes, écrites dans un format inspiré de Markdown.
+
+
+\subsection{Attributs et liens}
+
+Une fiche, à l'exception du type minimal (qui modélise réellement
+une feuille blanche avec un titre), contient un certain nombre d'attributs,
+qui sont les données sémantiques, et de relations.
+
+
+\subsubsection{Attributs \label{par:attributs}}
+
+Les attributs sont les propriétés sémantiques qui décrivent l'objet
+modélisé par une fiche. Certains attributs sont des liens vers d'autres
+fiches. L'auteur d'un livre (dans une fiche de notice bibliographique)
+est manipulé comme un lien vers une fiche personne; si cette fiche
+n'existe pas, elle est créée automatiquement avec les valeurs disponibles.
+
+Il existe trois espèces d'attributs:
+\begin{itemize}
+\item Il peut être un objet primitif, comme une chaîne, un nombre ou une
+date, ou un ensemble d'objets primitifs, comme une liste ou un ensemble.
+
+
+Dans une entrée de type \og notice bibliographique \fg{}, le numéro
+d'édition est un tel attribut. Ils sont relativement rares.
+
+\item Il peut être d'un type complexe, lui-même composé d'autres attributs
+(voir \vref{sub:Types}).
+
+
+Dans une entrée de type \og personne \fg{}, le nom de la personne
+est un type complexe formé de chaînes qui distingue les composants
+du nom. Ce type a aussi du code qui lui permet de lire et de mettre
+en forme un nom.
+
+\item Il peut être un \textbf{lien} vers une autre fiche d'un type donné. 
+\end{itemize}
+
+\subsubsection{Liens et relations}
+
+Il y a deux façons de lier une fiche à une autre : le lien simple
+et l'expression d'une relation.
+
+
+\paragraph{Le lien simple }
+
+est un \og pointeur \fg{} vers la fiche cible. L'auteur d'un document,
+par exemple, est un lien vers une fiche personne, et pas une simple
+séquence de caractères. Le lien peut avoir un \textbf{corollaire},
+c'est-à-dire que la liaison de A et B implique une relation d'une
+autre nature de B vers A. Dans l'exemple de l'auteur, le lien \og a
+pour auteur \fg{} a pour corollaire \og est auteur de \fg{}. 
+
+Le corollaire est généralement implicite. Il peut n'être fixable que
+depuis un seul des membres de la relation possible. Le lien d'auteur,
+par exemple, n'est manipulable que depuis la chose dont \emph{x} est
+l'auteur, et pas depuis \emph{x}. 
+
+
+\paragraph{La relation}
+
+est un attribut complexe, qui permet de lier des fiches entre elles
+de façon moins formelle et plus fine. Une relation a une \textbf{nature},
+qui est l'équivalent du type d'une fiche. Dans certains cas, un lien
+peut être remplacé par une relation. Par exemple, dans un document
+historique, l'attribution de l'auteur peut être douteuse — \og auteur
+probable \fg{} est une relation, car le lien simple ne suffit pas
+— il faut sans doute préciser la nature du doute, les différentes
+sources, etc.
+
+Une relation peut aussi décrire des relations entre entités : \og membre
+de \fg{} ou \og ami de \fg{}, \og frère de \fg{}, etc.
+
+Une relation peut être réciproque ou non. Dans l'exemple qui précède,
+les deux dernières sont nécessairement réciproques. Une relation peut
+aussi avoir un \textbf{corollaire}. La relation \code{A est membre de B}
+(dans cet exemple, B est par exemple une personne morale) a pour corollaire
+\og B a comme membre A \fg{}
+
+Une relation est de type \og cite \fg{} ou \og évoque \fg{}, qui
+permet de commenter un livre en le liant à ce qui fait son objet. 
+
+
+\subsection{La notion de type\label{sub:Type}}
+
+
+\subsection{Les types de fiche standards\label{sub:Types}}
+
+La description formelle de ces types est donnée en \secref{CoreSchema}.
+
+
+\subsubsection{Simple}
+
+Il s'agit d'une fiche a minima : titre et notes.
+
+
+\subsubsection{Référence bibliographique}
+
+Ce type de fiche peut représenter différents types d'objets entrant
+dans une bibliographie, qu'il s'agisse de sources primaires ou de
+sources secondaires, de supports imprimés ou audiovisuels. 
+
+
+\subsubsection{Personne (physique ou morale)}
+
+
+\section{L'organisation des fiches : la taxinomie}
+
+Cette organisation se fait sous la forme de\textbf{ taxinomies}. Une
+taxinomie est une structure hiérarchique, comparable à un système
+de fichiers, dans les entrées duquel les fiches prennent place. Contrairement
+à un système de fichiers, par définition unique, plusieurs taxinomies
+peuvent cohabiter, aucune fiche ne réside nécessairement dans une
+taxinomie quelconque, et une fiche peut se trouver associée à plusieurs
+taxons.
+
+Une taxinomie peut être créee manuellement ou automatiquement. Les
+types de fiche sont eux-mêmes des taxons, et créent une taxinomie
+automatique et non modifiable (ie, associer une fiche à un type revient
+à la faire rentrer dans une taxinomie)
+
+Les taxons peuvent se voir associés un certain nombre de règles d'affectation:
+\begin{itemize}
+\item un taxon peut contenir la totalité du contenu (ie, les fiches) de
+ses enfants. Comme dans une taxinomie biologique, toutes les sous-classes
+de mammifères (theria et prototheria) \emph{sont} des mammifères ;
+ou au contraire ne contenir que ce qui y est explicitement ajouté.
+\item Un taxon peut se voir ajouter directement (manuellement) du contenu,
+ou ne le recevoir que par affectation automatique (par le contenu
+de ses enfants ou d'autres moyens). 
+\item Un taxon peut être incompatible avec un autre, ie la présence d'une
+fiche dans ce taxon rend impossible sa présence dans un autre. Par
+exemple, un mammifère ne peut pas être un poisson ; ou au contraire
+un taxon peut en impliquer automatiquement un ou plusieurs autres. 
+\end{itemize}
+Un taxon peut fixer des règles pour lui-même et/ou ses enfants à un
+niveau \emph{n} ou aux niveaux \emph{n }à \emph{m}.
+
+\emph{Le lien d'une fiche à un taxon est lui-même une fiche, qui peut
+donc être commenté. }
+
+Le fait qu'une taxinomie est forcément hiérarchique n'implique pas
+nécessairement qu'elle soit manipulée comme telle. Il est possible
+de créer des taxinomies de \og tags \fg{} ou tous les tags sont
+au même niveau.
+
+Les taxinomies ne sont pas fortement indépendantes ; elles sont gérées
+en interne comme un unique arbre hiérarchique. 
+
+
+\section{Sélection et recherche}
+
+La sélection et la recherche utilisent le mécanisme de la taxinomie
+pour rechercher des notes. Chaque taxon peut être conçu comme un ensembl
+de fiches. Les expressions de recherche prennent la forme suivante:
+
+\texttt{{[}Publications{]} 'Michel Foucault' date < \{3 jan 1950\}}
+
+La recherche répond à une logique globalement ensembliste ; les opérations
+fondamentales de la théorie des ensembles (intersection, union, différence,
+différence symétrique) forment les opérateurs principaux du mécanisme
+de recherche. 
+
+À terme, il est prévu de faciliter l'usage de ce mécanisme de recherche
+par une interface graphique d'élaboration des requêtes et/ou une formulation
+des requêtes dans un langage formalisé proche du langage naturel.
+
+
+\subsection{Syntaxe}
+
+La totalité des opérateurs peuvent manipuler quatre types de propriétés,
+soit les trois types d'ensembles :
+\begin{lyxlist}{00.00.0000}
+\item [{\code{set}}] Un ensemble de fiches ou de taxons (c'est pareil,
+un taxon n'est qu'un ensemble de fiches)
+\item [{\code{strset}}] Un ensemble de chaînes.
+\item [{\code{attrset}}] Un ensemble de noms d'attributs ou de relations.
+\end{lyxlist}
+Et un type complexe, repéré par les accolades, spécifiques à certain
+type d'attributs, par exemple les dates.
+
+Il n'existe pas de type \og fiche unique \fg{} ou \og chaîne \fg{}
+: tout est un ensemble, qui peut ne contenir qu'un élément.
+
+
+\subsubsection{Opérateurs de groupement}
+\begin{lyxlist}{00.00.0000}
+\item [{{[}\quad{}{]}}] Sélectionne un taxon par son nom : \code{{[}str{]}}.
+Les ambiguités peuvent être résolues en donnant un parent du taxon
+au format \code{{[}parent/taxon{]}}, un parent plus lointain \code{{[}parent/…/taxon{]}}
+ou le nom de la taxinomie \code{{[}@taxinomie: taxon{]}} ou une combinaison
+: \code{{[}@taxinomie: parent/…/taxon{]}}. 
+\item [{'\quad{}'}] Sélectionne une fiche par son nom. 
+
+
+Une fiche peut être aussi sélectionnée directement par son numéro.
+
+\end{lyxlist}
+Ces deux premiers opérateurs utilisent la virgule comme séparateur.
+{[}taxon1, taxon2{]} est un ensemble de taxons, et donc renvoie une
+valeur de type \code{set}.
+\begin{lyxlist}{00.00.0000}
+\item [{()}] Les parenthèses augmentent la priorité d'une expression (cf.
+\subref{OperateursPriorite}). Rien de très original. L'expression
+\code{A+B{*}C} sera évaluée implicitement comme l'union de \code{A}
+et de l'intersection de \code{B} et \code{C}. Avec des parenthèses
+telles que \code{(A+B){*}C} elle renverra l'intersection de \code{C}
+et de l'union de \code{A} et \code{B}.
+\end{lyxlist}
+
+\subsubsection{Opérateurs binaires}
+\begin{lyxlist}{00.00.0000}
+\item [{:}] \code{attribut:set} ou \code{attribut:str} retourne l'ensemble
+des fiches dont l'attribut \code{a} a au moins une valeur dans \code{expr}. 
+\item [{::}] \code{a::expr} retourne l'ensemble des fiches dont l'attribut
+\code{a} a toutes ses valeurs dans expr.
+\item [{<}] Strictement inférieur à, pour les attributs où cela à un sens.
+\item [{<=}] Inférieur ou égal où, pour les attributs où cela à un sens.
+\item [{>}] Strictement supérieur à, pour les attributs où cela à un sens.
+\item [{>=}] Supérieur ou égal où, pour les attributs où cela à un sens.
+\item [{\&}] intersection ($\cap$). c'est l'opérateur implicite. \code{A\&B}
+ou \code{AB} retournent l'intersection des taxons \code{A} et \code{B}.
+L'intersection est symétrique; \code{A\&B == B\&A} 
+\item [{|}] union ($\cup$). \code{A|B} retourne l'ensemble des fiches
+de \code{A} et de \code{B}. L'union est symétrique; \code{A|B = B|A}
+\item [{-}] différence ($\backslash$). \code{A-B} renvoie l'ensemble
+\code{A} moins l'ensemble \code{B}. La différence n'est pas symétrique;
+\code{A-B ≠ B-A} ; l'intersection de \code{A-B} et \code{B-A}
+est vide : $(A\backslash B)\cap(B\backslash A)=\emptyset$.
+\item [{/}] différence symétrique ($\bigtriangleup$). \code{A/B} renvoie
+la totalité des fiches de \code{A} ou \code{B} mais pas les deux.
+\code{A/B = (A+B)-(B{*}A)}. 
+\end{lyxlist}
+
+\subsubsection{Opérateurs unaires}
+\begin{lyxlist}{00.00.0000}
+\item [{-}] Inverse. \code{-expr} renvoie la totalité des fiches non contenues
+dans \code{expr}. \code{-expr = {*}-expr}
+\item [{:}] équivalent approximatif de \code{:} sans spécifier le nom
+de l'attribut : \code{{*}:expr} renvoie toutes les fiches liées à
+expr. \code{{*}:expr} doit être un ensemble.
+\item [{:{*}}] \code{expr} 
+\end{lyxlist}
+
+\subsubsection{Autres termes}
+\begin{lyxlist}{00.00.0000}
+\item [{{*}}] L'ensemble des fiches du dépôt. 
+\item [{\{\quad{}\}}] Délimite une construction complexe spécifique à
+un type de données, par exemple une date.
+\item [{"\quad{}"}] Délimite une chaîne pour la recherche en plein texte.
+Isolé, il renvoie l'ensemble des fiches dans lesquelles ce texte a
+été trouvé ; sinon il peut être utilisé pour la recherche par attributs
+(\code{:}, \code{::})
+\item [{\textbackslash{}}] Caractère d'échappement.
+\end{lyxlist}
+
+\subsubsection{Priorité\label{sub:OperateursPriorite}}
+
+Les expressions sont évaluées avec les priorités suivantes. (1) et
+(2) précisent qu'il s'agit, respectivement, de la version unaire ou
+binaire d'un opérateur.
+
+\begin{tabular}{|l||l|l|l|l|l|l|}
+\hline 
+Priorité & 0 & 1 & 2 & 3 & 4 & 5\tabularnewline
+\hline 
+Opérateurs & Opérateurs de groupement & Opérateurs unaires & \& & | & - (2) & /\tabularnewline
+\hline 
+\end{tabular}
+
+
+\subsubsection{Synonymie}
+
+Pour des raisons de clarté, les opérateurs natifs ont les synonymes
+suivants:
+
+\begin{tabular}{|c||c|c|c|c|c|c|c|}
+\hline 
+Opérateur & : & :: & \& & | & - & \textbackslash{} & {*}\tabularnewline
+\hline 
+Synonymes & in &  & and & or & andnot & xor & all\tabularnewline
+\hline 
+\end{tabular}
+
+Les versions localisées pourraient implémenter ces synonymes dans
+leur langue.
+
+
+\section{Opérations du logiciel}
+
+
+\subsection{Mode de consultation}
+
+
+\subsection{Mode de recueil }
+
+Le mode de recueil suppose une source d'information (ou plusieurs
+?) représentée par une fiche, d'où on recueille un certain nombre
+de données sur elle-même ou sur d'autres objets, représentés par d'autres
+fiches, qui peuvent être déjà existantes ou créées à la volée.
+
+Il verrouille sur la source d'origine et associe toute information
+entrée à cette source.
+
+
+\section{Fonctions étendues}
+
+
+\subsection{Export de bibliographies}
+
+Les fiches de types \og référence bibliographiques \fg{} doivent
+pouvoir être exportées dans des formats manipulables par un gestionnaire
+de bases de données, en réduisant la complexité intrinsèque à Tkacz.
+
+
+\part{Utilisation et interface utilisateur}
+
+La fenêtre principale de Tkacz se présente de différentes façons selon
+le mode en cours. Le mode de consultation (par défaut, ou accessible
+via \menu{Meta>Data} (\keys{\cmd+\Alt+A,C})
+
+
+\part{Syntaxe des schémas}
+
+Le schéma global Tkacz définit un certain nombre d'entités. Les types
+racines sont \code{entity}, \code{relationship} et \code{taxonomy}.
+La définition d'un type de fiche se fait en créant un type d'entité
+avec l'attribut \code{cardtype=true}. Les types peuvent être imbriqués,
+mais un type n'est visible qu'au niveau d'imbrication où il a été
+créé et aux niveaux inférieurs. L'imbrication est utile pour définir
+des types utilitaires ponctuels qui ne sont pas destinés à être réutilisés. 
+
+Le parser compile d'abord les types en objets C++, puis 
+
+
+\section{Types d'entité}
+
+\begin{lstlisting}
+<?xml version="1.0" encoding="UTF-8"?>
+<tkacz version="0,1,0"> 
+<entity name="example" schema="core"> 	
+	<subtype taxonomy="subtypes" />
+	
+	<entity name="name">
+		<attribute type="string" name="first" />
+		<attribute type="string" name="last" />
+	</entity>
+	<attribute type="string" name="something">
+	<attribute type="name" name="name" />
+</entity>
+</tkacz>
+\end{lstlisting}
+
+
+
+\part{Implémentation}
+
+
+\section{Le système de types}
+
+Le mécanisme de types de Tkacz repose sur une correspondance terme
+à terme entre une hiérarchie de types et une hiérarchie d'objets instantiables.
+Ces deux hiérarchies sont définies comme suit:
+
+\begin{tabular*}{1\columnwidth}{@{\extracolsep{\fill}}|c|c||c|c|}
+\multicolumn{2}{c}{Types} & \multicolumn{2}{c}{Objets}\tabularnewline
+\hline 
+\multicolumn{2}{|c||}{\code{Template} (virtual)} & \multicolumn{2}{c|}{\code{Node}}\tabularnewline
+\hline 
+\code{EntityTemplate} & \code{PrimitiveTemplate<T>} & — & —\tabularnewline
+\hline 
+ & \code{IntegerTemplate, StringTemplate…} & \code{Card} & \tabularnewline
+\hline 
+\end{tabular*}
+
+À chaque instance d'un descendant d'\code{Object} correspond un objet
+\code{Template} du type correspondant (à une \code{Primitive} correspond
+un \code{PrimitiveTemplate}, etc.). L'objet \code{Template}:
+\begin{itemize}
+\item Initialise la structure de données de l'\code{Object}.
+\end{itemize}
+
+\section{Types primitifs}
+
+
+\section{Schéma de base\label{sec:CoreSchema}}
+
+
+\subsection{Le type \og personne \fg{}}
+
+Ce type de fiche représente une personne, physique ou morale; elle
+contient les données suivantes
+
+
+\section{Format de stockage}
+
+Un dépôt Tkacz est un point de l'arborescence d'un système de fichiers.
+Du point de vue utilisateur, il se présente comme un fichier simple
+qui contient le dossier tkacz compressé en zip, qui est décompressé
+dans un dossier temporaire à l'ouverture (sauf sous MacOS X où il
+s'agit d'un paquet%
+\footnote{\og Bundle \fg{}, c'est-à-dire un dossier qui apparaît au niveau
+de l'interface graphique comme un simple fichier.%
+}) ou comme un simple répertoire, structuré comme suit :
+
+\begin{table}[H]
+\dirtree{%
+.0 \hspace{-1.2em}/. % Dirty dirtree hack 
+%                      to align correctly 
+%                      to left edge.
+.1 .tkacz.
+.2 db\DTcomment{Fichiers de MongoDB}.
+.3 \dots.
+.2 manifest\DTcomment{Déclarations Tkacz de base (Yaml)}.
+}
+\end{table}
+
+
+Cette structure à répertoire système caché permet d'envisager de modifier
+ultérieurement le format de fichier pour y permettre le stockage automatisé
+de documents, par exemple des versions PDF ou EPUB de références électroniques,
+etc., en le présentant alors comme un simple dossier et n'utiliser
+la version zippée que pour l'échange entre machines.
+
+Le fichier \directory{.tkacz / manifest} est une représentation JSON
+de la structure détaillée ci-dessous:
+
+\begin{table}[H]
+\begin{tabular*}{1\columnwidth}{@{\extracolsep{\fill}}l|llr}
+\multicolumn{2}{|l}{\texttt{tkacz \{}} & \multicolumn{2}{r}{\textbf{Données fondamentales (compatibilité)}}\tabularnewline
+\cline{1-1} 
+ & \texttt{frameworkVersion} & \texttt{(0,1,0)} & Version de Tkacz (majeure, mineure, révision)\tabularnewline
+ & \texttt{formatVersion} & \texttt{(0,1,0)} & Version du format de fichier (idem)\tabularnewline
+ & \texttt{schemaVersion} & \texttt{(0,1,0)} & Version du schéma de données (idem)\tabularnewline
+ & \texttt{schemaId} & \texttt{“core”} & Identifiant du schéma de données\tabularnewline
+\multicolumn{1}{l}{} & \} &  & \tabularnewline
+\multicolumn{1}{l}{} &  &  & \tabularnewline
+\multicolumn{2}{|l}{\texttt{repository \{}} & \multicolumn{2}{r}{\textbf{Données utilisateur}}\tabularnewline
+\cline{1-1} 
+ & \texttt{uuid} & \texttt{{[}uuid{]}} & Un identifiant unique\tabularnewline
+ & \texttt{repoName} & \texttt{null} & Nom du dépôt (défini par l'utilisateur)\tabularnewline
+\multicolumn{1}{l}{} & \} &  & \tabularnewline
+\end{tabular*}
+\end{table}
+
+
+\appendix
+\clearpage
+
+
+\part{Annexes}
+
+
+\section{Définitions}
+
+Ce lexique décrit les termes employés dans la présent document, le
+lexique anglais équivalent pour l'implémentation, et le lexique anglais
+et français l'interface graphique quand ils divergent des termes retenus
+par ailleurs.
+
+\newcommand*\cf[1]{$\to$ \textit{#1}.}
+
+
+\subsection{Termes employés dans ce document}
+
+\begin{multicols}{2}
+
+
+\paragraph{Attribut}
+
+
+\paragraph{Dépôt}
+
+
+\paragraph{Fiche}
+
+
+\paragraph{Lien }
+
+Un lien est un type particulier d'attribut qui, au lieu d'être une
+donnée stockée en place, est un renvoi vers une autre fiche. L'attribut
+\emph{auteur }d'une fiche \emph{notice bibliographique} est un lien
+vers une fiche de type \emph{personne}.
+
+
+\paragraph{Nature }
+
+L'équivalent pour une relation du type d'une fiche.
+
+
+\paragraph{Relation}
+
+\parref{relations}
+
+
+\paragraph{Schéma}
+
+
+\paragraph{Taxinomie}
+
+
+\paragraph{Type}
+
+\end{multicols}
+
+
+\subsection{Termes anglais du code source }
+
+\begin{multicols}{3}
+\begin{lyxlist}{00.00.0000}
+\item [{attribute}] \cf{attribut}
+\item [{card}] \cf{fiche}
+\item [{link}] \cf{link}
+\item [{nature}] \cf{nature}
+\item [{relationship}] \cf{relation}
+\item [{repository}] \cf{dépôt}
+\item [{schema}] A Schema implements a factory and a visitor. 
+\end{lyxlist}
+\end{multicols}{2}
+
+\vfill\tiny\center
+\newtimeformat{htime}{\THEHOUR h\twodigit{\THEMINUTE}}
+\settimeformat{htime}
+Révision: \today{} à \currenttime.
+\end{document}

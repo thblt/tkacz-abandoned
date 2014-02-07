@@ -19,7 +19,6 @@
 #pragma once
 
 #include "Base_MainWindow.hpp"
-//#include "ui_mainWindow.h"
 #include "AboutDialog.hpp"
 
 #include <QtWidgets/QMainWindow>

@@ -36,9 +36,6 @@ Tkacz::Tkacz() {
 	//SchemaLoader(Platform::getCanonicalResourcePath("schema/base.xml")).run();
 }
 
-void Tkacz::test() {
-}
-
 Tkacz* Tkacz::getInstance() {
 	if (instance == nullptr) {
 		instance = new Tkacz();

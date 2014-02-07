@@ -33,8 +33,6 @@ public:
 	static const Version version;
 	static Tkacz* getInstance();
 
-	void test();
-
 	// Logging methods
 	static std::ostream& log();
 	static std::ostream& log(std::string msg);
