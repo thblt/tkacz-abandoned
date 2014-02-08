@@ -38,3 +38,11 @@ Base_*.*
 # Doxygen files
 doc/api/**/*
 /Debug
+
+# LaTeX artifacts
+doc/**/textput.log
+doc/**/*.aux
+doc/**/*.fdb_latexmk
+doc/**/*.fls
+doc/**/*.out
+doc/**/*.toc
