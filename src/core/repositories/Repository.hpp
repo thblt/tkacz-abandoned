@@ -1,6 +1,6 @@
 /*                                                                 [licblock]
  * This file is part of Tkacz. 
- * Copyright (c) 2012-2013 Thibault Polge. All rights reserved.
+ * Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -18,12 +18,20 @@
 
 #pragma once 
 
+#include <string>
+
+#include <git2/types.h>
+
 #include "Exception.hpp"
+#include "Repository.hpp"
+
+namespace boost {
+	namespace filesystem {
+		class path;
+	}
+}
 
 namespace tkacz {
-
-class Card;
-class EntityTemplate;
 
 /**
  * @brief This exception is thrown whenever a children class of Repository was
@@ -47,13 +55,53 @@ class MalformedRepositoryException: public Exception {
  * @ingroup repositories
  * @ingroup exceptions
  */
-class NotARepositoryException: public Exception  {
+class NotARepositoryException: public Exception {
 };
 
 /**
  * @brief A base interface for Tkacz repositories.
  * @ingroup repositories
  */
-class Repository {
+
+/**
+ * @brief Accesses a Tkacz repository stored as a directory.
+ * @ingroup repositories
+ */
+class Repository{
+
+public:
+	/**
+	 * @param path The path of the repository to open.
+	 */
+	Repository(const boost::filesystem::path & path) throw (NotARepositoryException,
+			MalformedRepositoryException, FileNotFoundException);
+
+	~Repository();
+
+	/**
+	 * Creates a new repository on filesystem. Please notice that this will
+	 * overwrite any existing contents.
+	 *
+	 * @param path Where to create the repository.
+	 * @param zipped If true, creates a zipped bundle instead of a directory.
+	 * @return A FSRepository object representing the newly created repository.
+	 *
+	 */
+	static Repository & initialize(const boost::filesystem::path &path) throw (Exception);
+
+protected:
+	/**
+	 * The path to the data directory
+	 */
+	static const boost::filesystem::path dataPath,
+	/**
+	 * The path to the manifest file
+	 */
+	manifestFile;
+	/**
+	 * The GIT repository
+	 */
+	git_repository *git_repo;
 };
+
 }

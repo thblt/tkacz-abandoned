@@ -1,3 +1,5 @@
+# Temp fixes
+
 cmake_minimum_required (VERSION 2.8.11)
 project (Tkacz)
 
@@ -118,9 +120,9 @@ SET(Tkacz_SOURCES ${Tkacz_SOURCES} ${Tkacz_FORMS_HEADERS} ${Tkacz_RESOURCES_RCC}
 ####################
 
 # @FIXME Remove absolute paths.
-set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.3/include/python3.3m/")
-set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.3/lib/libpython3.3.dylib")
-set(PythonLibs_FIND_VERSION 3.3)
+set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.4/include/python3.4m/")
+set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.4/lib/libpython3.4.dylib")
+set(PythonLibs_FIND_VERSION 3.4)
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 
@@ -149,23 +151,22 @@ link_directories(${Boost_LIBRARY_DIRS})
 # Expat            #
 ####################
 
-#find_package(XercesC REQUIRED)
 find_package(EXPAT REQUIRED)
 
 ####################
-# MongoDB          #
+# LibGit2          #
 ####################
 
-#find_package(MongoDB REQUIRED)
+find_package(LibGit2 REQUIRED)
 
-#include_directories(${MongoDB_INCLUDE_DIR})
+include_directories(${LIBGIT2_INCLUDE_DIR})
  
 ####################
 # Linker           #
 ####################
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -dead_strip -order-file -macosx_version_min=10.9")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -dead_strip -order-file")
 endif()
 
 ####################
@@ -175,8 +176,8 @@ endif()
 add_library(Tkacz ${Tkacz_CORE_SOURCES} ${Tkacz_CORE_INCLUDES})
 target_link_libraries(Tkacz ${PYTHON_LIBRARIES})
 target_link_libraries(Tkacz  ${Boost_PYTHON3_LIBRARY} ) 
-# Include-only: ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY})
-#target_link_libraries(Tkacz ${MongoDB_LIBRARIES})
+target_link_libraries(Tkacz  ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY}) 
+target_link_libraries(Tkacz ${LIBGIT2_LIBRARIES})
 target_link_libraries(Tkacz ${EXPAT_LIBRARY} )
 
 ####################

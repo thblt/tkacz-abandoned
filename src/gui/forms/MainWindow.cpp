@@ -1,6 +1,6 @@
 /*                                                                 [licblock]
  * This file is part of Tkacz. 
- * Copyright (c) 2012-2013 Thibault Polge. All rights reserved.
+ * Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -41,7 +41,7 @@ MainWindow::MainWindow() {
 	this->addToolBar(toolBar);
 	toolBar->addAction(actionPageCreatePopup);
 	toolBar->addAction(actionCollectionCreateFromrules);
-	toolBar->addWidget(addressBar= new QLineEdit());
+//	toolBar->addWidget(addressBar= new QLineEdit());
 	toolBar->addAction(actionWindowFullscreen);
 
 	// Init views

@@ -53,17 +53,17 @@ L'usage de Git fait ici est assez particulier: chaque message de commit décrit 
 
 Quand Tkacz contrôle l'éditeur de texte, il commite automatiquement les changements, sans contrôle possible de l'utilisateur, dans les situations suivantes:
 
- 1. La saisie ou l'effacement se poursuit, mais la position du curseur a changé.
+ 1. La saisie ou l'effacement se poursuit, mais la position du curseur a changé. [```move```]
  
- 2. L'utilisateur commence à saisir du texte après en avoir effacé.
+ 2. L'utilisateur commence à saisir du texte après en avoir effacé. [```insert```]
  
- 3. L'utilisateur commence à effacer du texte après en avoir saisi.
+ 3. L'utilisateur commence à effacer du texte après en avoir saisi. [```delete```]
  
- 4. La référence ou l'emplacement dans la référence a changé.
+ 4. La référence ou l'emplacement dans la référence a changé. [```insert```]
  
- 5. L'utilisateur coupe du texte.
+ 5. L'utilisateur coupe du texte. [```cut```]
  
- 6. L'utilisateur colle du texte.
+ 6. L'utilisateur colle du texte (au format Tkacz, sinon ```insert```). [```paste```]
  
 Si un éditeur externe est utilisé, un commit est réalisé à chaque modification du fichier[^edext]. 
 
@@ -77,7 +77,7 @@ Le format d'un message de commit en cours d'édition est une représentation JSO
 
 ~~~ json
 {
-    "operation": 1
+    "operation": "type",
     "using":     234,
     "position": {
         "page": "x"
@@ -85,20 +85,21 @@ Le format d'un message de commit en cours d'édition est une représentation JSO
 }
 ~~~
 
-```operation``` décrit l'action de l'utilisateur qui justifie le commit. Le numéro correspond à l'énumération ci-dessus.
+```operation``` décrit l'action de l'utilisateur qui justifie le commit. 
 
-Avec cette réserve que le format de  ```position```, s'il est obligatoirement un dictionnaire, n'est pas déterminé par avance, et dépend du type de fiche. En imaginant des notes prises à la volée sur un enregistrement audio, ```position``` pourrait avoir un format exprimé en heures:minutes:secondes :
+Avec cette réserve que le format de  ```position```, s'il est obligatoirement un dictionnaire, n'est pas déterminé par avance, et dépend du type de fiche. En imaginant des notes prises à la volée sur un enregistrement audio, ```position``` pourrait avoir un format du type:
 
 ~~~ json
 {
     "position": {
+        "tape": 0,
         "time": [0, 12, 34]
     }
 }
 ~~~
 
 
-Si une fiche est modifiée sans référence ouverte, le message de commit est un arbre JSON vide : ```{}```
+Si une fiche est modifiée sans référence ouverte, le message de commit ne contient que la clé ```operation```.
 
 #### Commits vides
 

@@ -28,4 +28,3 @@ sur un document sur de nouveaux supports, en facilitant l'orga
  * De maintenir vivant le graphe des relations entre informations, autrement
 dit de ne pas disposer que de fiches isolées mais toujours un \og répertoire \fg{}
 vivant et organisé.
-\end{enumerate}

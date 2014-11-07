@@ -108,10 +108,10 @@ Une relation est de type \og cite \fg{} ou \og évoque \fg{}, qui
 permet de commenter un livre en le liant à ce qui fait son objet. 
 
 
-## La notion de type\label{sub:Type}
+## La notion de type {#sub:Type}
 
 
-## Les types de fiche standards\label{sub:Types}
+## Les types de fiche standards {#sub:Types}
 
 La description formelle de ces types est donnée en \vref{CoreSchema}.
 

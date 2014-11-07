@@ -3,7 +3,7 @@
 
 #                                                                 [licblock]
 # This file is part of Tkacz. 
-# Copyright (c) 2012-2013 Thibault Polge. All rights reserved.
+# Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -38,7 +38,6 @@ marks = ("[licblock]", "[/licblock]")
 @param respect a re object (or any object who defines <code>bool match(self, str)</code> to identify  
        lines which must be kept at the top of the file. (for shebangs and the like)
 """
-
 templates = dict();
 templates["c"] = {"start":"/* ", "inter":" * ", "end":" */", "respect":None}
 templates["python"] = {"start":None, "inter":"# ", "end":None, "respect":re.compile("(^#!)|(^#.*-\*-)")}
