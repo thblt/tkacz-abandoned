@@ -39,5 +39,5 @@ Toute fiche commence généralement par un préambule qui expose formellement so
 
 ~~~ tkacz
 <> friend [Didier.Éribon]
-<> founder GIP.
+<> founder GIP
 ~~~

@@ -1,6 +1,6 @@
 /*                                                                 [licblock]
  * This file is part of Tkacz. 
- * Copyright (c) 2012-2013 Thibault Polge. All rights reserved.
+ * Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,8 +20,12 @@
 
 #include <iostream>
 
+#include <git2/threads.h>
+
 #include "Platform.hpp"
+#include "Version.hpp"
 #include "tzbuild.h"
+
 //#include "Version.hpp"
 
 namespace tkacz {
@@ -32,7 +36,9 @@ TZ_VERSION_NAME };
 
 Tkacz::Tkacz() {
 	Platform::init();
-	tzlog() << Platform::getResourcePath("Tkacz.icns") << std::endl;
+
+	git_threads_init();
+
 	//SchemaLoader(Platform::getCanonicalResourcePath("schema/base.xml")).run();
 }
 

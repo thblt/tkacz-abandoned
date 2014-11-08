@@ -1,6 +1,6 @@
-cat header.tex > document.tex
-pandoc *.tex.md --from markdown --to latex >> document.tex
-cat footer.tex >> document.tex
+pandoc *.tex.md --template template.tex -o document.tex --to latex
 
 pdflatex document
-pdflatex -interaction=nonstopmode document
+if pdflatex -interaction=nonstopmode document
+	rm document.aux document.log document.out document.toc document.tex
+fi

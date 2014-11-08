@@ -1,0 +1,56 @@
+#                                                                 [licblock]
+# This file is part of Tkacz. 
+# Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+# 
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#                                                                [/licblock]
+
+package "tkacz" 
+# version "0.01 alpha" 
+# usage "tz --generate STRING|--test STRING|--render STRING [options] -i FILE... [-u STRING...|-d STRING...] [-o FILE]"
+
+## Repositories
+
+defmode "init"          modedesc = "Initializes a new Tkacz repository"
+defmode "archive"       modedesc = "Compress a Tkacz repository in archive format"
+
+## Cards
+
+defmode "new"           modedesc = "Create or import a card"
+defmode "clone"         modedesc = "Clone an existing card"
+defmode "rm"            modedesc = "Delete a card"
+defmode "list"          modedesc = "List existing cards"
+defmode "edit"          modedesc = "Open cards"
+defmode "view"          modedesc = "View cards in browser"
+
+## Taxonomy
+
+defmode "tx-new"        modedesc = "Create or import a collection"
+defmode "tx-rm"         modedesc = "Delete a collection"
+defmode "tx-list"       modedesc = "List existing collections" # List cards in collection is done using the base list command.
+defmode "tx-edit"       modedesc = "Edit a collection"
+
+## Schema operations
+
+defmode "sch-browse"    modedesc = "Browse schema data directory"
+
+## Misc
+
+defmode "shell"         modedesc = "Runs an interactive shell"
+
+# Mode options
+
+## Init
+
+modeoption  "location"  -   "Base directory"    string  optional    default="." mode="init"

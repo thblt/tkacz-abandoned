@@ -1,6 +1,6 @@
 /*                                                                 [licblock]
  * This file is part of Tkacz. 
- * Copyright (c) 2012-2013 Thibault Polge. All rights reserved.
+ * Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,46 +17,18 @@
  *                                                                [/licblock] */
 
 #include <iostream>
+#include <string>
 
-#include <boost/python.hpp>
-#include <boost/python/module_init.hpp>
-
-
+#include <boost/filesystem.hpp>
 
 #include "Tkacz.hpp"
 #include "MainWindow.hpp"
-#include "FSRepository.hpp"
+#include "Repository.hpp"
 
 using namespace tzgui;
 using namespace tkacz;
-using namespace boost::python;
-
-void greet() {
-	// Retrieve the main module.
-	object main = import("__main__");
-
-	// Retrieve the main module's namespace
-	object global(main.attr("__dict__"));
-
-	// Define greet function in Python.
-	object result = exec("def greet():\n"
-			"\timport sys \n"
-			"\tprint(sys.version_info)\n"
-			"\treturn 'Hello from Python!' \n", global, global);
-
-	// Create a reference to it.
-	object greet = global["greet"];
-
-	// Call it.
-	std::string message = extract < std::string > (greet());
-	std::cout << message << std::endl;
-}
 
 int main(int argc, char* argv[]) {
-
-	Py_Initialize();
-
-	greet();
 
 	tzlog() << "Tkacz " << Tkacz::version << " “" << Tkacz::version.name << "“"
 			<< std::endl;
@@ -70,7 +42,9 @@ int main(int argc, char* argv[]) {
 	tzlog("Initializing core");
 	Tkacz::getInstance(); // Forces core initialization
 
+	Repository::initialize("/Users/thblt/Tkacz Data");
+
 	Tkacz::log("Running application");
 	return (app.exec());
-//	return 0;
+	return 0;
 }

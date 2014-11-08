@@ -15,7 +15,6 @@ de recherche.
 par une interface graphique d'élaboration des requêtes et/ou une formulation
 des requêtes dans un langage formalisé proche du langage naturel.
 
-
 ## Syntaxe
 
 La totalité des opérateurs peuvent manipuler quatre types de propriétés,
@@ -94,7 +93,7 @@ valeur de type ```set```.
  
  
 ```&```
-:   intersection ($\cap$). c'est l'opérateur implicite. ```A\&B``` ou ```AB``` retournent l'intersection des taxons ```A``` et ```B```. L'intersection est symétrique; ```A&B == B&A``` 
+:   intersection ($\cap$). c'est l'opérateur implicite. ```A&B``` ou ```AB``` retournent l'intersection des taxons ```A``` et ```B```. L'intersection est symétrique; ```A&B = B&A``` 
 
 
 
@@ -107,32 +106,37 @@ valeur de type ```set```.
 :   différence ($\backslash$). ```A-B``` renvoie l'ensemble ```A``` moins l'ensemble ```B```. La différence n'est pas symétrique (l'intersection de ```A-B``` et ```B-A``` est vide : $(A\backslash B)\cap(B\backslash A)=\emptyset$.)
 
 
-```/```
-:   différence symétrique ($\bigtriangleup$). ```A/B``` renvoie la totalité des fiches de ```A``` ou ```B``` mais pas les deux. ```A/B = (A+B)-(B*A)```. 
+```^```
+:   différence symétrique ($\bigtriangleup$). ```A^B``` renvoie la totalité des fiches de ```A``` ou ```B``` mais pas les deux. ```A^B = (A+B)-(B*A)```. 
 
 
 ## Opérateurs unaires
 
--
-```-```   
+```-``` 
 :   Inverse. ```-expr``` renvoie la totalité des fiches non contenues dans ```expr```. ```-expr = {*```-expr}
 
 ```:``` 
 :   équivalent approximatif de ```:``` sans spécifier le nom de l'attribut : ```*:expr``` renvoie toutes les fiches liées à expr. ```* :expr``` doit être un ensemble.
 
-:* ```expr``` 
+```:*```
+:   ```expr``` 
 
 
 ## Autres termes
 
- -  [{{*}}] L'ensemble des fiches du dépôt. 
- -  [{\{\quad{}\}}] Délimite une construction complexe spécifique à
-un type de données, par exemple une date.
- -  [{"\quad{}"}] Délimite une chaîne pour la recherche en plein texte.
+```*```
+:   L'ensemble des fiches du dépôt. 
+
+```[ ]```
+:   Délimite une construction complexe spécifique à un type de données, par exemple une date.
+
+```" "```
+:   Délimite une chaîne pour la recherche en plein texte.
 Isolé, il renvoie l'ensemble des fiches dans lesquelles ce texte a
-été trouvé ; sinon il peut être utilisé pour la recherche par attributs
-(```:```, ```::```)
- -  [{\textbackslash{}}] Caractère d'échappement.
+été trouvé ; sinon il peut être utilisé pour la recherche par attributs (```:```, ```::```)
+
+```\```
+:    Caractère d'échappement.
 
 
 ## Priorité {#OperateursPriorite}

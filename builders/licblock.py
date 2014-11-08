@@ -3,7 +3,7 @@
 
 #                                                                 [licblock]
 # This file is part of Tkacz. 
-# Copyright (c) 2012-2013 Thibault Polge. All rights reserved.
+# Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -51,6 +51,7 @@ extensions = {
               "h.in":"c",
               "cpp":"c",
               "cxx":"c",
+			  "gengetopt": "python",
               "hpp":"c",
               "py":"python",
               "htm":"xml",
@@ -94,7 +95,7 @@ def do(f, licText):
                 tpl = templates[tplName]
                 break
         if not tpl:
-            print("Skipping\t{0}\t(unrecognized type)".format(f))
+            # print("Skipping\t{0}\t(unrecognized type)".format(f))
             return False
     
         contents = readFile(f)

@@ -1,6 +1,6 @@
 # L'organisation des fiches : la taxinomie
 
-Cette organisation se fait sous la forme de** taxinomies**. Une
+Cette organisation se fait sous la forme de **taxinomies**. Une
 taxinomie est une structure hiérarchique, comparable à un système
 de fichiers, dans les entrées duquel les fiches prennent place. Contrairement
 à un système de fichiers, par définition unique, plusieurs taxinomies

@@ -16,43 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                                                                [/licblock] */
 
+#include <iostream>
+#include <string>
 
-#include <boost/filesystem.hpp>
+// #include <parameters.h>
 
-#include <git2/repository.h>
+#include <Tkacz.hpp>
 
-#include "Tkacz.hpp"
-#include "Repository.hpp"
+enum class Command {
+	repo_init, card_new
+};
 
-namespace bfs = boost::filesystem;
-
-namespace tkacz {
-
-const bfs::path Repository::dataPath = ".tkacz",
-		Repository::manifestFile = "manifest";
-
-Repository::Repository(const bfs::path & path) throw (NotARepositoryException,
-		MalformedRepositoryException, FileNotFoundException) {
-
-	Tkacz::log() << "Creating Repository from " << path << std::endl;
-
-	if (!bfs::exists(path))
-		throw FileNotFoundException();
-
-	if (!bfs::is_directory(path)) {
-		throw NotARepositoryException();
+int main(int argc, char* argv[]) {
+	if (argc < 2) {
+		std::cout << "Requires at least 1 argument.\n";
+		exit(-1);
 	}
-}
-
-Repository & Repository::initialize(const bfs::path & path) throw (Exception) {
-
-	if (!bfs::exists(path)) {
-		bfs::create_directory(path);
-	}
-
-}
-
-Repository::~Repository() {
-}
-
+	
+	std::string command { argv[1] };
+		
 }

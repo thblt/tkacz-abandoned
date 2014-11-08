@@ -1,6 +1,6 @@
 /*                                                                 [licblock]
  * This file is part of Tkacz. 
- * Copyright (c) 2012-2013 Thibault Polge. All rights reserved.
+ * Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,30 +20,63 @@
 
 #include <string>
 
+#include <git2/types.h>
+
+#include "Exception.hpp"
 #include "Repository.hpp"
 
 namespace boost {
-namespace filesystem {
-class path;
-}
+	namespace filesystem {
+		class path;
+	}
 }
 
 namespace tkacz {
 
 /**
+ * @brief This exception is thrown whenever a children class of Repository was
+ * asked to open a repository and got something that either doesn't look like
+ * a Tkacz repository or seemed damaged.
+ *
+ * This exception may be subclassed if different types of problems should be reported.
+ * @ingroup repositories
+ * @ingroup exceptions
+ */
+class MalformedRepositoryException: public Exception {
+};
+
+/**
+ * @brief This exception is thrown whenever a children class of Repository was
+ * asked to open something that definitely doesn't look like a Tkacz repository.
+ * This exception should be preferred over MalformedRepositoryException when there
+ * doesn't seem to be any way to get any data from the given location.
+ *
+ * This exception may be subclassed if different types of problems should be reported.
+ * @ingroup repositories
+ * @ingroup exceptions
+ */
+class NotARepositoryException: public Exception {
+};
+
+/**
+ * @brief A base interface for Tkacz repositories.
+ * @ingroup repositories
+ */
+
+/**
  * @brief Accesses a Tkacz repository stored as a directory.
  * @ingroup repositories
  */
-class FSRepository: public Repository {
+class Repository{
 
 public:
 	/**
 	 * @param path The path of the repository to open.
 	 */
-	FSRepository(const std::string & path) throw (NotARepositoryException,
+	Repository(const boost::filesystem::path & path) throw (NotARepositoryException,
 			MalformedRepositoryException, FileNotFoundException);
 
-	~FSRepository();
+	~Repository();
 
 	/**
 	 * Creates a new repository on filesystem. Please notice that this will
@@ -54,14 +87,9 @@ public:
 	 * @return A FSRepository object representing the newly created repository.
 	 *
 	 */
-	static FSRepository & initialize(const std::string &path,
-			const bool zipped = false) throw (FileExistsException);
+	static Repository & initialize(const boost::filesystem::path &path) throw (Exception);
 
 protected:
-	/**
-	 * Whether this repository was loaded from a zipped bundle file.
-	 */
-	bool isZipBundle = false;
 	/**
 	 * The path to the data directory
 	 */
@@ -70,6 +98,10 @@ protected:
 	 * The path to the manifest file
 	 */
 	manifestFile;
+	/**
+	 * The GIT repository
+	 */
+	git_repository *git_repo;
 };
 
 }
