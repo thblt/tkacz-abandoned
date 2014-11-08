@@ -18,42 +18,58 @@
 
 #pragma once 
 
-#include "Exception.hpp"
+#include <string>
+
+#include "Repository.hpp"
+
+namespace boost {
+namespace filesystem {
+class path;
+}
+}
 
 namespace tkacz {
 
-class Card;
-class EntityTemplate;
-
 /**
- * @brief This exception is thrown whenever a children class of Repository was
- * asked to open a repository and got something that either doesn't look like
- * a Tkacz repository or seemed damaged.
- *
- * This exception may be subclassed if different types of problems should be reported.
- * @ingroup repositories
- * @ingroup exceptions
- */
-class MalformedRepositoryException: public Exception {
-};
-
-/**
- * @brief This exception is thrown whenever a children class of Repository was
- * asked to open something that definitely doesn't look like a Tkacz repository.
- * This exception should be preferred over MalformedRepositoryException when there
- * doesn't seem to be any way to get any data from the given location.
- *
- * This exception may be subclassed if different types of problems should be reported.
- * @ingroup repositories
- * @ingroup exceptions
- */
-class NotARepositoryException: public Exception  {
-};
-
-/**
- * @brief A base interface for Tkacz repositories.
+ * @brief Accesses a Tkacz repository stored as a directory.
  * @ingroup repositories
  */
-class Repository {
+class FSRepository: public Repository {
+
+public:
+	/**
+	 * @param path The path of the repository to open.
+	 */
+	FSRepository(const std::string & path) throw (NotARepositoryException,
+			MalformedRepositoryException, FileNotFoundException);
+
+	~FSRepository();
+
+	/**
+	 * Creates a new repository on filesystem. Please notice that this will
+	 * overwrite any existing contents.
+	 *
+	 * @param path Where to create the repository.
+	 * @param zipped If true, creates a zipped bundle instead of a directory.
+	 * @return A FSRepository object representing the newly created repository.
+	 *
+	 */
+	static FSRepository & initialize(const std::string &path,
+			const bool zipped = false) throw (FileExistsException);
+
+protected:
+	/**
+	 * Whether this repository was loaded from a zipped bundle file.
+	 */
+	bool isZipBundle = false;
+	/**
+	 * The path to the data directory
+	 */
+	static const boost::filesystem::path dataPath,
+	/**
+	 * The path to the manifest file
+	 */
+	manifestFile;
 };
+
 }
