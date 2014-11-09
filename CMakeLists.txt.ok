@@ -24,7 +24,6 @@ include_directories (
 "${PROJECT_SOURCE_DIR}/core/schemas"
 "${PROJECT_SOURCE_DIR}/core/schemas/loader"
 "${PROJECT_SOURCE_DIR}/core/taxonomies"
-"${PROJECT_SOURCE_DIR}/cli" 
 "${PROJECT_SOURCE_DIR}/gui" 
 "${PROJECT_SOURCE_DIR}/gui/forms"
 "${PROJECT_SOURCE_DIR}/gui/widgets"
@@ -36,13 +35,7 @@ configure_file (
   "${PROJECT_SOURCE_DIR}/tzbuild.h.in"
   "${PROJECT_BINARY_DIR}/tzbuild.h"
   )
-
-SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/;${CMAKE_MODULE_PATH}")
   
-################
-# Source files #
-################
-
 # Core Lib
 
 file(
@@ -63,6 +56,12 @@ file(
         GLOB_RECURSE
         CLI_SOURCES
         ${PROJECT_SOURCE_DIR}/cli/*.cpp
+)
+
+file(
+        GLOB_RECURSE
+        CLI_GGO
+        ${PROJECT_SOURCE_DIR}/cli/*.ggo
 )
 
 # Qt Interface
@@ -91,94 +90,117 @@ file(
         ${PROJECT_SOURCE_DIR}/gui/forms/*.hpp
 )
 
+###### Modules ######
+
+SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/;${CMAKE_MODULE_PATH}")
+
 ####################
-# Libraries        #
+# Qt               #
+####################
+find_package(Qt5 COMPONENTS widgets REQUIRED)
+
+QT5_WRAP_UI(QtGUI_FORMS_HEADERS ${QtGUI_FORMS})
+QT5_WRAP_CPP(QtGUI_HEADERS_MOC ${QtGUI_HEADERS_MOC})
+QT5_ADD_RESOURCES(QtGUI_RESOURCES_RCC ${QtGUI_RESOURCES})
+
+# foreach(_USE_FILE ${Qt5_USE_FILES})
+#     include(${_USE_FILE})
+# endforeach()
+
+SET(QtGUI_SOURCES ${QtGUI_SOURCES} ${QtGUI_FORMS_HEADERS} ${QtGUI_RESOURCES_RCC} ${QtGUI_HEADERS_MOC})
+
+####################
+# Python           #
 ####################
 
-# Boost
-# -----
-IF(APPLE)
-	set(Boost_USE_STATIC_LIBS ON)
-ELSE()
-    set(Boost_USE_STATIC_LIBS OFF)
-ENDIF()
-
-set(Boost_USE_MULTITHREADED ON)  
-set(Boost_USE_STATIC_RUNTIME ON)
-
-find_package(Boost COMPONENTS system filesystem log python python3 program_options REQUIRED)
-
-include_directories(${Boost_INCLUDE_DIR})
-link_directories(${Boost_LIBRARY_DIRS})
-
-# Bison
-# -----
-find_package(Bison REQUIRED)
-
-# Expat
-# -----
-find_package(EXPAT REQUIRED)
-
-# LibGit2
-# -------
-find_package(LibGit2 REQUIRED)
-include_directories(${LIBGIT2_INCLUDE_DIR})
-
-# Python
-# ------
-set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.3/include/python3.3m/") # @FIXME Remove absolute path.
-set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.3/lib/libpython3.3.dylib") # @FIXME Remove absolute path.
+# @FIXME Remove absolute paths.
+set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.3/include/python3.3m/")
+set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.3/lib/libpython3.3.dylib")
 set(PythonLibs_FIND_VERSION 3)
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 
-# Qt
-# --
-find_package(Qt5 COMPONENTS core widgets REQUIRED)
+#message("-- Python version: ${PYTHONLIBS_VERSION_STRING}")
+#message("-- Python library: ${PYTHON_LIBRARIES} (${PYTHONLIBS_VERSION_STRING})")
+ 
+####################
+# Boost            #
+####################
+
+IF(APPLE) 
+	set(Boost_USE_STATIC_LIBS ON) 
+ELSE()
+    set(Boost_USE_STATIC_LIBS OFF) 
+ENDIF()
+
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF)
+
+find_package(Boost COMPONENTS system filesystem log python python3 REQUIRED)
+
+include_directories(${Boost_INCLUDE_DIR})
+link_directories(${Boost_LIBRARY_DIRS})
+
+####################
+# Expat            #
+####################
+
+find_package(EXPAT REQUIRED)
+
+####################
+# LibGit2          #
+####################
+
+find_package(LibGit2 REQUIRED)
+
+include_directories(${LIBGIT2_INCLUDE_DIR})
+
+####################
+# Gengetopt        #
+####################
+
+find_package(Gengetopt REQUIRED)
+WRAP_GGO(${CLI_GGO})
+message("Gengetopt: " ${${GGO_SRCS}}) 
+
+####################
+# Linker           #
+####################
+
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -dead_strip -order-file")
+endif()
 
 ####################
 # Targets          #
 ####################
 
 # Library
-# -------
 
 add_library(LibTkacz ${LibTkacz_SOURCES} ${LibTkacz_INCLUDES})
-
 target_link_libraries(LibTkacz ${PYTHON_LIBRARIES})
-target_link_libraries(LibTkacz  ) 
-target_link_libraries(LibTkacz ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY} ${Boost_PYTHON3_LIBRARY}) 
+target_link_libraries(LibTkacz ${Boost_PYTHON3_LIBRARY} ) 
+target_link_libraries(LibTkacz ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY}) 
 target_link_libraries(LibTkacz ${LIBGIT2_LIBRARIES})
 target_link_libraries(LibTkacz ${EXPAT_LIBRARY} )
 
 SET_TARGET_PROPERTIES(LibTkacz PROPERTIES OUTPUT_NAME "tkacz")
 
 # CLI Executable
-# --------------
-
-set( CLI_SOURCES ${CLI_SOURCES} )
 
 ADD_EXECUTABLE(CLI ${CLI_SOURCES})
-
-target_link_libraries( LibTkacz ${Boost_FILESYSTEM_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ) 
 
 SET_TARGET_PROPERTIES(CLI PROPERTIES OUTPUT_NAME "tkacz")
 target_link_libraries(CLI LibTkacz)
 
 # Qt Gui executable
-# -----------------
-
-QT5_WRAP_UI(QtGUI_FORMS_HEADERS ${QtGUI_FORMS})
-QT5_WRAP_CPP(QtGUI_HEADERS_MOC ${QtGUI_HEADERS_MOC})
-QT5_ADD_RESOURCES(QtGUI_RESOURCES_RCC ${QtGUI_RESOURCES})
-
-SET(QtGUI_SOURCES ${QtGUI_SOURCES} ${QtGUI_FORMS_HEADERS} ${QtGUI_RESOURCES_RCC} ${QtGUI_HEADERS_MOC})
 
 IF(APPLE)
+	# - Bundle -
     set(CMAKE_INSTALL_PREFIX "." )
     SET(QtGUI_SOURCES ${QtGUI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/icons/Tkacz.icns)
     SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/icons/Tkacz.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-    SET(MACOSX_BUNDLE_ICON_FILE Tkacz.icns)
+    SET(MACOSX_BUNDLE_ICON_FILE Tkacz.icns) 
     
     # copy schemas in bundle
     # @fixme potentially buggy…
@@ -199,17 +221,6 @@ target_link_libraries(QtGUI Qt5::Gui Qt5::Widgets)
 
 target_link_libraries(QtGUI ${Boost_PYTHON3_LIBRARY} ) 
 target_link_libraries(QtGUI ${PYTHON_LIBRARIES})
-
-########
-# Misc #
-########
-
-# Linker
-# ------
-
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -dead_strip -order-file")
-endif()
 
 ####################
 # Install          #

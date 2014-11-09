@@ -49,9 +49,9 @@ namespace tkacz {
 				NULL, NULL);
 
 		if (!resourceURL) {
-			Tkacz::log("Missing resource ");
-			Tkacz::log(std::string(file));
-			Tkacz::log("Missing resource ");
+			warn("Missing resource ");
+			warn(std::string(file));
+			warn("Missing resource ");
 			return nullptr;
 		}
 

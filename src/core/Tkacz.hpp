@@ -24,6 +24,18 @@ namespace tkacz {
 
 class Version;
 
+enum class LogLevel : int {
+	_NONE = 0,
+	DEBUG = 10,
+	FINE = 20,
+	INFO = 30,
+	MESSAGE = 40,
+	WARNING = 50,
+	SEVERE = 60,
+	FATAL = 70,
+	_ALL = 2048
+};
+
 /**
  * @brief The main application class.
  * @ingroup core
@@ -34,9 +46,7 @@ public:
 	static const Version version;
 	static Tkacz* getInstance();
 
-	// Logging methods
-	static std::ostream& log();
-	static std::ostream& log(std::string msg);
+	static std::ostream& log(LogLevel lvl=LogLevel::MESSAGE, std::string msg="");
 
 protected:
 	Tkacz();
@@ -45,7 +55,15 @@ protected:
 	static Tkacz *instance;
 };
 
-std::ostream& tzlog() { return (Tkacz::log()); }
-std::ostream& tzlog(std::string msg) { return (Tkacz::log(msg)); }
 
+// Shortcuts to logging functions //
+std::ostream& log(LogLevel lvl=LogLevel::MESSAGE, std::string msg="") { return (Tkacz::log(lvl, msg)); }
+
+std::ostream& debug_msg(std::string msg="") { return (Tkacz::log(LogLevel::DEBUG, msg)); }
+std::ostream& fine(std::string msg="")      { return (Tkacz::log(LogLevel::FINE, msg)); }
+std::ostream& info(std::string msg="")      { return (Tkacz::log(LogLevel::INFO, msg)); }
+std::ostream& say(std::string msg="")       { return (Tkacz::log(LogLevel::MESSAGE, msg)); }
+std::ostream& warn(std::string msg="")      { return (Tkacz::log(LogLevel::WARNING, msg)); }
+std::ostream& severe(std::string msg="")    { return (Tkacz::log(LogLevel::SEVERE, msg)); }
+std::ostream& fatal(std::string msg="")     { return (Tkacz::log(LogLevel::FATAL, msg)); }
 }

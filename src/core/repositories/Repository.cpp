@@ -17,8 +17,9 @@
  *                                                                [/licblock] */
 
 
-#include <boost/filesystem.hpp>
+#include <unistd.h>
 
+#include <boost/filesystem.hpp>
 #include <git2/repository.h>
 
 #include "Tkacz.hpp"
@@ -34,7 +35,7 @@ const bfs::path Repository::dataPath = ".tkacz",
 Repository::Repository(const bfs::path & path) throw (NotARepositoryException,
 		MalformedRepositoryException, FileNotFoundException) {
 
-	Tkacz::log() << "Creating Repository from " << path << std::endl;
+	info() << "Attempting to open Repository from " << path << std::endl;
 
 	if (!bfs::exists(path))
 		throw FileNotFoundException();
@@ -44,7 +45,7 @@ Repository::Repository(const bfs::path & path) throw (NotARepositoryException,
 	}
 }
 
-Repository & Repository::initialize(const bfs::path & path) throw (Exception) {
+Repository & Repository::initialize (const bfs::path & path, bool mkdir, bool mk_interm, bool lock) throw (Exception) {
 
 	if (!bfs::exists(path)) {
 		bfs::create_directory(path);

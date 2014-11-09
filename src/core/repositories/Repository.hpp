@@ -29,7 +29,8 @@ namespace boost {
 	namespace filesystem {
 		class path;
 	}
-}
+};
+namespace bfs = boost::filesystem;
 
 namespace tkacz {
 
@@ -77,17 +78,35 @@ public:
 			MalformedRepositoryException, FileNotFoundException);
 
 	~Repository();
-
+	
 	/**
 	 * Creates a new repository on filesystem. Please notice that this will
 	 * overwrite any existing contents.
 	 *
 	 * @param path Where to create the repository.
 	 * @param zipped If true, creates a zipped bundle instead of a directory.
-	 * @return A FSRepository object representing the newly created repository.
-	 *
+	 * @return A Repository object representing the newly created repository.
 	 */
-	static Repository & initialize(const boost::filesystem::path &path) throw (Exception);
+	 static Repository & initialize(const bfs::path & path = ".", bool mkdir = true, bool mk_interm = false, bool lock = false) throw (Exception);
+
+	/** 
+	 * Locks this repository against concurrent access. 
+	 * 
+	 * @param timeout If lock is enabled, wait timeout ms before giving up.
+	 * @param retry_interval Time to wait before trying again.
+	 * @return true if a lock has been acquired before timeout, false either.
+	*/
+	bool lock_acquire(unsigned int timeout=0, unsigned int retry_interval=50);
+	
+	/** 
+	 * Releases this repository's lock.
+	 * 
+	 * @param force If true, release the repository even if owned by a different process.
+	 * @return true if this repository was locked by the current process and released, false either. 
+	 * Notice that returning false doesn't mean the repository is unlocked, since it may have been owned
+	 * by a different process.
+	*/
+	bool lock_release(bool force=false);
 
 protected:
 	/**

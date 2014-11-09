@@ -1,38 +1,79 @@
-/*                                                                 [licblock]
- * This file is part of Tkacz. 
- * Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *                                                                [/licblock] */
-
 #include <iostream>
-#include <string>
+#include <memory>
 
-// #include <parameters.h>
+#include <boost/program_options.hpp>
 
-#include <Tkacz.hpp>
+#include "tzbuild.h"
+#include "subcommands.hpp"
+#include "Tkacz.hpp"
 
-enum class Command {
-	repo_init, card_new
-};
+namespace po = boost::program_options;
+using namespace std;
+using namespace tzcli;
+
+tkacz::LogLevel loglevel = tkacz::LogLevel::MESSAGE;
+bool quiet;
+char* binary_name;
+
+void print_help() {
+	cout << "Usage:\n"
+		 << "\t" << binary_name << " [OPTIONS] command [OPTIONS]…" << endl;
+}
 
 int main(int argc, char* argv[]) {
-	if (argc < 2) {
-		std::cout << "Requires at least 1 argument.\n";
+	
+	binary_name = argv[0];
+	
+	map<string, int(*)(std::vector<string>)> routes {
+		{ "init",              &cmd_init },
+		{ "new",               &cmd_init }
+	};
+	
+	 po::options_description root_options_desc("Common options");
+	 root_options_desc.add_options()
+		 ("verbose,v",       "Throws lots of garbage on stdout")
+		 ("quiet",           "Do not print anything on stdout/stderr (equivalent to -v 0)")
+		 ("version,V",       "Print version number and exit")
+	     ("help,h",          "Show help");
+	 	 
+	po::variables_map root_options;
+
+	po::parsed_options parsed = po::command_line_parser(argc, argv).
+		options(root_options_desc).
+		allow_unregistered().
+		run();
+
+	po::store(parsed, root_options);
+	
+	if (root_options.count("version")) {
+		cout << "Tkacz " << TZ_VERSION_STRING << endl;
+		exit(0);
+	}
+		
+	if (root_options.count("verbose"))
+		loglevel = tkacz::LogLevel::_ALL;
+
+	if (root_options.count("quiet"))
+		loglevel = tkacz::LogLevel::_NONE;
+	
+	std::vector<std::string> subcommand_options = po::collect_unrecognized(parsed.options, po::include_positional);
+	
+	string subcom;
+	if (subcommand_options.size()>0) {
+		subcom = subcommand_options[0];
+		}
+		
+	if (subcom.empty()) {
+		print_help();
 		exit(-1);
 	}
 	
-	std::string command { argv[1] };
-		
+	if (routes.find(subcom) != routes.end()) {
+		routes.at(subcom)(subcommand_options);
+	} else {
+		tkacz::fatal() << "Not a valid command or parameter: " << subcom << endl;
+		print_help();
+	}
+	
+	exit(0);
 }
