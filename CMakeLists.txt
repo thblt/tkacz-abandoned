@@ -11,21 +11,24 @@ set (Tkacz_VERSION_NAME "Avogadro")
 set (PROJECT_SOURCE_DIR src)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g -Wextra -std=c++11")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O0 -g -Wall -std=c++11")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O4 -DNDEBUG -Wall -std=c++11")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS}  -O0 -g -Wextra -std=c++11 -fstandalone-debug -gdwarf-4")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS}  -O0 -g -Wall -std=c++11")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O4 -DNDEBUG -Wall -std=c++11")
+
+# @FIXME DEBUG
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
 
 include_directories (  
-"${PROJECT_SOURCE_DIR}" 
-"${PROJECT_SOURCE_DIR}/core" 
-"${PROJECT_SOURCE_DIR}/core/entities" 
-"${PROJECT_SOURCE_DIR}/core/io" 
-"${PROJECT_SOURCE_DIR}/core/repositories" 
+"${PROJECT_SOURCE_DIR}"
+"${PROJECT_SOURCE_DIR}/core"
+"${PROJECT_SOURCE_DIR}/core/entities"
+"${PROJECT_SOURCE_DIR}/core/io"
+"${PROJECT_SOURCE_DIR}/core/repositories"
 "${PROJECT_SOURCE_DIR}/core/schemas"
 "${PROJECT_SOURCE_DIR}/core/schemas/loader"
 "${PROJECT_SOURCE_DIR}/core/taxonomies"
-"${PROJECT_SOURCE_DIR}/cli" 
-"${PROJECT_SOURCE_DIR}/gui" 
+"${PROJECT_SOURCE_DIR}/cli"
+"${PROJECT_SOURCE_DIR}/gui"
 "${PROJECT_SOURCE_DIR}/gui/forms"
 "${PROJECT_SOURCE_DIR}/gui/widgets"
 "${PROJECT_SOURCE_DIR}/gui/perspectives"
