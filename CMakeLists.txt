@@ -1,3 +1,5 @@
+# Temp fixes
+
 cmake_minimum_required (VERSION 2.8.11)
 project (Tkacz)
 
@@ -98,10 +100,23 @@ file(
 # Libraries        #
 ####################
 
-# Boost
-# -----
-IF(APPLE)
-	set(Boost_USE_STATIC_LIBS ON)
+# @FIXME Remove absolute paths.
+set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.4/include/python3.4m/")
+set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.4/lib/libpython3.4.dylib")
+set(PythonLibs_FIND_VERSION 3.4)
+find_package(PythonLibs REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIRS})
+
+#message("-- Python version: ${PYTHONLIBS_VERSION_STRING}")
+#message("-- Python library: ${PYTHON_LIBRARIES} (${PYTHONLIBS_VERSION_STRING})")
+ 
+####################
+# Boost            #
+####################
+# No need to ask for format (include only lib)
+
+IF(APPLE) 
+	set(Boost_USE_STATIC_LIBS ON) 
 ELSE()
     set(Boost_USE_STATIC_LIBS OFF)
 ENDIF()
@@ -118,41 +133,32 @@ link_directories(${Boost_LIBRARY_DIRS})
 # -----
 find_package(Bison REQUIRED)
 
-# Expat
-# -----
 find_package(EXPAT REQUIRED)
 
-# LibGit2
-# -------
+####################
+# LibGit2          #
+####################
+
 find_package(LibGit2 REQUIRED)
+
 include_directories(${LIBGIT2_INCLUDE_DIR})
-
-# Python
-# ------
-set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.3/include/python3.3m/") # @FIXME Remove absolute path.
-set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.3/lib/libpython3.3.dylib") # @FIXME Remove absolute path.
-set(PythonLibs_FIND_VERSION 3)
-find_package(PythonLibs REQUIRED)
-include_directories(${PYTHON_INCLUDE_DIRS})
-
-# Qt
-# --
-find_package(Qt5 COMPONENTS core widgets REQUIRED)
-
+ 
 ####################
 # Targets          #
 ####################
 
-# Library
-# -------
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -dead_strip -order-file")
+endif()
 
 add_library(LibTkacz ${LibTkacz_SOURCES} ${LibTkacz_INCLUDES})
 
-target_link_libraries(LibTkacz ${PYTHON_LIBRARIES})
-target_link_libraries(LibTkacz  ) 
-target_link_libraries(LibTkacz ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY} ${Boost_PYTHON3_LIBRARY}) 
-target_link_libraries(LibTkacz ${LIBGIT2_LIBRARIES})
-target_link_libraries(LibTkacz ${EXPAT_LIBRARY} )
+add_library(Tkacz ${Tkacz_CORE_SOURCES} ${Tkacz_CORE_INCLUDES})
+target_link_libraries(Tkacz ${PYTHON_LIBRARIES})
+target_link_libraries(Tkacz  ${Boost_PYTHON3_LIBRARY} ) 
+target_link_libraries(Tkacz  ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY}) 
+target_link_libraries(Tkacz ${LIBGIT2_LIBRARIES})
+target_link_libraries(Tkacz ${EXPAT_LIBRARY} )
 
 SET_TARGET_PROPERTIES(LibTkacz PROPERTIES OUTPUT_NAME "tkacz")
 

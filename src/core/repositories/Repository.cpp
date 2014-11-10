@@ -22,6 +22,8 @@
 #include <boost/filesystem.hpp>
 #include <git2/repository.h>
 
+#include <git2/repository.h>
+
 #include "Tkacz.hpp"
 #include "Repository.hpp"
 
@@ -36,6 +38,8 @@ Repository::Repository(const bfs::path & path) throw (NotARepositoryException,
 		MalformedRepositoryException, FileNotFoundException) {
 
 	info() << "Attempting to open Repository from " << path << std::endl;
+
+	Tkacz::log() << "Creating Repository from " << path << std::endl;
 
 	if (!bfs::exists(path))
 		throw FileNotFoundException();
