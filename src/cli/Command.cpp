@@ -5,16 +5,6 @@
 
 namespace tzcli {
 
-	Command::Command (const char * name, const char * description, const char * longdesc, const char * lastWords, bool hidden, bool allowUnregistered, bool autoHelp) :
-		name(name),
-		description(description),
-		longDesc(longdesc),
-		lastWords(lastWords),
-		hidden(hidden),
-		allowUnregistered(allowUnregistered),
-		autoHelp(autoHelp)
-	{}
-		
 	void Command::addBasicOption(const char * name, const po::value_semantic * sem, const char * desc) {
 		addOption(0, name, sem, desc);
 	}
@@ -56,19 +46,40 @@ namespace tzcli {
 		positionalArgs.add(name, max);
 	}
 	
-	bool Command::execute(int argc, char * argv [], std::string invocationPrefix) const {
-		return execute(std::vector<std::string> (argv, argv + argc), invocationPrefix);
+	bool Command::execute(int argc, char * argv [], std::vector<const char *> & invocation) const {
+		return execute(std::vector<std::string> (argv, argv + argc), invocation);
 	}
 	
-	bool Command::execute(std::vector<std::string> args, std::string invocationPrefix) const {
+	bool Command::execute(std::vector<std::string> args, std::vector<const char *> & invocation) const {
+
+		for (auto o : args) {
+			tkacz::debug_msg() << "args : " << o << "\n";
+		}
+		
+		for (auto o : invocation) {
+			tkacz::debug_msg() << "invoc: " << o << "\n";
+		}
+		
+		tkacz::debug_msg() << "zero : " << args[0] << "\n";
+		
+		tkacz::debug_msg() << "-------";
 		
 		po::options_description 	all;
 		po::variables_map 			parsed_args;
 		std::vector<std::string> 	unrecognized;
 		
-		invocationPrefix += args.at(0) + " ";
+		invocation.push_back(args[0].c_str());
 		
-		args.erase(args.begin());
+		for (auto o : args) {
+			tkacz::debug_msg() << "args : " << o << "\n";
+		}
+		
+		for (auto o : invocation) {
+			tkacz::debug_msg() << "invoc: " << o << "\n";
+		}
+		
+		
+		// args.erase(args.begin());
 	
 		for (auto od : optionGroups) {
 			all.add(od);
@@ -88,7 +99,7 @@ namespace tzcli {
 			unrecognized = po::collect_unrecognized(parse_result.options, po::include_positional);
 		
 		} catch (std::exception &e) {
-			tkacz::warn() << invocationPrefix << "error: " << e.what() << std::endl;
+			tkacz::warn() << invocationString(invocation) << "error: " << e.what() << std::endl;
 			return false;
 		}
 
@@ -106,10 +117,10 @@ namespace tzcli {
 		// ------------
 
 		if (autoHelp and parsed_args.count("help")){
-			printHelp(false, invocationPrefix);
+			printHelp(false, invocation);
 			return true;
 		}
-		run(parsed_args, unrecognized, invocationPrefix);
+		run(parsed_args, unrecognized, invocation);
 		return true;
 	}
 		
@@ -122,11 +133,11 @@ namespace tzcli {
 		addHiddenOption("__invocation-ignored-args", po::value<int>(),  "Number of args to ignore at beginning of argv");
 	}
 	
-	void Command::printHelp(bool onError, std::string invocationPrefix) const {
+	void Command::printHelp(bool onError, std::vector<const char *> & invocation) const {
 		if (!onError) {
-			tkacz::say() << invocationPrefix << "— " << description << "." << std::endl << std::endl;			
+			tkacz::say() << invocationString(invocation) << "— " << description << "." << std::endl << std::endl;			
 		
-		 if (longDesc != NULL)
+		 if (!longDesc.empty())
 			 tkacz::say() << longDesc << std::endl << std::endl;
 		 }
 		 		 
@@ -135,10 +146,19 @@ namespace tzcli {
 				 tkacz::say() << optionGroups[i] << std::endl;
 		 }
 		 
-		 if (!onError and lastWords != NULL) 
+		 if (!onError and !lastWords.empty()) 
 			 tkacz::say() << lastWords << std::endl << std::endl;
-		 
-		
+	}
+	
+	std::string Command::invocationString(std::vector<const char *> invocation, std::string prefix, std::string suffix) const {
+		std::string out;
+		for (auto i : invocation){
+			out += i;
+			out += " ";
+		}
+		if (out.empty())
+			return out;
+		return prefix + out + suffix; 
 		
 	}
 }

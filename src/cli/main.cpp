@@ -16,35 +16,19 @@ tkacz::LogLevel loglevel = tkacz::LogLevel::MESSAGE;
 bool quiet = false,
 shell = false;
 
-class RootMetaCommand : public MetaCommand {
-public:
-	RootMetaCommand(const char * name) : MetaCommand (
-		name, 
-		"A weird reference manager and knowledge organization system",
-		NULL,
-	    "Invoke with --license or see LICENSE file for legal informations.")
-	 {
-		 addBasicOption("license", "Display license terms");
- 		 addBasicOption("version", "Display version information");
-	}
-};
-
 int main(int argc, char* argv[]) {
 
 	po::variables_map args; std::vector<std::string> others;// DEBUG, remove
 
-	RootMetaCommand root { argv[0] };
+	MetaCommand root;
 
-	CmdInit * x = new CmdInit();
+	root.description = "A weird reference and knowledge management system";
 
-	root.addSubcommand(x);
+	root.addSubcommand("init", new CmdInit());
 
-	root.execute(argc, argv);
+	std::vector<const char *> invocationStack { argv[0] };
 
-
-	// x.run(args, others); y.run(args, others); z.run(args, others);
-
-	// delete x ; delete y ; delete z;
+	root.execute(argc, argv, invocationStack);
 	
 	return 0;
 //

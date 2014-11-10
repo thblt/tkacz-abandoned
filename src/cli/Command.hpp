@@ -15,27 +15,28 @@ namespace tzcli {
 class Command {
 public:
 	
-	Command(const char * name, const char * description, const char * longdesc=NULL, const char * lastWords=NULL, bool hidden=false, bool allowUnregistered=false, bool autoHelp=true);
+	
 		
-	virtual void run(po::variables_map & args, std::vector<std::string> & others, std::string invocation) const = 0;
+	virtual void run(po::variables_map & args, std::vector<std::string> & others, std::vector<const char *> & invocation) const = 0;
 	
-	bool execute(int argc, char * argv [], std::string invocationPrefix="") const;
-	virtual bool execute(std::vector<std::string> args, std::string invocationPrefix="") const;
-	bool execute(std::string & cmdline, std::string invocationPrefix="") const;
+	bool execute(int argc, char * argv [], std::vector<const char *> & invocation) const;
+	virtual bool execute(std::vector<std::string> args, std::vector<const char *> & invocation) const;
+	bool execute(std::string & cmdline, std::vector<const char *> & invocation) const;
 	
-	void fail(std::string msg) const;
-	void printHelp(bool onError, std::string invocationPrefix="") const;
+	void printHelp(bool onError, std::vector<const char *> & invocation) const;
 
-	const char
-		*name,
+	// Public options
+
+	std::string
 		/** The standard description in command list */
-		*description, 
+		description, 
 		/** A longer description for command help */
-		*longDesc, 
+		longDesc, 
 		/** A few words to end of the help message */
-		*lastWords;
+		lastWords;
 		
-	const bool hidden = false,
+	bool 
+		hidden 			  = false,
 		allowUnregistered = false,
 		autoHelp          = true;
 		
@@ -56,6 +57,8 @@ protected:
 	void addPositionalArg(const char * name, int max, bool createUnderlying=true);
 	
 	void initialize();
+	
+	std::string invocationString(std::vector<const char *> invocation, std::string prefix="", std::string suffix="") const;
 
 	po::positional_options_description positionalArgs;
 	

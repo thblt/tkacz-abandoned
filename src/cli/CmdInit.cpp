@@ -13,15 +13,19 @@ using namespace tkacz;
 
 namespace tzcli {
 
-	void CmdInit::run(po::variables_map & args, std::vector<std::string> & others, std::string invocation) const {
-		tkacz::say("Initialize repository in:" ) << args["path"].as<path>() << endl;
+	void CmdInit::run(po::variables_map & args, vector<string> & others, vector<const char *> & invocation) const {
+		say("Initialize repository in:" ) << args["path"].as<path>() << endl;
 	}
 	
-	CmdInit::CmdInit() : Command("init", "Initializes a new, empty Tkacz repository") {
+	CmdInit::CmdInit() {
+		
+		description = "Initializes a new, empty Tkacz repository";
+		longDesc = "A longer description of init";
+		
 		addBasicOption("mkdir,m",         "Create base directory if needed");
 		addBasicOption("mkinterm,i",      "Create full path to repository");
 		
-		addPositionalArg("path", po::value<bfs::path>()->default_value("."), 1, "Where to create this repository");
+		addPositionalArg("path", po::value<path>()->default_value("."), 1, "Where to create this repository");
 		
 		initialize();
 	}
