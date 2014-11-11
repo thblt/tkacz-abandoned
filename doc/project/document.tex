@@ -1,0 +1,929 @@
+\documentclass[11pt]{article}
+
+\usepackage[french]{babel}
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e}
+
+% References and stuff
+\usepackage{varioref}
+
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+
+% Fonts
+\usepackage{charter}
+\usepackage{berasans}
+\usepackage{inconsolata}
+
+% Inputs
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Geometry
+\usepackage[a4paper]{geometry}
+\geometry{verbose,margin=2.5cm}
+
+% Typography
+\usepackage[runin]{abstract}
+\usepackage{datetime}
+\usepackage{dirtree}
+\usepackage{float}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage[os=mac, mackeys=symbols]{menukeys}
+\usepackage{microtype}
+\usepackage[lof,toc]{multitoc}
+    \setlength{\columnseprule}{0.5pt}
+\usepackage[compact]{titlesec}
+\usepackage{scrtime}
+\usepackage{setspace}
+\usepackage[normalem]{ulem}
+\usepackage{color}
+
+\definecolor{shadecolor}{gray}{0.80}
+
+\usepackage{enumitem}  
+\SetLabelAlign{parright}{\strut\smash{\parbox[t]{\labelwidth}{\raggedleft#1}}}
+\setlist[description]{style=multiline,leftmargin=2cm, align=parleft,noitemsep}
+
+% Document commands
+
+\newcommand\tzcard[1]{%
+    \begin{minipage}[t]{1\columnwidth}%
+    \begin{shaded}%
+    \sffamily #1
+    \end{shaded}%
+    \end{minipage}
+}
+
+\newcommand\cf[1]{$\to$ \textit{#1}.}
+
+\reversemarginpar
+
+% Pandoc syntax highlighting
+
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+
+% End pandoc highlighting
+
+% Typography settings
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{\smallskipamount}
+
+\begin{document}
+
+\title{Tkacz: un~système de~gestion de~connaissances}
+
+\author{Thibault Polge%
+\thanks{Doctorant contractuel chargé d'enseignement en philosophie (PhiCo/EXeCO, ED
+280, EA 3562, Paris 1 Panthéon Sorbonne). \protect\href{http://mailto:thibault.polge@univ-paris1.fr}{thibault.polge@univ-paris1.fr}%
+}}
+
+\date{Révision: \today{} à \currenttime.}
+
+\maketitle
+
+\begin{abstract}
+Ce document présente les fonctions fondamentales d'un outil d'organisation
+de données en recherche en histoire. Ce logiciel, en cours de conception,
+est écrit dans le cadre de ma thèse, c'est-à-dire qu'il vise à couvrir
+tout particulièrement les besoins d'un historien des sciences qui
+travaille sur la période moderne.
+\end{abstract}
+\begin{center}\includegraphics[width=1in]{../../icons/Tkacz.iconset/icon_512x512@2x.png}\end{center}
+
+\bigskip\begin{spacing}{.7}
+\makeatletter
+    \setcounter{tocdepth}{2}
+    \@starttoc{toc}
+\makeatother
+\end{spacing}
+
+\clearpage
+
+\part{Présentation générale}
+
+\section{Introduction}\label{introduction}
+
+Tkacz veut modéliser les différentes activités d'organisation des
+données trouvées en bibliothèque ou aux archives. Il présuppose que ces
+activités consistent principalement en la prise en notes d'informations
+trouvées sur des sources papier ou numérisées. Il suppose que la prise
+de notes sur des livres ou des documents d'archives s'organise selon un
+flux de travail à (au moins) deux temps : 1) La prise rapide de notes
+peu structurées, directement à la lecture du document. Ces notes peuvent
+porter sur le document lui-même s'il constitue une source primaire, mais
+aussi potentiellement renvoyer vers d'autres sources à consulter,
+apporter des informations sur un objet tiers (une personne, un
+évènement, un autre document\ldots{}), etc. Elles peuvent donc prendre
+différentes formes, comme une référence bibliographique, une citation,
+un évènement ou toute autre forme. Ensuite, 2) l'organisation et la mise
+au propre des points importants, et notamment la recopie de certaines
+informations sur des fiches spécifiques. Ces informations peuvent être
+une liste de sources à consulter citées ou évoquées dans le document,
+des données nouvelles sur une personne, etc.
+
+Tkacz a pour objectifs:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  De faciliter la manipulation de données sémantiquement structurées,
+  sans que cette structure ne soit un obstacle à l'enregistrement
+  d'informations complexes.
+\item
+  De réduire la nécessité d'une reprise (temps 2) des informations
+  acquises sur un document sur de nouveaux supports, en facilitant
+  l'orga
+\item
+  De maintenir vivant le graphe des relations entre informations,
+  autrement dit de ne pas disposer que de fiches isolées mais toujours
+  un \og répertoire \fg{} vivant et organisé.
+\end{itemize}
+
+\section{L'objet fondamental : la
+fiche}\label{lobjet-fondamental-la-fiche}
+
+\subsection{L'objet fiche}\label{lobjet-fiche}
+
+La \textbf{fiche} est l'unité atomique de Tkacz. Une fiche a un
+\textbf{type} (cf. \vref{sub:Types}); la liste complète des types n'est
+pas fixée \emph{a priori}. Chaque fiche a un \textbf{titre}, permet la
+prise de notes, et est identifiée par un numéro unique attribué
+séquententiellement à la création.
+
+Le titre devrait être unique et identifie la fiche de façon pour
+l'utilisateur. Sa forme est par défaut libre, mais peut être imposée par
+certains types. Par exemple, une fiche d'entrée bibliographique produit
+son titre automatiquement (mais de façon configurable) par rapport aux
+données structurées qu'elle contient. Un tel titre peut prendre la
+forme:
+
+\tzcard{\textbf{The efficacy of AZT in the treatment of patients
+with AIDS…}\hfill1987
+
+\textsc{\uline{Fischl}}, \textsc{\uline{Richman}}, \textsc{\uline{Grieco}} *et **\uline{al*}.\hfill \uline{N
+Engl J Med}}
+
+Automatiquement calculée à partir des noms des auteurs, de l'année et du
+titre (éventuellement, comme ici, abrégé) d'une entrée bibliographique.
+Le titre d'une fiche personne prendra une forme du type:
+
+\tzcard{**FOUCAULT, Michel**\hfill1926--1984}
+
+Des notes, écrites dans un format inspiré de Markdown.
+
+\subsection{Attributs et liens}\label{attributs-et-liens}
+
+Une fiche, à l'exception du type minimal (qui modélise réellement une
+feuille blanche avec un titre), contient un certain nombre d'attributs,
+qui sont les données sémantiques, et de relations.
+
+\subsubsection{Attributs}\label{par:attributs}
+
+Les attributs sont les propriétés sémantiques qui décrivent l'objet
+modélisé par une fiche. Certains attributs sont des liens vers d'autres
+fiches. L'auteur d'un livre (dans une fiche de notice bibliographique)
+est manipulé comme un lien vers une fiche personne; si cette fiche
+n'existe pas, elle est créée automatiquement avec les valeurs
+disponibles.
+
+Il existe trois espèces d'attributs: - Il peut être un objet primitif,
+comme une chaîne, un nombre ou une date, ou un ensemble d'objets
+primitifs, comme une liste ou un ensemble.
+
+Dans une entrée de type \og notice bibliographique \fg{}, le numéro
+d'édition est un tel attribut. Ils sont relativement rares.
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Il peut être d'un type complexe, lui-même composé d'autres attributs
+  (voir \vref{sub:Types}).
+\end{itemize}
+
+Dans une entrée de type \og personne \fg{}, le nom de la personne est un
+type complexe formé de chaînes qui distingue les composants du nom. Ce
+type a aussi du code qui lui permet de lire et de mettre en forme un
+nom.
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Il peut être un \textbf{lien} vers une autre fiche d'un type donné.
+\end{itemize}
+
+\subsubsection{Liens et relations}\label{liens-et-relations}
+
+Il y a deux façons de lier une fiche à une autre : le lien simple et
+l'expression d'une relation.
+
+\subsubsection{Le lien simple}\label{le-lien-simple}
+
+est un \og pointeur \fg{} vers la fiche cible. L'auteur d'un document,
+par exemple, est un lien vers une fiche personne, et pas une simple
+séquence de caractères. Le lien peut avoir un \textbf{corollaire},
+c'est-à-dire que la liaison de A et B implique une relation d'une autre
+nature de B vers A. Dans l'exemple de l'auteur, le lien \og a pour
+auteur \fg{} a pour corollaire \og est auteur de \fg{}.
+
+Le corollaire est généralement implicite. Il peut n'être fixable que
+depuis un seul des membres de la relation possible. Le lien d'auteur,
+par exemple, n'est manipulable que depuis la chose dont \emph{x} est
+l'auteur, et pas depuis \emph{x}.
+
+\subsubsection{La relation}\label{la-relation}
+
+est un attribut complexe, qui permet de lier des fiches entre elles de
+façon moins formelle et plus fine. Une relation a une \textbf{nature},
+qui est l'équivalent du type d'une fiche. Dans certains cas, un lien
+peut être remplacé par une relation. Par exemple, dans un document
+historique, l'attribution de l'auteur peut être douteuse --- \og auteur
+probable \fg{} est une relation, car le lien simple ne suffit pas --- il
+faut sans doute préciser la nature du doute, les différentes sources,
+etc.
+
+Une relation peut aussi décrire des relations entre entités : \og membre
+de \fg{} ou \og ami de \fg{}, \og frère de \fg{}, etc.
+
+Une relation peut être réciproque ou non. Dans l'exemple qui précède,
+les deux dernières sont nécessairement réciproques. Une relation peut
+aussi avoir un \textbf{corollaire}. La relation
+\texttt{A est membre de B} (dans cet exemple, B est par exemple une
+personne morale) a pour corollaire \og B a comme membre A \fg{}
+
+Une relation est de type \og cite \fg{} ou \og évoque \fg{}, qui permet
+de commenter un livre en le liant à ce qui fait son objet.
+
+\subsection{La notion de type}\label{sub:Type}
+
+\subsection{Les types de fiche standards}\label{sub:Types}
+
+La description formelle de ces types est donnée en \vref{CoreSchema}.
+
+\subsubsection{Simple}\label{simple}
+
+Il s'agit d'une fiche a minima : titre et notes.
+
+\subsubsection{Référence
+bibliographique}\label{ruxe9fuxe9rence-bibliographique}
+
+Ce type de fiche peut représenter différents types d'objets entrant dans
+une bibliographie, qu'il s'agisse de sources primaires ou de sources
+secondaires, de supports imprimés ou audiovisuels.
+
+\subsubsection{Personne (physique ou
+morale)}\label{personne-physique-ou-morale}
+
+\section{L'organisation des fiches : la
+taxinomie}\label{lorganisation-des-fiches-la-taxinomie}
+
+Cette organisation se fait sous la forme de** taxinomies**. Une
+taxinomie est une structure hiérarchique, comparable à un système de
+fichiers, dans les entrées duquel les fiches prennent place.
+Contrairement à un système de fichiers, par définition unique, plusieurs
+taxinomies peuvent cohabiter, aucune fiche ne réside nécessairement dans
+une taxinomie quelconque, et une fiche peut se trouver associée à
+plusieurs taxons.
+
+Une taxinomie peut être créee manuellement ou automatiquement. Les types
+de fiche sont eux-mêmes des taxons, et créent une taxinomie automatique
+et non modifiable (ie, associer une fiche à un type revient à la faire
+rentrer dans une taxinomie)
+
+Les taxons peuvent se voir associés un certain nombre de règles
+d'affectation:
+
+\begin{itemize}
+\item
+  un taxon peut contenir la totalité du contenu (ie, les fiches) de ses
+  enfants. Comme dans une taxinomie biologique, toutes les sous-classes
+  de mammifères (theria et prototheria) \emph{sont} des mammifères ; ou
+  au contraire ne contenir que ce qui y est explicitement ajouté.
+\item
+  Un taxon peut se voir ajouter directement (manuellement) du contenu,
+  ou ne le recevoir que par affectation automatique (par le contenu de
+  ses enfants ou d'autres moyens).
+\item
+  Un taxon peut être incompatible avec un autre, ie la présence d'une
+  fiche dans ce taxon rend impossible sa présence dans un autre. Par
+  exemple, un mammifère ne peut pas être un poisson ; ou au contraire un
+  taxon peut en impliquer automatiquement un ou plusieurs autres.
+\end{itemize}
+
+Un taxon peut fixer des règles pour lui-même et/ou ses enfants à un
+niveau \emph{n} ou aux niveaux \emph{n }à \emph{m}.
+
+\emph{Le lien d'une fiche à un taxon est lui-même une fiche, qui peut
+donc être commenté.}
+
+Le fait qu'une taxinomie est forcément hiérarchique n'implique pas
+nécessairement qu'elle soit manipulée comme telle. Il est possible de
+créer des taxinomies de \og tags \fg{} ou tous les tags sont au même
+niveau.
+
+Les taxinomies ne sont pas fortement indépendantes ; elles sont gérées
+en interne comme un unique arbre hiérarchique.
+
+\section{Sélection et recherche}\label{suxe9lection-et-recherche}
+
+La sélection et la recherche utilisent le mécanisme de la taxinomie pour
+rechercher des notes. Chaque taxon peut être conçu comme un ensembl de
+fiches. Les expressions de recherche prennent la forme suivante:
+
+\texttt{{[}Publications{]} 'Michel Foucault' date < \{3 jan 1950\}}
+
+La recherche répond à une logique globalement ensembliste ; les
+opérations fondamentales de la théorie des ensembles (intersection,
+union, différence, différence symétrique) forment les opérateurs
+principaux du mécanisme de recherche.
+
+À terme, il est prévu de faciliter l'usage de ce mécanisme de recherche
+par une interface graphique d'élaboration des requêtes et/ou une
+formulation des requêtes dans un langage formalisé proche du langage
+naturel.
+
+\subsection{Syntaxe}\label{syntaxe}
+
+La totalité des opérateurs peuvent manipuler quatre types de propriétés,
+soit les trois types d'ensembles :
+
+\begin{description}
+\item[\texttt{set}]
+Un ensemble de fiches ou de taxons (c'est pareil, un taxon n'est qu'un
+ensemble de fiches)
+\item[\texttt{strset}]
+Un ensemble de chaînes.
+\item[\texttt{attrset}]
+Un ensemble de noms d'attributs ou de relations.
+\end{description}
+
+Et un type complexe, repéré par les accolades, spécifiques à certain
+type d'attributs, par exemple les dates.
+
+Il n'existe pas de type \og fiche unique \fg{} ou \og chaîne \fg{} :
+tout est un ensemble, qui peut ne contenir qu'un élément.
+
+\subsection{Opérateurs de groupement}\label{opuxe9rateurs-de-groupement}
+
+\begin{description}
+\itemsep1pt\parskip0pt\parsep0pt
+\item[\texttt{{[} {]}}]
+Sélectionne un taxon par son nom : \texttt{{[}str{]}}.
+\end{description}
+
+Les ambiguités peuvent être résolues en donnant un parent du taxon au
+format \texttt{{[}parent/taxon{]}}, un parent plus lointain
+\texttt{{[}parent/.../taxon{]}} ou le nom de la taxinomie
+\texttt{{[}@taxinomie: parent/taxon{]}} ou une combinaison:
+\texttt{{[}@taxinomie: parent//taxon{]}}.
+
+\begin{description}
+\itemsep1pt\parskip0pt\parsep0pt
+\item[\texttt{" "}]
+Sélectionne une fiche par son nom.
+\end{description}
+
+Une fiche peut être aussi sélectionnée directement par son numéro.
+
+Ces deux premiers opérateurs utilisent la virgule comme séparateur.
+\texttt{{[}taxon1, taxon2{]}} est un ensemble de taxons, et donc renvoie
+une valeur de type \texttt{set}.
+
+\begin{description}
+\itemsep1pt\parskip0pt\parsep0pt
+\item[\texttt{()}]
+Les parenthèses augmentent la priorité d'une expression (cf.
+\vref{OperateursPriorite}). Rien de très original. L'expression
+\texttt{A+B*C} sera évaluée implicitement comme l'union de \texttt{A} et
+de l'intersection de \texttt{B} et \texttt{C}. Avec des parenthèses
+telles que \texttt{(A+B)*C}, elle renverra l'intersection de \texttt{C}
+et de l'union de \texttt{A} et \texttt{B}.
+\end{description}
+
+\subsection{Opérateurs binaires}\label{opuxe9rateurs-binaires}
+
+\begin{description}
+\item[\texttt{:}]
+\texttt{attribut:set} ou \texttt{attribut:str} retourne l'ensemble des
+fiches dont l'attribut \texttt{a} a au moins une valeur dans
+\texttt{expr}.
+\item[\texttt{::}]
+\texttt{a::expr} retourne l'ensemble des fiches dont l'attribut
+\texttt{a} a toutes ses valeurs dans expr.
+\item[\texttt{\textless{}}]
+Strictement inférieur à, pour les attributs où cela à un sens.
+\item[\texttt{\textless{}=}]
+Inférieur ou égal où, pour les attributs où cela à un sens.
+\item[\texttt{\textgreater{}}]
+Strictement supérieur à, pour les attributs où cela à un sens.
+\item[\texttt{\textgreater{}=}]
+Supérieur ou égal où, pour les attributs où cela à un sens.
+\item[\texttt{\&}]
+intersection ($\cap$). c'est l'opérateur implicite.
+\texttt{A\textbackslash{}\&B} ou \texttt{AB} retournent l'intersection
+des taxons \texttt{A} et \texttt{B}. L'intersection est symétrique;
+\texttt{A\&B == B\&A}
+\item[\texttt{\textbar{}}]
+union ($\cup$). \texttt{A\textbar{}B} retourne l'ensemble des fiches de
+\texttt{A} et de \texttt{B}. L'union est symétrique;
+\texttt{A\textbar{}B = B\textbar{}A}
+\item[\texttt{-}]
+différence ($\backslash$). \texttt{A-B} renvoie l'ensemble \texttt{A}
+moins l'ensemble \texttt{B}. La différence n'est pas symétrique
+(l'intersection de \texttt{A-B} et \texttt{B-A} est vide :
+$(A\backslash B)\cap(B\backslash A)=\emptyset$.)
+\item[\texttt{/}]
+différence symétrique ($\bigtriangleup$). \texttt{A/B} renvoie la
+totalité des fiches de \texttt{A} ou \texttt{B} mais pas les deux.
+\texttt{A/B = (A+B)-(B*A)}.
+\end{description}
+
+\subsection{Opérateurs unaires}\label{opuxe9rateurs-unaires}
+
+\begin{description}
+\item[\texttt{-}]
+Inverse. \texttt{-expr} renvoie la totalité des fiches non contenues
+dans \texttt{expr}. \texttt{-expr = \{*}-expr\}
+\item[\texttt{:}]
+équivalent approximatif de \texttt{:} sans spécifier le nom de
+l'attribut : \texttt{*:expr} renvoie toutes les fiches liées à expr.
+\texttt{* :expr} doit être un ensemble.
+\item[\texttt{:*}]
+\texttt{expr}
+\end{description}
+
+\subsection{Autres termes}\label{autres-termes}
+
+\begin{description}
+\item[\texttt{*}]
+L'ensemble des fiches du dépôt.
+\item[\texttt{{[} {]}}]
+Délimite une construction complexe spécifique à un type de données, par
+exemple une date.
+\item[\texttt{" "}]
+Délimite une chaîne pour la recherche en plein texte.
+\end{description}
+
+Isolé, il renvoie l'ensemble des fiches dans lesquelles ce texte a été
+trouvé ; sinon il peut être utilisé pour la recherche par attributs
+(\texttt{:}, \texttt{::})
+
+\begin{description}
+\itemsep1pt\parskip0pt\parsep0pt
+\item[\texttt{\textbackslash{}}]
+Caractère d'échappement.
+\end{description}
+
+\subsection{Priorité}\label{OperateursPriorite}
+
+Les expressions sont évaluées avec les priorités suivantes. (1) et (2)
+précisent qu'il s'agit, respectivement, de la version unaire ou binaire
+d'un opérateur.
+
+\begin{tabular}{|l||l|l|l|l|l|l|}
+\hline 
+Priorité & 0 & 1 & 2 & 3 & 4 & 5\tabularnewline
+\hline 
+Opérateurs & Opérateurs de groupement & Opérateurs unaires & \& & | & - (2) & /\tabularnewline
+\hline 
+\end{tabular}
+
+\subsection{Synonymie}\label{synonymie}
+
+Pour des raisons de clarté, les opérateurs natifs ont les synonymes
+suivants:
+
+\begin{tabular}{|c||c|c|c|c|c|c|c|}
+\hline 
+Opérateur & : & :: & \& & | & - & \textbackslash{} & {*}\tabularnewline
+\hline 
+Synonymes & in &  & and & or & andnot & xor & all\tabularnewline
+\hline 
+\end{tabular}
+
+Les versions localisées pourraient implémenter ces synonymes dans leur
+langue.
+
+\section{Opérations du logiciel}\label{opuxe9rations-du-logiciel}
+
+\subsection{Mode de consultation}\label{mode-de-consultation}
+
+\subsection{Mode de recueil}\label{mode-de-recueil}
+
+Le mode de recueil suppose une source d'information (ou plusieurs ?)
+représentée par une fiche, d'où on recueille un certain nombre de
+données sur elle-même ou sur d'autres objets, représentés par d'autres
+fiches, qui peuvent être déjà existantes ou créées à la volée.
+
+Il verrouille sur la source d'origine et associe toute information
+entrée à cette source.
+
+\section{Fonctions étendues}\label{fonctions-uxe9tendues}
+
+\subsection{Export de bibliographies}\label{export-de-bibliographies}
+
+Les fiches de types \og référence bibliographiques \fg{} doivent pouvoir
+être exportées dans des formats manipulables par un gestionnaire de
+bases de données, en réduisant la complexité intrinsèque à Tkacz.
+
+\part{Utilisation et interface utilisateur}
+
+La fenêtre principale de Tkacz se présente de différentes façons selon
+le mode en cours. Le mode de consultation (par défaut, ou accessible via
+\menu{Meta>Data} (\keys{\cmd+\Alt+A,C})
+
+\section{Syntaxe des fiches}\label{syntaxe-des-fiches}
+
+La syntaxe est dérivée de Markdown et d'autres langages de formatage
+rapide. Il y a néanmoins quelques différences dans le comportement
+standard du parser:
+
+\begin{itemize}
+\item
+  Tkacz utilise les \_\emph{tirets de soulignement\_} pour la mise en
+  italiques, et *\textbf{une seule étoile}* pour le gras.
+\item
+  Un paragraphe indenté de quatre espaces ou plus n'est pas traité comme
+  un bloc de code, mais est simplement indenté d'un niveau. Les blocs de
+  code utilisent exclusivement la syntaxe «grillagée», en encadrant le
+  bloc de \texttt{\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+  et en indiquant éventuellement le langage après la première série de
+  tildes.
+\item
+  La syntaxe des liens est supprimée.
+\item
+  La syntaxe des blocs de description est modifiée.
+\item
+  Le format des citations permet d'en préciser l'origine.
+\item
+  Tkacz pourrait gèrer plusieurs tables des matières dans un seul
+  document.
+\end{itemize}
+
+De plus, un certain nombre d'extensions spécifiques sont ajoutées.
+
+\subsection{Association clé-valeur}\label{association-cluxe9-valeur}
+
+Toute fiche commence généralement par un préambule qui expose
+formellement son contenu. Ce préambule prend la forme
+
+\begin{verbatim}
+:name 
+    :first Michel
+    :middle Paul :unused
+    :last Foucault
+
+:name Fuchs :aka
+    Dans [Guibert 1980]
+    
+:birth 15 octobre 1926 @ Poitiers
+:death 25 juin 1984 @ Paris
+\end{verbatim}
+
+\subsection{Liens et relations}\label{liens-et-relations-1}
+
+\begin{verbatim}
+<> friend [Didier.Éribon]
+<> founder GIP
+\end{verbatim}
+
+\part{Implémentation}
+
+\section{Format de stockage}\label{format-de-stockage}
+
+Un dépôt Tkacz est un répertoire du système de fichiers, qui n'est pas
+destiné à être manipulé par l'utilisateur. Il peut être présenté comme
+un bundle (sur OS X) ou stocké zippé (sur les autres systèmes) pour
+empêcher toute manipulation destructrice.
+
+\subsection{Format d'un dépôt}\label{format-dun-duxe9puxf4t}
+
+Un dépôt combine un dépôt git\footnote{Dans ce document, le mot «dépôt»
+  seul fait \emph{toujours} référence à un dépôt Tkacz.} et une base de
+données SQLite qui sert de cache. Un dépôt vide a donc la structure
+suivante:
+
+\begin{figure}[H]
+\dirtree{%
+.0 \hspace{-1.2em}/. % Dirty dirtree hack 
+%                      to align correctly 
+%                      to left edge.
+.1 .git.
+.2 ….
+.1 .tkacz.
+.2 db\DTcomment{Fichiers SQLite}.
+.3 ….
+.2 manifest\DTcomment{Déclarations Tkacz de base (Yaml)}.
+}
+\end{figure}
+
+Le fichier \directory{.tkacz / manifest} est une représentation JSON de
+la structure détaillée ci-dessous. évidemment
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{}
+    \DataTypeTok{"tkacz"}\NormalTok{: \{}
+        \DataTypeTok{"frameworkVersion"}\NormalTok{: [}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{],}
+        \DataTypeTok{"formatVersion"}\NormalTok{:    [}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{],}
+        \DataTypeTok{"schemaId"}\NormalTok{:         }\StringTok{"core"}\NormalTok{,}
+        \DataTypeTok{"schemaVersion"}\NormalTok{:    [}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{]}
+    \NormalTok{\},}
+    \DataTypeTok{"repository"}\NormalTok{: \{}
+        \DataTypeTok{"uuid"}\NormalTok{:             }\StringTok{"03095EEF-6C87-430B-A00E-440616196C31"}\NormalTok{,}
+        \DataTypeTok{"name"}\NormalTok{:             }\StringTok{"As set by the user"}
+    \NormalTok{\},}
+    \DataTypeTok{"core"}\NormalTok{: \{\}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Les clés \texttt{tkacz}, \texttt{repository} et \texttt{core} (options
+du schéma standard) et de façon générale toutes les clés racines
+vérifiant
+\texttt{{[}a-zA-Z{]}+{[}a-zA-Z0-9\_{]}*` sont réservées, les extensions ou les schémas tiers peuvent inscrire leur paramétrage dans des clés au format}com.domaine.nom```
+(à la Java).
+
+\subsection{Stockage des fiches}\label{stockage-des-fiches}
+
+Les fiches sont sauvegardées comme des fichiers gérés par Git, dans des
+dossiers correspondant à leurs types, par exemple
+\directory{person / collective}. Leur nom est un numéro attribué
+séquentiellement pour le dépôt entier (indépendemment du type donc).
+Tous les noms vérifiant \texttt{{[}0-9{]}+} sont donc réservés pour les
+fiches au niveau du suivi des versions.
+
+Le dépôt n'utilise qu'une seule branche, \texttt{master}.
+
+L'usage de Git fait ici est assez particulier: chaque message de commit
+décrit l'état des références, c'est à dire la fiche qui sert de source
+et la position dans cette fiche.
+
+Quand Tkacz contrôle l'éditeur de texte, il commite automatiquement les
+changements, sans contrôle possible de l'utilisateur, dans les
+situations suivantes:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  La saisie ou l'effacement se poursuit, mais la position du curseur a
+  changé. {[}\texttt{move}{]}
+\item
+  L'utilisateur commence à saisir du texte après en avoir effacé.
+  {[}\texttt{insert}{]}
+\item
+  L'utilisateur commence à effacer du texte après en avoir saisi.
+  {[}\texttt{delete}{]}
+\item
+  La référence ou l'emplacement dans la référence a changé.
+  {[}\texttt{insert}{]}
+\item
+  L'utilisateur coupe du texte. {[}\texttt{cut}{]}
+\item
+  L'utilisateur colle du texte (au format Tkacz, sinon \texttt{insert}).
+  {[}\texttt{paste}{]}
+\end{enumerate}
+
+Si un éditeur externe est utilisé, un commit est réalisé à chaque
+modification du fichier\footnote{Il est plausible qu'il soit en fait
+  impossible d'utiliser un éditeur pour lequel Tkacz ne puisse pas
+  suivre chaque modification. En effet, la fonctionnalité fondamentale
+  de suivi des ajouts et modifications et de leur rattachement à des
+  emplacements précis des sources nécessite un suivi extrêment précis
+  des modifications. Autrement dit, seul peut sans doute être utilisé un
+  éditeur qui sauvegarde à chaque caractère modifié.}.
+
+\subsubsection{Format des messages de
+commit}\label{format-des-messages-de-commit}
+
+\paragraph{Commits sur modification}\label{commits-sur-modification}
+
+Le format d'un message de commit en cours d'édition est une
+représentation JSON (minimisée) de la structure:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{}
+    \DataTypeTok{"operation"}\NormalTok{: }\StringTok{"type"}\NormalTok{,}
+    \DataTypeTok{"using"}\NormalTok{:     }\DecValTok{234}\NormalTok{,}
+    \DataTypeTok{"position"}\NormalTok{: \{}
+        \DataTypeTok{"page"}\NormalTok{: }\StringTok{"x"}
+    \NormalTok{\}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{operation} décrit l'action de l'utilisateur qui justifie le
+commit.
+
+Avec cette réserve que le format de \texttt{position}, s'il est
+obligatoirement un dictionnaire, n'est pas déterminé par avance, et
+dépend du type de fiche. En imaginant des notes prises à la volée sur un
+enregistrement audio, \texttt{position} pourrait avoir un format du
+type:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{}
+    \DataTypeTok{"position"}\NormalTok{: \{}
+        \DataTypeTok{"tape"}\NormalTok{: }\DecValTok{0}\NormalTok{,}
+        \DataTypeTok{"time"}\NormalTok{: [}\DecValTok{0}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{34}\NormalTok{]}
+    \NormalTok{\}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Si une fiche est modifiée sans référence ouverte, le message de commit
+ne contient que la clé \texttt{operation}.
+
+\paragraph{Commits vides}\label{commits-vides}
+
+Des messages supplémentaires sont produits à l'ouverture et à la
+fermeture d'une ressource, avec des commit vide:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{}
+    \DataTypeTok{"opening"}\NormalTok{: }\DecValTok{123}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+et:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{}
+    \DataTypeTok{"closing"}\NormalTok{: }\DecValTok{123}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Un dernier type de message permet d'associer une donnée déjà saisie à
+une autre ressource:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{}
+    \DataTypeTok{"link"}\NormalTok{: }\DecValTok{72}\NormalTok{,}
+    \DataTypeTok{"from"}\NormalTok{: [}\DecValTok{132}\NormalTok{, }\DecValTok{21}\NormalTok{],}
+    \DataTypeTok{"to"}\NormalTok{:   [}\DecValTok{135}\NormalTok{, }\DecValTok{12}\NormalTok{]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{from} et \texttt{to} sont ici des paires ligne/colonne.
+
+\subsubsection{Calcul des diffs, suivi de l'origine et déplacement de
+paragraphes}\label{calcul-des-diffs-suivi-de-lorigine-et-duxe9placement-de-paragraphes}
+
+Le \emph{déplacement} de blocs de texte est un problème sérieux que les
+diff classiques ne permettent pas de résoudre. Or, un bloc déplacé doit
+continuer à être associé à son origine. Plusieurs solutions semblent
+possibles:
+
+\begin{itemize}
+\item
+  Commit automatique à chaque opération couper/copier/coller.
+\item
+  ``Lester'' les copies/coupes avec les informations d'origine de la
+  source et les porter dans le commit lors du collage. \emph{Cette
+  option exclut absolument d'utiliser un autre éditeur de texte que
+  celui de Tkacz}.
+\end{itemize}
+
+\subsection{Structure du cache}\label{structure-du-cache}
+
+La totalité des données utiles se trouve dans les fiches elle-même, ce
+qui signifie que seul le dépôt git doit être copié pour cloner
+entièrement
+
+\section{Le système de types}\label{le-systuxe8me-de-types}
+
+Le mécanisme de types de Tkacz repose sur une correspondance terme à
+terme entre une hiérarchie de types et une hiérarchie d'objets
+instantiables. Ces deux hiérarchies sont définies comme suit:
+
+\begin{tabular*}{1\columnwidth}{@{\extracolsep{\fill}}|c|c||c|c|}
+\multicolumn{2}{c}{Types} & \multicolumn{2}{c}{Objets}\tabularnewline
+\hline 
+\multicolumn{2}{|c||}{Template (virtual)} & \multicolumn{2}{c|}{Node}\tabularnewline
+\hline 
+EntityTemplate & PrimitiveTemplate<T> & — & —\tabularnewline
+\hline 
+ & IntegerTemplate, StringTemplate… & Card & \tabularnewline
+\hline 
+\end{tabular*}
+
+À chaque instance d'un descendant d'Object correspond un objet Template
+du type correspondant (à une Primitive correspond un PrimitiveTemplate,
+etc.). L'objet Template:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Initialise la structure de données de l'Object.
+\end{itemize}
+
+\appendix
+
+\part{Annexes}
+
+\section{Définitions}\label{duxe9finitions}
+
+Ce lexique décrit les termes employés dans la présent document, le
+lexique anglais équivalent pour l'implémentation, et le lexique anglais
+et français l'interface graphique quand ils divergent des termes retenus
+par ailleurs.
+
+\subsection{Termes employés dans ce
+document}\label{termes-employuxe9s-dans-ce-document}
+
+\%\textbackslash{}begin\{multicols\}\{2\}
+
+\paragraph{Attribut}\label{attribut}
+
+\paragraph{Dépôt}\label{duxe9puxf4t}
+
+\paragraph{Fiche}\label{fiche}
+
+\paragraph{Lien}\label{lien}
+
+Un lien est un type particulier d'attribut qui, au lieu d'être une
+donnée stockée en place, est un renvoi vers une autre fiche. L'attribut
+\emph{auteur }d'une fiche \emph{notice bibliographique} est un lien vers
+une fiche de type \emph{personne}.
+
+\paragraph{Nature}\label{nature}
+
+L'équivalent pour une relation du type d'une fiche.
+
+\paragraph{Relation}\label{relation}
+
+\{\#relation\}
+
+\paragraph{Schéma}\label{schuxe9ma}
+
+\paragraph{Taxinomie}\label{taxinomie}
+
+\paragraph{Type}\label{type}
+
+\%\textbackslash{}end\{multicols\}
+
+\subsection{Termes anglais du code
+source}\label{termes-anglais-du-code-source}
+
+\begin{multicols}{3}
+attribute
+:   \cf{attribut}
+
+card:
+    \cf{fiche}
+    
+link:
+    \cf{lien}
+    
+nature
+:   \cf{nature}
+
+relationship
+:   \cf{relation}
+
+repository
+:    \cf{dépôt}
+
+schema
+:   A Schema implements a factory and a visitor. 
+
+
+\end{multicols}
+
+\end{document}

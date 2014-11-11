@@ -1,23 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--                                                            [licblock]
-This file is part of Tkacz. 
-Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-                                                               [/licblock]-->
-
 <ui version="4.0">
  <class>CollectionEditor</class>
  <widget class="QDialog" name="CollectionEditor">
@@ -48,7 +29,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <item>
        <widget class="QWidget" name="widget_4" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <property name="margin">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
@@ -60,7 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <string>...</string>
            </property>
            <property name="icon">
-            <iconset resource="../qrc/icons.qrc">
+            <iconset resource="../build/icons.qrc">
              <normaloff>:/collections/collection-dynamic</normaloff>:/collections/collection-dynamic</iconset>
            </property>
            <property name="iconSize">
@@ -190,7 +180,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <widget class="QStackedWidget" name="stackedWidget">
          <widget class="QWidget" name="page">
           <layout class="QVBoxLayout" name="verticalLayout_6">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
@@ -200,7 +199,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
          </widget>
          <widget class="QWidget" name="page_2">
           <layout class="QVBoxLayout" name="verticalLayout_5">
-           <property name="margin">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
@@ -216,7 +224,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -322,7 +339,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </layout>
  </widget>
  <resources>
-  <include location="../qrc/icons.qrc"/>
+  <include location="../build/icons.qrc"/>
  </resources>
  <connections>
   <connection>

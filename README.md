@@ -23,7 +23,7 @@ For an out-of-source build, first create a build directory in the root of the so
 Generate intermediate files:
 
     ../builders/tzuic.py ../xml ../src/gui/Base_MainWindow.hpp
-    ../builders/dir2qrc.py -multi . ../resources/qrc   
+    ../builders/dir2qrc.py -multi . ../qrc   
     
 Then invoke
 

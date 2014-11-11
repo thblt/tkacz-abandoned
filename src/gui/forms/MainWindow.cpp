@@ -41,8 +41,10 @@ MainWindow::MainWindow() {
 	this->addToolBar(toolBar);
 	toolBar->addAction(actionPageCreatePopup);
 	toolBar->addAction(actionCollectionCreateFromrules);
-//	toolBar->addWidget(addressBar= new QLineEdit());
+	toolBar->addWidget(addressBar= new QLineEdit());
 	toolBar->addAction(actionWindowFullscreen);
+
+	this->setUnifiedTitleAndToolBarOnMac(true);
 
 	// Init views
 	setCentralWidget(container = new QStackedWidget());
@@ -51,7 +53,6 @@ MainWindow::MainWindow() {
 	container->setCurrentIndex(0);
 
 	QMetaObject::connectSlotsByName(this);
-
 }
 
 void MainWindow::on_app_about_triggered() {
