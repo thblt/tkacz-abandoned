@@ -1,6 +1,6 @@
 
-\part{Utilisation et interface utilisateur}
+# Utilisation et interface utilisateur
 
-La fenêtre principale de Tkacz se présente de différentes façons selon
+\deprecated La fenêtre principale de Tkacz se présente de différentes façons selon
 le mode en cours. Le mode de consultation (par défaut, ou accessible
 via \menu{Meta>Data} (\keys{\cmd+\Alt+A,C})

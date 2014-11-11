@@ -16,9 +16,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #                                                                [/licblock]
 
-import tkacz
+from tkacz import *
 
-@tkacz.hook_option("person/name/simple")
+class Person (TZTemplate):
+	name = TZString()
+	firstName = TZString()
+	middleName = TZString()
+	vonPart = TZString()
+	lastName = TZString()
+	suffix = TZString()
+
+@hook_option("person/name/simple")
 def option_simple(entity, new_value):
     if new_value:
         entity["name"].set(person_name_format(entity))
@@ -30,4 +38,4 @@ def option_simple(entity, new_value):
     entity["von_part"].enabled = not new_value
     entity["last_name"].enabled = not new_value
     entity["suffix"].enabled = not new_value
-    entity["name"].enabled = new_value    
+    entity["name"].enabled = new_value

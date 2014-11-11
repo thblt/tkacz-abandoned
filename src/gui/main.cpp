@@ -30,7 +30,7 @@ using namespace tkacz;
 
 int main(int argc, char* argv[]) {
 
-	tzlog() << "Tkacz " << Tkacz::version << " “" << Tkacz::version.name << "“"
+	debug_msg() << "Tkacz " << Tkacz::version << " “" << Tkacz::version.name << "“"
 			<< std::endl;
 
 	QApplication app(argc, argv);
@@ -39,12 +39,10 @@ int main(int argc, char* argv[]) {
 	MainWindow mw;
 	mw.showMaximized();
 
-	tzlog("Initializing core");
+	fine("Initializing core");
 	Tkacz::getInstance(); // Forces core initialization
 
-	Repository::initialize("/Users/thblt/Tkacz Data");
-
-	Tkacz::log("Running application");
+	fine("Running application");
 	return (app.exec());
 	return 0;
 }

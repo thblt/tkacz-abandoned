@@ -25,6 +25,7 @@
 #include <QtCore/QString>
 
 #include <Tkacz.hpp>
+#include <Version.hpp>
 
 #include "ui_dlgAbout.h"
 

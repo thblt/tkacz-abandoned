@@ -23,6 +23,7 @@
 #include <git2/threads.h>
 
 #include "Platform.hpp"
+#include "Version.hpp"
 #include "tzbuild.h"
 
 //#include "Version.hpp"
@@ -35,7 +36,6 @@ TZ_VERSION_NAME };
 
 Tkacz::Tkacz() {
 	Platform::init();
-
 	git_threads_init();
 
 	//SchemaLoader(Platform::getCanonicalResourcePath("schema/base.xml")).run();
@@ -48,12 +48,10 @@ Tkacz* Tkacz::getInstance() {
 	return (instance);
 }
 
-std::ostream& Tkacz::log() {
-	return (std::cout << "[log] ");
-}
-
-std::ostream& Tkacz::log(const std::string msg) {
-	return (log() << msg << std::endl);
+std::ostream& Tkacz::log(LogLevel lvl, std::string msg) {
+	if (msg.empty())
+		return std::cout;
+	return std::cout << msg << std::endl;
 }
 
 Tkacz::~Tkacz() {

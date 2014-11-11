@@ -24,5 +24,4 @@
 #define TZ_VERSION_PREVERSION @Tkacz_VERSION_PREVERSION@
 #define TZ_VERSION_NAME "@Tkacz_VERSION_NAME@"
 
-// Tkacz resources path
-// @FIXME Should obviously be set by cmake depending on the running system
+#define TZ_VERSION_STRING "@Tkacz_VERSION_MAJOR@.@Tkacz_VERSION_MINOR@.@Tkacz_VERSION_PATCH@ @Tkacz_VERSION_MATURITY@ @Tkacz_VERSION_PREVERSION@ “@Tkacz_VERSION_NAME@”"

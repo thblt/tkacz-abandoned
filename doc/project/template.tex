@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 
 \usepackage[french]{babel}
+\frenchbsetup{og=«, fg=»}
 
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e}
@@ -127,6 +128,10 @@ travaille sur la période moderne.
 \end{spacing}
 
 \clearpage
+
+\newcommand\chapter[1]{\part{#1}}
+
+\newcommand\deprecated{\fbox{\textbf{OBSOLÈTE}}\hspace{1em}}
 
 $body$
 

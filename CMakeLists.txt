@@ -1,5 +1,3 @@
-# Temp fixes
-
 cmake_minimum_required (VERSION 2.8.11)
 project (Tkacz)
 
@@ -10,12 +8,16 @@ set (Tkacz_VERSION_MATURITY "Alpha")
 set (Tkacz_VERSION_PREVERSION 1)
 set (Tkacz_VERSION_NAME "Avogadro")
 
-set ( PROJECT_SOURCE_DIR src ) 
+set (PROJECT_SOURCE_DIR src)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g -Wextra -std=c++11")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O0 -g -Wall -std=c++11")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O4 -DNDEBUG -Wall -std=c++11")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set (CMAKE_CXX_FLAGS_DEBUG "-O0 -g -Wextra -std=c++11")
+set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O0 -g -Wall -std=c++11")
+set (CMAKE_CXX_FLAGS_RELEASE "-O4 -DNDEBUG -Wall -std=c++11")
+
+# @fixme Debug
+
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
 
 include_directories (  
 "${PROJECT_SOURCE_DIR}" 
@@ -26,10 +28,12 @@ include_directories (
 "${PROJECT_SOURCE_DIR}/core/schemas"
 "${PROJECT_SOURCE_DIR}/core/schemas/loader"
 "${PROJECT_SOURCE_DIR}/core/taxonomies"
+"${PROJECT_SOURCE_DIR}/cli" 
 "${PROJECT_SOURCE_DIR}/gui" 
 "${PROJECT_SOURCE_DIR}/gui/forms"
 "${PROJECT_SOURCE_DIR}/gui/widgets"
 "${PROJECT_SOURCE_DIR}/gui/perspectives"
+"${PROJECT_BINARY_DIR}"
 )
  
 configure_file (
@@ -37,33 +41,148 @@ configure_file (
   "${PROJECT_BINARY_DIR}/tzbuild.h"
   )
 
-file(
-        GLOB_RECURSE
-        Tkacz_SOURCES
-        ${PROJECT_SOURCE_DIR}/gui/*.cpp
-)
+SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/;${CMAKE_MODULE_PATH}")
+  
+################
+# Source files #
+################
+
+# Core Lib
 
 file(
         GLOB_RECURSE
-        Tkacz_CORE_SOURCES
+        LibTkacz_SOURCES
         ${PROJECT_SOURCE_DIR}/core/*.cpp
 )
 
 file(
         GLOB_RECURSE
-        Tkacz_CORE_INCLUDES
+        LibTkacz_INCLUDES
         ${PROJECT_SOURCE_DIR}/core/*.hpp
 )
 
+# CLI
+
+file(
+        GLOB_RECURSE
+        CLI_SOURCES
+        ${PROJECT_SOURCE_DIR}/cli/*.cpp
+)
+
+# Qt Interface
+
+file(
+		GLOB_RECURSE
+        QtGUI_SOURCES
+        ${PROJECT_SOURCE_DIR}/gui/*.cpp
+)
+
+file(
+        GLOB_RECURSE
+        QtGUI_FORMS
+        *.ui
+)
+
+file(
+        GLOB_RECURSE
+        QtGUI_RESOURCES
+        *.qrc
+)
+
+file(
+        GLOB_RECURSE
+        QtGUI_HEADERS_MOC
+        ${PROJECT_SOURCE_DIR}/gui/forms/*.hpp
+)
+
+####################
+# Libraries        #
+####################
+
+# Boost
+# -----
 IF(APPLE)
-    # set(CMAKE_INSTALL_PREFIX "/Applications" )
+	set(Boost_USE_STATIC_LIBS ON)
+ELSE()
+    set(Boost_USE_STATIC_LIBS OFF)
+ENDIF()
+
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME ON)
+
+find_package(Boost COMPONENTS system filesystem log python python3 program_options REQUIRED)
+
+include_directories(${Boost_INCLUDE_DIR})
+link_directories(${Boost_LIBRARY_DIRS})
+
+# Bison
+# -----
+find_package(Bison REQUIRED)
+
+# Expat
+# -----
+find_package(EXPAT REQUIRED)
+
+# LibGit2
+# -------
+find_package(LibGit2 REQUIRED)
+include_directories(${LIBGIT2_INCLUDE_DIR})
+
+# Python
+# ------
+set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.3/include/python3.3m/") # @FIXME Remove absolute path.
+set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.3/lib/libpython3.3.dylib") # @FIXME Remove absolute path.
+set(PythonLibs_FIND_VERSION 3)
+find_package(PythonLibs REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIRS})
+
+# Qt
+# --
+find_package(Qt5 COMPONENTS core widgets REQUIRED)
+
+####################
+# Targets          #
+####################
+
+# Library
+# -------
+
+add_library(LibTkacz ${LibTkacz_SOURCES} ${LibTkacz_INCLUDES})
+
+target_link_libraries(LibTkacz ${PYTHON_LIBRARIES})
+target_link_libraries(LibTkacz  ) 
+target_link_libraries(LibTkacz ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY} ${Boost_PYTHON3_LIBRARY}) 
+target_link_libraries(LibTkacz ${LIBGIT2_LIBRARIES})
+target_link_libraries(LibTkacz ${EXPAT_LIBRARY} )
+
+SET_TARGET_PROPERTIES(LibTkacz PROPERTIES OUTPUT_NAME "tkacz")
+
+# CLI Executable
+# --------------
+
+set( CLI_SOURCES ${CLI_SOURCES} )
+
+ADD_EXECUTABLE(CLI ${CLI_SOURCES})
+
+target_link_libraries( LibTkacz ${Boost_FILESYSTEM_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ) 
+
+SET_TARGET_PROPERTIES(CLI PROPERTIES OUTPUT_NAME "tkacz")
+target_link_libraries(CLI LibTkacz)
+
+# Qt Gui executable
+# -----------------
+
+QT5_WRAP_UI(QtGUI_FORMS_HEADERS ${QtGUI_FORMS})
+QT5_WRAP_CPP(QtGUI_HEADERS_MOC ${QtGUI_HEADERS_MOC})
+QT5_ADD_RESOURCES(QtGUI_RESOURCES_RCC ${QtGUI_RESOURCES})
+
+SET(QtGUI_SOURCES ${QtGUI_SOURCES} ${QtGUI_FORMS_HEADERS} ${QtGUI_RESOURCES_RCC} ${QtGUI_HEADERS_MOC})
+
+IF(APPLE)
     set(CMAKE_INSTALL_PREFIX "." )
-    # set how it shows up in the Info.plist file
-    SET(MACOSX_BUNDLE_ICON_FILE Tkacz.icns) 
-    # set where in the bundle to put the icns file
+    SET(QtGUI_SOURCES ${QtGUI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/icons/Tkacz.icns)
     SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/icons/Tkacz.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-    # include the icns file in the target
-    SET(Tkacz_SOURCES ${Tkacz_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/icons/Tkacz.icns)
+    SET(MACOSX_BUNDLE_ICON_FILE Tkacz.icns)
     
     # copy schemas in bundle
     # @fixme potentially buggy…
@@ -71,141 +190,40 @@ IF(APPLE)
     
     # Link to CoreFoundation
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework CoreFoundation")
-ENDIF(APPLE)    
+	
+ADD_EXECUTABLE(QtGUI MACOSX_BUNDLE ${QtGUI_SOURCES}) # This must be invoked last, or else icon/bundle name won't be set correctly
+ELSE(APPLE)
+	ADD_EXECUTABLE(QtGUI ${QtGUI_SOURCES})
+ENDIF(APPLE)
 
-SET(MACOSX_BUNDLE_BUNDLE_NAME Tkacz)
+SET_TARGET_PROPERTIES(QtGUI PROPERTIES OUTPUT_NAME "Tkacz")
 
-include_directories("${PROJECT_BINARY_DIR}")
+target_link_libraries(QtGUI LibTkacz)
+target_link_libraries(QtGUI Qt5::Gui Qt5::Widgets)
 
-###### Modules ######
+target_link_libraries(QtGUI ${Boost_PYTHON3_LIBRARY} ) 
+target_link_libraries(QtGUI ${PYTHON_LIBRARIES})
 
-SET(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/;${CMAKE_MODULE_PATH}")
+########
+# Misc #
+########
 
-####################
-# Qt               #
-####################
-
-file(
-        GLOB_RECURSE
-        Tkacz_FORMS
-        *.ui
-)
-
-file(
-        GLOB_RECURSE
-        Tkacz_RESOURCES
-        *.qrc
-)
-
-file(
-        GLOB_RECURSE
-        Tkacz_HEADERS_MOC
-        ${PROJECT_SOURCE_DIR}/gui/forms/*.hpp
-)
-
-find_package(Qt5 COMPONENTS widgets REQUIRED)
-
-QT5_WRAP_UI(Tkacz_FORMS_HEADERS ${Tkacz_FORMS})
-QT5_WRAP_CPP(Tkacz_MOC_HEADERS ${Tkacz_HEADERS_MOC})
-QT5_ADD_RESOURCES(Tkacz_RESOURCES_RCC ${Tkacz_RESOURCES})
-
-#foreach(_USE_FILE ${Qt5_USE_FILES})
-#    include(${_USE_FILE})
-#endforeach()
-
-SET(Tkacz_SOURCES ${Tkacz_SOURCES} ${Tkacz_FORMS_HEADERS} ${Tkacz_RESOURCES_RCC}  ${Tkacz_MOC_HEADERS})
-
-####################
-# Python           #
-####################
-
-# @FIXME Remove absolute paths.
-set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.4/include/python3.4m/")
-set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.4/lib/libpython3.4.dylib")
-set(PythonLibs_FIND_VERSION 3.4)
-find_package(PythonLibs REQUIRED)
-include_directories(${PYTHON_INCLUDE_DIRS})
-
-#message("-- Python version: ${PYTHONLIBS_VERSION_STRING}")
-#message("-- Python library: ${PYTHON_LIBRARIES} (${PYTHONLIBS_VERSION_STRING})")
- 
-####################
-# Boost            #
-####################
-# No need to ask for format (include only lib)
-
-IF(APPLE) 
-	set(Boost_USE_STATIC_LIBS ON) 
-ELSE()
-    set(Boost_USE_STATIC_LIBS OFF) 
-ENDIF()
-set(Boost_USE_MULTITHREADED ON)  
-set(Boost_USE_STATIC_RUNTIME OFF)
-
-find_package(Boost COMPONENTS system filesystem log python python3 REQUIRED)
-
-include_directories(${Boost_INCLUDE_DIR})
-link_directories(${Boost_LIBRARY_DIRS})
-
-####################
-# Expat            #
-####################
-
-find_package(EXPAT REQUIRED)
-
-####################
-# LibGit2          #
-####################
-
-find_package(LibGit2 REQUIRED)
-
-include_directories(${LIBGIT2_INCLUDE_DIR})
- 
-####################
-# Linker           #
-####################
+# Linker
+# ------
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -dead_strip -order-file")
 endif()
 
 ####################
-# Library          #
-####################
-
-add_library(Tkacz ${Tkacz_CORE_SOURCES} ${Tkacz_CORE_INCLUDES})
-target_link_libraries(Tkacz ${PYTHON_LIBRARIES})
-target_link_libraries(Tkacz  ${Boost_PYTHON3_LIBRARY} ) 
-target_link_libraries(Tkacz  ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY}) 
-target_link_libraries(Tkacz ${LIBGIT2_LIBRARIES})
-target_link_libraries(Tkacz ${EXPAT_LIBRARY} )
-
-####################
-# Executable       #
-####################
-
-ADD_EXECUTABLE(TkaczGui MACOSX_BUNDLE ${Tkacz_SOURCES})
-
-SET_TARGET_PROPERTIES(TkaczGui PROPERTIES OUTPUT_NAME "Tkacz")
-
-target_link_libraries(TkaczGui Tkacz)
-target_link_libraries(TkaczGui Qt5::Gui Qt5::Widgets)# Qt5::WebKitWidgets)
-
-## Testing only!
-target_link_libraries(TkaczGui ${Boost_PYTHON3_LIBRARY} ) 
-target_link_libraries(TkaczGui ${PYTHON_LIBRARIES})
-## /Testing
-#target_link_libraries(TkaczGui ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY})
-
-####################
 # Install          #
 ####################
 
-INSTALL(TARGETS TkaczGui 
+INSTALL(TARGETS QtGUI 
     BUNDLE DESTINATION . COMPONENT Runtime 
     RUNTIME DESTINATION bin COMPONENT Runtime
     )
     
-INSTALL(TARGETS Tkacz
+INSTALL(TARGETS LibTkacz
     ARCHIVE DESTINATION lib COMPONENT Runtime
     )

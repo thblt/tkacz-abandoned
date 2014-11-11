@@ -1,4 +1,7 @@
-pandoc *.tex.md --template template.tex -o document.tex --to latex
+pandoc *.tex.md --chapters --template template.tex -o document.tex --to latex
 
 pdflatex document
-pdflatex -interaction=nonstopmode document
+if pdflatex -interaction=nonstopmode document
+	then
+	rm document.aux document.log document.out document.toc document.tex
+fi

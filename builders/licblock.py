@@ -50,6 +50,7 @@ extensions = {
               "h.in":"c",
               "cpp":"c",
               "cxx":"c",
+			  "gengetopt": "python",
               "hpp":"c",
               "py":"python",
               "htm":"xml",
@@ -93,7 +94,7 @@ def do(f, licText):
                 tpl = templates[tplName]
                 break
         if not tpl:
-            print("Skipping\t{0}\t(unrecognized type)".format(f))
+            # print("Skipping\t{0}\t(unrecognized type)".format(f))
             return False
     
         contents = readFile(f)
