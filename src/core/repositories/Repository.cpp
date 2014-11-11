@@ -49,7 +49,7 @@ Repository::Repository(const bfs::path & path) throw (NotARepositoryException,
 	}
 }
 
-Repository & Repository::initialize (const bfs::path & path, bool mkdir, bool mk_interm, bool lock) throw (Exception) {
+Repository & Repository::initialize (const bfs::path & path) throw (Exception) {
 
 	if (!bfs::exists(path)) {
 		bfs::create_directory(path);

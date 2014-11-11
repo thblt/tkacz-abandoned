@@ -1,5 +1,3 @@
-# Temp fixes
-
 cmake_minimum_required (VERSION 2.8.11)
 project (Tkacz)
 
@@ -12,25 +10,26 @@ set (Tkacz_VERSION_NAME "Avogadro")
 
 set (PROJECT_SOURCE_DIR src)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS}  -O0 -g -Wextra -std=c++11 -fstandalone-debug -gdwarf-4")
-set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS}  -O0 -g -Wall -std=c++11")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O4 -DNDEBUG -Wall -std=c++11")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set (CMAKE_CXX_FLAGS_DEBUG "-O0 -g -Wextra -std=c++11")
+set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O0 -g -Wall -std=c++11")
+set (CMAKE_CXX_FLAGS_RELEASE "-O4 -DNDEBUG -Wall -std=c++11")
 
-# @FIXME DEBUG
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
+# @fixme Debug
+
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
 
 include_directories (  
-"${PROJECT_SOURCE_DIR}"
-"${PROJECT_SOURCE_DIR}/core"
-"${PROJECT_SOURCE_DIR}/core/entities"
-"${PROJECT_SOURCE_DIR}/core/io"
-"${PROJECT_SOURCE_DIR}/core/repositories"
+"${PROJECT_SOURCE_DIR}" 
+"${PROJECT_SOURCE_DIR}/core" 
+"${PROJECT_SOURCE_DIR}/core/entities" 
+"${PROJECT_SOURCE_DIR}/core/io" 
+"${PROJECT_SOURCE_DIR}/core/repositories" 
 "${PROJECT_SOURCE_DIR}/core/schemas"
 "${PROJECT_SOURCE_DIR}/core/schemas/loader"
 "${PROJECT_SOURCE_DIR}/core/taxonomies"
-"${PROJECT_SOURCE_DIR}/cli"
-"${PROJECT_SOURCE_DIR}/gui"
+"${PROJECT_SOURCE_DIR}/cli" 
+"${PROJECT_SOURCE_DIR}/gui" 
 "${PROJECT_SOURCE_DIR}/gui/forms"
 "${PROJECT_SOURCE_DIR}/gui/widgets"
 "${PROJECT_SOURCE_DIR}/gui/perspectives"
@@ -100,23 +99,10 @@ file(
 # Libraries        #
 ####################
 
-# @FIXME Remove absolute paths.
-set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.4/include/python3.4m/")
-set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.4/lib/libpython3.4.dylib")
-set(PythonLibs_FIND_VERSION 3.4)
-find_package(PythonLibs REQUIRED)
-include_directories(${PYTHON_INCLUDE_DIRS})
-
-#message("-- Python version: ${PYTHONLIBS_VERSION_STRING}")
-#message("-- Python library: ${PYTHON_LIBRARIES} (${PYTHONLIBS_VERSION_STRING})")
- 
-####################
-# Boost            #
-####################
-# No need to ask for format (include only lib)
-
-IF(APPLE) 
-	set(Boost_USE_STATIC_LIBS ON) 
+# Boost
+# -----
+IF(APPLE)
+	set(Boost_USE_STATIC_LIBS ON)
 ELSE()
     set(Boost_USE_STATIC_LIBS OFF)
 ENDIF()
@@ -133,32 +119,41 @@ link_directories(${Boost_LIBRARY_DIRS})
 # -----
 find_package(Bison REQUIRED)
 
+# Expat
+# -----
 find_package(EXPAT REQUIRED)
 
-####################
-# LibGit2          #
-####################
-
+# LibGit2
+# -------
 find_package(LibGit2 REQUIRED)
-
 include_directories(${LIBGIT2_INCLUDE_DIR})
- 
+
+# Python
+# ------
+set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.3/include/python3.3m/") # @FIXME Remove absolute path.
+set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.3/lib/libpython3.3.dylib") # @FIXME Remove absolute path.
+set(PythonLibs_FIND_VERSION 3)
+find_package(PythonLibs REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIRS})
+
+# Qt
+# --
+find_package(Qt5 COMPONENTS core widgets REQUIRED)
+
 ####################
 # Targets          #
 ####################
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -dead_strip -order-file")
-endif()
+# Library
+# -------
 
 add_library(LibTkacz ${LibTkacz_SOURCES} ${LibTkacz_INCLUDES})
 
-add_library(Tkacz ${Tkacz_CORE_SOURCES} ${Tkacz_CORE_INCLUDES})
-target_link_libraries(Tkacz ${PYTHON_LIBRARIES})
-target_link_libraries(Tkacz  ${Boost_PYTHON3_LIBRARY} ) 
-target_link_libraries(Tkacz  ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY}) 
-target_link_libraries(Tkacz ${LIBGIT2_LIBRARIES})
-target_link_libraries(Tkacz ${EXPAT_LIBRARY} )
+target_link_libraries(LibTkacz ${PYTHON_LIBRARIES})
+target_link_libraries(LibTkacz  ) 
+target_link_libraries(LibTkacz ${Boost_SYSTEM_LIBRARY}  ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY} ${Boost_PYTHON3_LIBRARY}) 
+target_link_libraries(LibTkacz ${LIBGIT2_LIBRARIES})
+target_link_libraries(LibTkacz ${EXPAT_LIBRARY} )
 
 SET_TARGET_PROPERTIES(LibTkacz PROPERTIES OUTPUT_NAME "tkacz")
 

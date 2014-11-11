@@ -26,8 +26,7 @@ int main(int argc, char* argv[]) {
 
 	root.addSubcommand("init", new CmdInit());
 
-	std::vector<const char *> invocationStack { argv[0] };
-
+	std::vector<const char *> invocationStack;
 	root.execute(argc, argv, invocationStack);
 	
 	return 0;

@@ -12,10 +12,11 @@ Un dépôt combine un dépôt git[^depot] et une base de données SQLite qui ser
 %                      to align correctly 
 %                      to left edge.
 .1 .git.
-.2 ….
+.2 …\DTcomment{Dossier git, non géré par Tkacz}.
 .1 .tkacz.
-.2 db\DTcomment{Fichiers SQLite}.
-.3 ….
+.2 cache\DTcomment{Fichiers de cache (non gérés par git)}.
+.3 db\DTcomment{Fichiers SQLite}.
+.2 ….
 .2 manifest\DTcomment{Déclarations Tkacz de base (Yaml)}.
 }
 \end{figure}

@@ -30,7 +30,7 @@ using namespace tkacz;
 
 int main(int argc, char* argv[]) {
 
-	tzlog() << "Tkacz " << Tkacz::version << " “" << Tkacz::version.name << "“"
+	debug_msg() << "Tkacz " << Tkacz::version << " “" << Tkacz::version.name << "“"
 			<< std::endl;
 
 	QApplication app(argc, argv);

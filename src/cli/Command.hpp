@@ -58,7 +58,7 @@ protected:
 	
 	void initialize();
 	
-	std::string invocationString(std::vector<const char *> invocation, std::string prefix="", std::string suffix="") const;
+	std::string invocationString(std::vector<const char *> & invocation, std::string prefix="", std::string suffix="") const;
 
 	po::positional_options_description positionalArgs;
 	
