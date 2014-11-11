@@ -1,4 +1,4 @@
-# Introduction
+## Introduction
 
 Tkacz veut modéliser les différentes activités d'organisation des
 données trouvées en bibliothèque ou aux archives. Il présuppose que

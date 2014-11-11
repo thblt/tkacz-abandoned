@@ -1,5 +1,5 @@
 
-# Le système de types
+## Le système de types
 
 Le mécanisme de types de Tkacz repose sur une correspondance terme
 à terme entre une hiérarchie de types et une hiérarchie d'objets instantiables.

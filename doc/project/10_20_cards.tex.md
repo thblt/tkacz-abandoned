@@ -1,6 +1,6 @@
-# L'objet fondamental : la fiche
+## L'objet fondamental : la fiche
 
-## L'objet fiche
+### L'objet fiche
 
 La **fiche** est l'unité atomique de Tkacz. Une fiche a un **type**
 (cf. \vref{sub:Types}); la liste complète des types n'est pas fixée
@@ -30,13 +30,13 @@ Le titre d'une fiche personne prendra une forme du type:
 Des notes, écrites dans un format inspiré de Markdown.
 
 
-## Attributs et liens
+### Attributs et liens
 
 Une fiche, à l'exception du type minimal (qui modélise réellement
 une feuille blanche avec un titre), contient un certain nombre d'attributs,
 qui sont les données sémantiques, et de relations.
 
-### Attributs {#par:attributs}
+#### Attributs {#par:attributs}
 
 Les attributs sont les propriétés sémantiques qui décrivent l'objet
 modélisé par une fiche. Certains attributs sont des liens vers d'autres
@@ -63,13 +63,13 @@ en forme un nom.
 
  -  Il peut être un **lien** vers une autre fiche d'un type donné. 
 
-### Liens et relations
+#### Liens et relations
 
 Il y a deux façons de lier une fiche à une autre : le lien simple
 et l'expression d'une relation.
 
 
-### Le lien simple 
+#### Le lien simple 
 
 est un \og pointeur \fg{} vers la fiche cible. L'auteur d'un document,
 par exemple, est un lien vers une fiche personne, et pas une simple
@@ -84,7 +84,7 @@ par exemple, n'est manipulable que depuis la chose dont *x* est
 l'auteur, et pas depuis *x*. 
 
 
-### La relation
+#### La relation
 
 est un attribut complexe, qui permet de lier des fiches entre elles
 de façon moins formelle et plus fine. Une relation a une **nature**,
@@ -108,24 +108,24 @@ Une relation est de type \og cite \fg{} ou \og évoque \fg{}, qui
 permet de commenter un livre en le liant à ce qui fait son objet. 
 
 
-## La notion de type {#sub:Type}
+### La notion de type {#sub:Type}
 
 
-## Les types de fiche standards {#sub:Types}
+### Les types de fiche standards {#sub:Types}
 
 La description formelle de ces types est donnée en \vref{CoreSchema}.
 
 
-### Simple
+#### Simple
 
 Il s'agit d'une fiche a minima : titre et notes.
 
 
-### Référence bibliographique
+#### Référence bibliographique
 
 Ce type de fiche peut représenter différents types d'objets entrant
 dans une bibliographie, qu'il s'agisse de sources primaires ou de
 sources secondaires, de supports imprimés ou audiovisuels. 
 
 
-### Personne (physique ou morale)
+#### Personne (physique ou morale)

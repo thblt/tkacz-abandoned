@@ -1,4 +1,4 @@
-# Sélection et recherche
+## Sélection et recherche
 
 La sélection et la recherche utilisent le mécanisme de la taxinomie
 pour rechercher des notes. Chaque taxon peut être conçu comme un ensembl
@@ -15,7 +15,7 @@ de recherche.
 par une interface graphique d'élaboration des requêtes et/ou une formulation
 des requêtes dans un langage formalisé proche du langage naturel.
 
-## Syntaxe
+### Syntaxe
 
 La totalité des opérateurs peuvent manipuler quatre types de propriétés,
 soit les trois types d'ensembles :
@@ -36,7 +36,7 @@ Il n'existe pas de type \og fiche unique \fg{} ou \og chaîne \fg{}
 : tout est un ensemble, qui peut ne contenir qu'un élément.
 
 
-## Opérateurs de groupement
+### Opérateurs de groupement
 
 ```[ ]```
 :   Sélectionne un taxon par son nom : ```[str]```.
@@ -59,7 +59,7 @@ valeur de type ```set```.
 
 :   Les parenthèses augmentent la priorité d'une expression (cf. \vref{OperateursPriorite}). Rien de très original. L'expression ```A+B*C``` sera évaluée implicitement comme l'union de ```A``` et de l'intersection de ```B``` et ```C```. Avec des parenthèses telles que ```(A+B)*C```, elle renverra l'intersection de ```C``` et de l'union de ```A``` et ```B```.
 
-## Opérateurs binaires
+### Opérateurs binaires
 
 ```:```
 
@@ -110,7 +110,7 @@ valeur de type ```set```.
 :   différence symétrique ($\bigtriangleup$). ```A^B``` renvoie la totalité des fiches de ```A``` ou ```B``` mais pas les deux. ```A^B = (A+B)-(B*A)```. 
 
 
-## Opérateurs unaires
+### Opérateurs unaires
 
 ```-``` 
 :   Inverse. ```-expr``` renvoie la totalité des fiches non contenues dans ```expr```. ```-expr = {*```-expr}
@@ -122,7 +122,7 @@ valeur de type ```set```.
 :   ```expr``` 
 
 
-## Autres termes
+### Autres termes
 
 ```*```
 :   L'ensemble des fiches du dépôt. 
@@ -139,7 +139,7 @@ Isolé, il renvoie l'ensemble des fiches dans lesquelles ce texte a
 :    Caractère d'échappement.
 
 
-## Priorité {#OperateursPriorite}
+### Priorité {#OperateursPriorite}
 
 Les expressions sont évaluées avec les priorités suivantes. (1) et
 (2) précisent qu'il s'agit, respectivement, de la version unaire ou
@@ -154,7 +154,7 @@ Opérateurs & Opérateurs de groupement & Opérateurs unaires & \& & | & - (2) &
 \end{tabular}
 
 
-## Synonymie
+### Synonymie
 
 Pour des raisons de clarté, les opérateurs natifs ont les synonymes
 suivants:
