@@ -1,0 +1,12 @@
+repo									Repository operations
+	info		&cmd_repo_info			Show informations about this repository
+	clear		&cmd_repo_clear			Clear this repository cache and non-necessary data
+
+card
+	new			$cmd_card_new			Create a new card
+	
+shell			&cmd_shell				Runs in shell mode
+
+info									System informations
+	version		&cmd_info_version		Show application version
+	license		&cmd_info_license		Print license
