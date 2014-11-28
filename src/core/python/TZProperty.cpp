@@ -16,43 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                                                                [/licblock] */
 
-#pragma once
+#include <iostream>
 
-#include <boost/log/trivial.hpp>
+#include <boost/python.hpp>
 
-#include "tzbuild.h"
-#include "Version.hpp"
+#include "TZProperty.hpp"
 
-using namespace std;
+namespace bpy = boost::python;
 
 namespace tkacz {
-    class Tkacz {
 
+    template <typename T>
+    TZProperty<T>::TZProperty(T * value) {
+        value = value;
+    }
+
+    class Test {
     public:
-
-        enum class LogLevel : int {
-            _NONE  =   0,
-            TRACE  =   10,
-            DEBUG  =   20,
-            INFO    =   30,
-            WARNING =   50,
-            SEVERE  =   60,
-            FATAL   =   70,
-            _ALL    =   1024
-        };
-
-        const Version version {
-            TZ_VERSION_MAJOR,
-            TZ_VERSION_MINOR,
-            TZ_VERSION_PATCH,
-            Version::Maturity::TZ_VERSION_MATURITY,
-            TZ_VERSION_PREVERSION,
-            TZ_VERSION_NAME };
-
-        static void init();
-
-
-        
+        void hello() {
+            std::cout << "Hello, world!\n";
+        }
     };
-    
+
+    BOOST_PYTHON_MODULE(tkacz) {
+        bpy::class_<Test>("TZTest")
+        .def("hello", &Test::hello);
+    }
+
 }

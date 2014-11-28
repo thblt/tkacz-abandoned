@@ -16,43 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                                                                [/licblock] */
 
-#pragma once
+#include <exception>
 
-#include <boost/log/trivial.hpp>
-
-#include "tzbuild.h"
-#include "Version.hpp"
-
-using namespace std;
+#define TZ_BASIC_EXCEPTION(NAME, PARENT) class NAME : public PARENT { public: NAME(const char * what = #NAME) : PARENT(wtf) {} };
 
 namespace tkacz {
-    class Tkacz {
-
+	class Exception : public std::exception {
     public:
+		const char * wtf;
 
-        enum class LogLevel : int {
-            _NONE  =   0,
-            TRACE  =   10,
-            DEBUG  =   20,
-            INFO    =   30,
-            WARNING =   50,
-            SEVERE  =   60,
-            FATAL   =   70,
-            _ALL    =   1024
-        };
+        Exception(const char * wtf) : wtf (wtf) {};
+	};
 
-        const Version version {
-            TZ_VERSION_MAJOR,
-            TZ_VERSION_MINOR,
-            TZ_VERSION_PATCH,
-            Version::Maturity::TZ_VERSION_MATURITY,
-            TZ_VERSION_PREVERSION,
-            TZ_VERSION_NAME };
+    /*************************
+     * Filesystem exceptions *
+     *************************/
+    TZ_BASIC_EXCEPTION ( FSException, 					Exception );
+    TZ_BASIC_EXCEPTION ( NotADirectoryException, 		FSException);
+    TZ_BASIC_EXCEPTION ( NotAFileException, 			FSException);
+    TZ_BASIC_EXCEPTION ( NotEmptyException, 			FSException);
+    TZ_BASIC_EXCEPTION ( NotWritableException, 			FSException);
+    TZ_BASIC_EXCEPTION ( NotReadableException, 			FSException);
+    TZ_BASIC_EXCEPTION ( PathDoesNotExistException, 	FSException);
 
-        static void init();
-
-
-        
-    };
-    
 }

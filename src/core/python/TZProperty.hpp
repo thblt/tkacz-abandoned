@@ -18,41 +18,20 @@
 
 #pragma once
 
-#include <boost/log/trivial.hpp>
-
-#include "tzbuild.h"
-#include "Version.hpp"
-
-using namespace std;
-
 namespace tkacz {
-    class Tkacz {
-
+	
+	template <typename T>
+	class TZProperty {
     public:
+        TZProperty(T * value);
+        T getter();
+        T setter(T value);
+        T deleter();
 
-        enum class LogLevel : int {
-            _NONE  =   0,
-            TRACE  =   10,
-            DEBUG  =   20,
-            INFO    =   30,
-            WARNING =   50,
-            SEVERE  =   60,
-            FATAL   =   70,
-            _ALL    =   1024
-        };
-
-        const Version version {
-            TZ_VERSION_MAJOR,
-            TZ_VERSION_MINOR,
-            TZ_VERSION_PATCH,
-            Version::Maturity::TZ_VERSION_MATURITY,
-            TZ_VERSION_PREVERSION,
-            TZ_VERSION_NAME };
-
-        static void init();
+    protected:
+        T *value, *defaultValue;
+	};
 
 
-        
-    };
-    
+	
 }
