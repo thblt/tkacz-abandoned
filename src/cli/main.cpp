@@ -42,54 +42,51 @@ bool shell_mode = false;
 
 Tkacz::LogLevel logLevel = Tkacz::LogLevel::INFO;
 
-const void cmd_root(bpo::variables_map args) {
-  std::cout << "Root executed!\n";
-}
-
 const void cmd_repo_init(bpo::variables_map args) {
-  Repository::initialize(args["path"].as<bfs::path>());
+    Repository::initialize(args["path"].as<bfs::path>());
 }
 
 const void cmd_shell(bpo::variables_map args) { shell_mode = true; }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 
-  Command root{};
-  int globalOption = root.addOptionGroup("Global options");
-  root.name = "Tkacz";
-  root.description = "A weird reference and knowledge management system";
-  root.lastWords = "invoke with:\t-h [command [subcommand]]\tto get help on a "
-                   "specific command.";
+    Command root{};
+    int globalOption = root.addOptionGroup("Global options");
+    root.name = "Tkacz";
+    root.description = "A weird reference and knowledge management system";
+    root.lastWords =
+        "invoke with:\t-h [command [subcommand]]\tto get help on a "
+        "specific command.";
 
-  root.addOption(globalOption, "verbose,v",
-                 "Throw lots and lots of garbage on stdout");
-  root.addOption(globalOption, "quiet", "Completely disable output");
-  root.addOption(globalOption, "no-interaction",
-                 "No interaction (script) mode");
+    root.addOption(globalOption, "verbose,v",
+                   "Throw lots and lots of garbage on stdout");
+    root.addOption(globalOption, "quiet", "Completely disable output");
+    root.addOption(globalOption, "no-interaction",
+                   "No interaction (script) mode");
 
-  // Root level commands
-  Command shell{&cmd_shell, false};
-  shell.description = "Start an interactive shell";
+    // Root level commands
+    Command shell{&cmd_shell, false};
+    shell.description = "Start an interactive shell";
 
-  // Repository operations
-  Command repo_init{&cmd_repo_init, false};
-  repo_init.description = "Initializes a new Tkacz repository";
-  repo_init.addPositionalArg("path",
-                             bpo::value<bfs::path>()->default_value("."), 1);
+    // Repository operations
+    Command repo_init{&cmd_repo_init, false};
+    repo_init.description = "Initialize a new Tkacz repository";
+    repo_init.addPositionalArg("path",
+                               bpo::value<bfs::path>()->default_value("."), 1);
 
-  root.addSubcommand("init", &repo_init);
+    root.addSubcommand("init", &repo_init);
 
-  root.addSubcommand("shell", &shell);
-  root.addSubcommand("init", &repo_init);
+    root.addSubcommand("shell", &shell);
+    root.addSubcommand("init", &repo_init);
 
-  try {
-    root.execute(argc, argv);
-  } catch (Exception &e) {
-    std::cout << "Fatal error (uncaught exception): ";
-    std::cout << e.what() << std::endl;
-  }
+    try {
+        root.execute(argc, argv);
+    } catch (Exception& e) {
+        std::cout << "Fatal error (uncaught exception): ";
+        std::cout << e.what() << std::endl;
+    }
 
-  if (shell_mode) {
-    std::cout << "Will do shell\n";
-  }
+    if (shell_mode) {
+        std::cout << "Will do shell\n";
+    }
 }
