@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+\documentclass[onesided,11pt]{book}
 
 \usepackage[french]{babel}
 \frenchbsetup{og=«, fg=»}
@@ -31,7 +31,7 @@
 \geometry{verbose,margin=2.5cm}
 
 % Typography
-\usepackage[runin]{abstract}
+%\usepackage[runin]{abstract}
 \usepackage{datetime}
 \usepackage{dirtree}
 \usepackage{float}
@@ -98,6 +98,8 @@
 \setlength{\parindent}{0cm}
 \setlength{\parskip}{\smallskipamount}
 
+\newcommand\deprecated{\fbox{\textbf{OBSOLÈTE}}\hspace{1em}}
+
 \begin{document}
 
 \title{Tkacz: un~système de~gestion de~connaissances}
@@ -111,27 +113,18 @@
 
 \maketitle
 
-\begin{abstract}
-Ce document présente les fonctions fondamentales d'un outil d'organisation
-de données en recherche en histoire. Ce logiciel, en cours de conception,
-est écrit dans le cadre de ma thèse, c'est-à-dire qu'il vise à couvrir
-tout particulièrement les besoins d'un historien des sciences qui
-travaille sur la période moderne.
-\end{abstract}
-\begin{center}\includegraphics[width=1in]{../../icons/Tkacz.iconset/icon_512x512@2x.png}\end{center}
+%\begin{center}\includegraphics[width=1in]{../../icons/Tkacz.iconset/icon_512x512@2x.png}\end{center}
 
-\bigskip\begin{spacing}{.7}
-\makeatletter
-    \setcounter{tocdepth}{2}
-    \@starttoc{toc}
-\makeatother
-\end{spacing}
+% \bigskip\begin{spacing}{.7}
+% \makeatletter
+%     \setcounter{tocdepth}{2}
+%     \@starttoc{toc}
+% \makeatother
+% \end{spacing}
 
-\clearpage
+%\newcommand\chapter[1]{\part{#1}}
 
-\newcommand\chapter[1]{\part{#1}}
-
-\newcommand\deprecated{\fbox{\textbf{OBSOLÈTE}}\hspace{1em}}
+\tableofcontents
 
 $body$
 

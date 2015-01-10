@@ -1,5 +1,5 @@
 
-## Syntaxe des fiches
+# Syntaxe des fiches
 
 La syntaxe est dérivée de Markdown et d'autres langages de formatage rapide. Il y a néanmoins quelques différences dans le comportement standard du parser:
 
@@ -18,7 +18,7 @@ La syntaxe est dérivée de Markdown et d'autres langages de formatage rapide. I
 De plus, un certain nombre d'extensions spécifiques sont ajoutées.
 
 
-### Association clé-valeur
+## Association clé-valeur
 
 Toute fiche commence généralement par un préambule qui expose formellement son contenu. Ce préambule prend la forme 
 
@@ -35,7 +35,7 @@ Toute fiche commence généralement par un préambule qui expose formellement so
 :death 25 juin 1984 @ Paris
 ~~~
 
-### Liens et relations
+## Liens et relations
 
 ~~~ tkacz
 <> friend [Didier.Éribon]

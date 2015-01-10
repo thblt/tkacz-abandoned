@@ -41,12 +41,11 @@ doc/api/**/*
 
 # LaTeX artifacts
 doc/**/textput.log
-doc/**/*.log
-doc/**/*.pdf
 doc/**/*.aux
 doc/**/*.fdb_latexmk
 doc/**/*.fls
+doc/**/*.log
 doc/**/*.out
+doc/**/*.out.tex
+doc/**/*.pdf
 doc/**/*.toc
-
-doc/project/*.tex

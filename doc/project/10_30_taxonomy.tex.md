@@ -1,4 +1,4 @@
-## L'organisation des fiches : la taxinomie
+# L'organisation des fiches : la taxinomie
 
 Cette organisation se fait sous la forme de **taxinomies**. Une
 taxinomie est une structure hiérarchique, comparable à un système

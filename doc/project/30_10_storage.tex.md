@@ -1,8 +1,8 @@
-## Format de stockage
+# Format de stockage
 
 Un dépôt Tkacz est un répertoire du système de fichiers, qui n'est pas destiné à être manipulé par l'utilisateur. Il peut être présenté comme un bundle (sur OS X) ou stocké zippé (sur les autres systèmes) pour empêcher toute manipulation destructrice. 
 
-### Format d'un dépôt
+## Format d'un dépôt
 
 Un dépôt combine un dépôt git[^depot] et une base de données SQLite qui sert de cache. Un dépôt vide a donc la structure suivante:
 
@@ -17,7 +17,7 @@ Un dépôt combine un dépôt git[^depot] et une base de données SQLite qui ser
 .2 cache\DTcomment{Fichiers de cache (non gérés par git)}.
 .3 db\DTcomment{Fichiers SQLite}.
 .2 ….
-.2 manifest\DTcomment{Déclarations Tkacz de base (Yaml)}.
+.2 manifest\DTcomment{Déclarations Tkacz de base (JSON)}.
 }
 \end{figure}
 
@@ -44,7 +44,7 @@ de la structure détaillée ci-dessous. évidemment
 
 Les clés ```tkacz```, ```repository``` et ```core``` (options du schéma standard) et de façon générale toutes les clés racines vérifiant ```[a-zA-Z]+[a-zA-Z0-9_]*``` sont réservées, les extensions ou les schémas tiers peuvent inscrire leur paramétrage dans des clés au format ```com.domaine.nom``` (à la Java).
 
-### Stockage des fiches
+## Stockage des fiches
 
 Les fiches sont sauvegardées comme des fichiers gérés par Git, dans des dossiers correspondant à leurs types, par exemple \directory{person / collective}. Leur nom est un numéro attribué séquentiellement pour le dépôt entier (indépendemment du type donc). Tous les noms vérifiant ```[0-9]+``` sont donc réservés pour les fiches au niveau du suivi des versions. 
 
@@ -70,9 +70,9 @@ Si un éditeur externe est utilisé, un commit est réalisé à chaque modificat
 
 [^edext]: Il est plausible qu'il soit en fait impossible d'utiliser un éditeur pour lequel Tkacz ne puisse pas suivre chaque modification. En effet, la fonctionnalité fondamentale de suivi des ajouts et modifications et de leur rattachement à des emplacements précis des sources nécessite un suivi extrêment précis des modifications. Autrement dit, seul peut sans doute être utilisé un éditeur qui sauvegarde à chaque caractère modifié.
 
-#### Format des messages de commit
+### Format des messages de commit
 
-##### Commits sur modification
+#### Commits sur modification
 
 Le format d'un message de commit en cours d'édition est une représentation JSON (minimisée) de la structure:
 
@@ -102,7 +102,7 @@ Avec cette réserve que le format de  ```position```, s'il est obligatoirement u
 
 Si une fiche est modifiée sans référence ouverte, le message de commit ne contient que la clé ```operation```.
 
-##### Commits vides
+#### Commits vides
 
 Des messages supplémentaires sont produits à l'ouverture et à la fermeture d'une ressource, avec des commit vide:
 
@@ -132,7 +132,7 @@ Un dernier type de message permet d'associer une donnée déjà saisie à une au
 
 ```from``` et ```to``` sont ici des paires ligne/colonne.
 
-#### Calcul des diffs, suivi de l'origine et déplacement de paragraphes
+### Calcul des diffs, suivi de l'origine et déplacement de paragraphes
 
 Le *déplacement* de blocs de texte est un problème sérieux que les diff classiques ne permettent pas de résoudre. Or, un bloc déplacé doit continuer à être associé à son origine. Plusieurs solutions semblent possibles:
 
@@ -140,6 +140,6 @@ Le *déplacement* de blocs de texte est un problème sérieux que les diff class
  
  * “Lester” les copies/coupes avec les informations d'origine de la source et les porter dans le commit lors du collage. *Cette option exclut absolument d'utiliser un autre éditeur de texte que celui de Tkacz*.
 
-### Structure du cache
+## Structure du cache
 
 La totalité des données utiles se trouve dans les fiches elle-même, ce qui signifie que seul le dépôt git doit être copié pour cloner entièrement 

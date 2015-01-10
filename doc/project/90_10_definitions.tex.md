@@ -1,22 +1,22 @@
 
-## Définitions
+# Définitions
 
 Ce lexique décrit les termes employés dans la présent document, le
 lexique anglais équivalent pour l'implémentation, et le lexique anglais
 et français l'interface graphique quand ils divergent des termes retenus
 par ailleurs.
 
-### Termes employés dans ce document
+## Termes employés dans ce document
 
 %\begin{multicols}{2}
 
-##### Attribut
+#### Attribut
 
-##### Dépôt
+#### Dépôt
 
-##### Fiche
+#### Fiche
 
-##### Lien 
+#### Lien 
 
 Un lien est un type particulier d'attribut qui, au lieu d'être une
 donnée stockée en place, est un renvoi vers une autre fiche. L'attribut
@@ -24,26 +24,26 @@ donnée stockée en place, est un renvoi vers une autre fiche. L'attribut
 vers une fiche de type *personne*.
 
 
-##### Nature 
+#### Nature 
 
 L'équivalent pour une relation du type d'une fiche.
 
 
-##### Relation
+#### Relation
 {#relation}
 
 
-##### Schéma
+#### Schéma
 
 
-##### Taxinomie
+#### Taxinomie
 
 
-##### Type
+#### Type
 
 %\end{multicols}
 
-### Termes anglais du code source 
+## Termes anglais du code source 
 
 \begin{multicols}{3}
 attribute
