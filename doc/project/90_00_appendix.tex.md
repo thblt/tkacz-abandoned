@@ -1,4 +1,3 @@
 
-\part{Annexes}
-
 \appendix
+\part{Annexes}

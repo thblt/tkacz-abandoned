@@ -1,0 +1,13 @@
+;; This logfile was generated automatically by `xindy'
+;; at 14.01.2015  23:07:33
+;; Indexstyle: "/var/folders/kc/q8wj6tbj0h9frydpyj7rw0300000gn/T/x1aO4lNayq", Rawindex: "/var/folders/kc/q8wj6tbj0h9frydpyj7rw0300000gn/T/3wvHjIveb3", Output: "document.out.gls"
+
+
+Building indexentry-tree:
+Hierdepth of index is :TREE
+
+sort-indexentries: (FORWARD BACKWARD FORWARD FORWARD)
+
+Forming letter-groups:
+sort-indexentries: (FORWARD BACKWARD FORWARD FORWARD)
+Letter-group: "Ë—´€Ú¨Ã¼" -> "R"

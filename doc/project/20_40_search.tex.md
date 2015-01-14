@@ -1,7 +1,7 @@
 # Sélection et recherche
 
 La sélection et la recherche utilisent le mécanisme de la taxinomie
-pour rechercher des notes. Chaque taxon peut être conçu comme un ensembl
+pour rechercher des notes. Chaque taxon peut être conçu comme un ensemble
 de fiches. Les expressions de recherche prennent la forme suivante:
 
 \texttt{{[}Publications{]} 'Michel Foucault' date < \{3 jan 1950\}}

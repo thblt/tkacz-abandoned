@@ -26,6 +26,9 @@
 \usepackage{berasans}
 \usepackage{inconsolata}
 
+\usepackage{amsmath}
+\usepackage{amssymb}
+
 % Inputs
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -37,6 +40,7 @@
 \usepackage{dirtree}
 \usepackage{float}
 \usepackage{framed}
+\usepackage[toc,xindy]{glossaries}
 \usepackage{graphicx}
 \usepackage[os=mac, mackeys=symbols]{menukeys}
 \usepackage{microtype}
@@ -90,6 +94,10 @@
 \newcommand\deprecated{\fbox{\textbf{OBSOLÈTE}}\hspace{1em}}
 
 \setcounter{tocdepth}{2}
+\makeglossaries
+
+
+
 % Document commands
 
 \newcommand\tzcard[1]{%
@@ -115,6 +123,12 @@
 \date{}
 
 \maketitle
+
+\clearpage
+
+\null\vfill
+
+Copyright © 2012--2015 Thibault Polge. Tous droits réservés. Ce document est distribué selon les termes de la licence Creative Commons BY-SA, qui peut être consultée à l'adresse \url{https://creativecommons.org/licenses/by-sa/2.0/fr/}. 
 
 %\begin{center}\includegraphics[width=1in]{../../icons/Tkacz.iconset/icon_512x512@2x.png}\end{center}
 

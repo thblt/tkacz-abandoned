@@ -1,18 +1,21 @@
+
 # Organisation en graphe : liens et relations
 
-Une fonction fondamentale et originale de Tkacz est sa capacité à décrire des relations complexes entre des fiches. Ces relations sont sémantiques, et organisent un dépôt Tkacz sous la forme d'un graphe. 
+\newglossaryentry{relation}{ 
+  name=relation,
+  plural=relations,
+  description={is a programmable machine that receives input,
+               stores and manipulates data, and provides
+               output in a useful format}
+}
+
+Une fonction fondamentale et originale de Tkacz est sa capacité à décrire des \glspl{relation} complexes entre des fiches. Ces relations sont sémantiques, et organisent un dépôt Tkacz sous la forme d'un graphe. 
 
 Au plus simple, une relation est un simple pointeur d'une fiche vers une fiche cible. L'auteur d'un document, par exemple, est un lien vers une fiche personne, et pas une chaîne de caractères. Certaines relations sont plus élaborées : un texte publié sous pseudonyme verra l'auteur attribué par un lien vers la fiche de personne, mais ce lien stockera aussi le pseudonyme retenu. Une attribution d'auteur peut-être douteuse, ou au contraire certaine pour un texte publié anonymement. Ces informations sont stockées au niveau de la relation.
 
 
 
 ## Le lien simple 
-
-
-Le corollaire est généralement implicite. Il peut n'être fixable que
-depuis un seul des membres de la relation possible. Le lien d'auteur,
-par exemple, n'est manipulable que depuis la chose dont *x* est
-l'auteur, et pas depuis *x*. 
 
 
 ## La relation
@@ -38,6 +41,12 @@ aussi avoir un **corollaire**. La relation «A est membre de B»
 Une relation est de type «cite»  ou «évoque» , qui
 permet de commenter un livre en le liant à ce qui fait son objet. 
 
-## Corollaires et relations symétriques
+Formellement, une relation est toujours un prédicat à deux places et représente un nœud d'un graphe. Lorsque une fiche présente la même relation a plusieurs autres fiches, la relation est assignée autant de fois qu'il y a de fiches cibles.
 
-Une relation peut avoir un **corollaire**, c'est-à-dire que la liaison de A et B implique une relation (de même nature ou d'une autre nature) de B vers A. Dans l'exemple de l'auteur, le lien «a pour auteur» a pour corollaire «est auteur de». Une relation dont le corollaire est la même relation dans l'autre sens est une relation symétrique.
+## Corollaires, corollaires purs et relations symétriques
+
+Une relation peut avoir un *corollaire*, c'est-à-dire que la relation de A et B implique une relation (de même nature ou d'une autre nature) de B vers A. Dans l'exemple de l'auteur, le lien «a pour auteur» a pour corollaire «est auteur de». Un corollaire est toujours attribué automatiquement, puisqu'il est comme une conséquence logique de la relation dont le corollaire : $Ax,y \iff Bx,y$. 
+
+Une relation est un pur corollaire lorsqu'elle ne peut pas être assignée directement : «est l'auteur de» est un pur corollaire, qui ne peut être affecté à une fiche personne, mais dérive de l'affectation de la relation «auteur» d'une fiche document à une fiche personne.
+
+Une relation dont le corollaire est la même relation dans l'autre sens est une relation symétrique. 
