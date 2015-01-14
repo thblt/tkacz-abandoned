@@ -32,7 +32,7 @@ soit les trois types d'ensembles :
 Et un type complexe, repéré par les accolades, spécifiques à certain
 type d'attributs, par exemple les dates.
 
-Il n'existe pas de type \og fiche unique \fg{} ou \og chaîne \fg{}
+Il n'existe pas de type « fiche unique » ou « chaîne \fg{}
 : tout est un ensemble, qui peut ne contenir qu'un élément.
 
 
@@ -147,7 +147,7 @@ binaire d'un opérateur.
 
 +----------+------------+
 | Priorité | Opérateurs |
-+----------+------------+
++============+==========+
 | 1        | Opérateurs de groupement
 +----------+------------+
 | 2        | Opérateurs unaires
@@ -157,6 +157,8 @@ binaire d'un opérateur.
 | 4        | - (binaire)
 +----------+------------+
 | 5        | /
+
+Table: Priorité des opérateurs de recherche
 
 
 
@@ -183,7 +185,8 @@ suivants:
 | *          | all
 +------------+-----------+
 
-
+Table: Synonymes des opérateurs de recherche
 
 Les versions localisées pourraient implémenter ces synonymes dans
 leur langue.
+

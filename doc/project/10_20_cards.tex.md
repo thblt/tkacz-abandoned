@@ -1,4 +1,4 @@
-# L'objet fondamental : la fiche
+# L'objet fondamental : la fiche {#chap:Fiches}
 
 ## L'objet fiche
 
@@ -61,51 +61,6 @@ du nom. Ce type a aussi du code qui lui permet de lire et de mettre
 en forme un nom.
 
  -  Il peut être un **lien** vers une autre fiche d'un type donné. 
-
-### Liens et relations
-
-Il y a deux façons de lier une fiche à une autre : le lien simple
-et l'expression d'une relation.
-
-
-### Le lien simple 
-
-est un \og pointeur \fg{} vers la fiche cible. L'auteur d'un document,
-par exemple, est un lien vers une fiche personne, et pas une simple
-séquence de caractères. Le lien peut avoir un **corollaire**,
-c'est-à-dire que la liaison de A et B implique une relation d'une
-autre nature de B vers A. Dans l'exemple de l'auteur, le lien \og a
-pour auteur \fg{} a pour corollaire \og est auteur de \fg{}. 
-
-Le corollaire est généralement implicite. Il peut n'être fixable que
-depuis un seul des membres de la relation possible. Le lien d'auteur,
-par exemple, n'est manipulable que depuis la chose dont *x* est
-l'auteur, et pas depuis *x*. 
-
-
-### La relation
-
-est un attribut complexe, qui permet de lier des fiches entre elles
-de façon moins formelle et plus fine. Une relation a une **nature**,
-qui est l'équivalent du type d'une fiche. Dans certains cas, un lien
-peut être remplacé par une relation. Par exemple, dans un document
-historique, l'attribution de l'auteur peut être douteuse — \og auteur
-probable \fg{} est une relation, car le lien simple ne suffit pas
-— il faut sans doute préciser la nature du doute, les différentes
-sources, etc.
-
-Une relation peut aussi décrire des relations entre entités : \og membre
-de \fg{} ou \og ami de \fg{}, \og frère de \fg{}, etc.
-
-Une relation peut être réciproque ou non. Dans l'exemple qui précède,
-les deux dernières sont nécessairement réciproques. Une relation peut
-aussi avoir un **corollaire**. La relation ```A est membre de B```
-(dans cet exemple, B est par exemple une personne morale) a pour corollaire
-\og B a comme membre A \fg{}
-
-Une relation est de type \og cite \fg{} ou \og évoque \fg{}, qui
-permet de commenter un livre en le liant à ce qui fait son objet. 
-
 
 ## La notion de type {#sub:Type}
 

@@ -24,13 +24,11 @@ informations sur des fiches spécifiques. Ces informations peuvent
 être une liste de sources à consulter citées ou évoquées dans le document,
 des données nouvelles sur une personne, etc.
 
-Tkacz a pour objectifs:
-
- * De faciliter la manipulation de données sémantiquement structurées,
+Tkacz a pour objectifs de faciliter la manipulation de données sémantiquement structurées,
 sans que cette structure ne soit un obstacle à l'enregistrement d'informations
-complexes.
- * De réduire la nécessité d'une reprise (temps 2) des informations acquises
-sur un document sur de nouveaux supports, en facilitant l'orga
- * De maintenir vivant le graphe des relations entre informations, autrement
-dit de ne pas disposer que de fiches isolées mais toujours un \og répertoire \fg{}
+complexes ; 
+de réduire la nécessité d'une reprise (temps 2) des informations acquises
+sur un document sur de nouveaux supports, en en facilitant l'organisation et le tri ; 
+de maintenir «vivant» le graphe des relations entre informations, autrement
+dit de ne pas disposer que de fiches isolées mais toujours un «répertoire»
 vivant et organisé.
