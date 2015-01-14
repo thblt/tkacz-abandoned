@@ -1,5 +1,9 @@
 \documentclass[french]{book}
 
+% Geometry
+% \usepackage[a4paper]{geometry}
+% \geometry{verbose,margin=2.5cm}
+
 \usepackage{babel}
 \frenchbsetup{og=«, fg=»}
 
@@ -26,10 +30,6 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
-% Geometry
-\usepackage[a4paper]{geometry}
-\geometry{verbose,margin=2.5cm}
-
 % Typography
 %\usepackage[runin]{abstract}
 \usepackage{datetime}
@@ -40,11 +40,11 @@
 \usepackage{longtable}
 \usepackage[os=mac, mackeys=symbols]{menukeys}
 \usepackage{microtype}
-\usepackage[lof,toc]{multitoc}
-    \setlength{\columnseprule}{0.5pt}
-\usepackage[compact]{titlesec}
+% \usepackage[lof,toc]{multitoc}
+%     \setlength{\columnseprule}{0.5pt}
+% \usepackage[compact]{titlesec}
 \usepackage{scrtime}
-\usepackage{setspace}
+% \usepackage{setspace}
 \usepackage[normalem]{ulem}
 \usepackage{color}
 
@@ -100,6 +100,8 @@
 
 \newcommand\deprecated{\fbox{\textbf{OBSOLÈTE}}\hspace{1em}}
 
+\setcounter{tocdepth}{2}
+
 \begin{document}
 
 \title{Tkacz: un~système de~gestion de~connaissances}
@@ -124,8 +126,9 @@
 
 %\newcommand\chapter[1]{\part{#1}}
 
+$body$
+
 \tableofcontents
 
-$body$
 
 \end{document}

@@ -145,13 +145,19 @@ Les expressions sont évaluées avec les priorités suivantes. (1) et
 (2) précisent qu'il s'agit, respectivement, de la version unaire ou
 binaire d'un opérateur.
 
-\begin{tabular}{|l||l|l|l|l|l|l|}
-\hline 
-Priorité & 0 & 1 & 2 & 3 & 4 & 5\tabularnewline
-\hline 
-Opérateurs & Opérateurs de groupement & Opérateurs unaires & \& & | & - (2) & /\tabularnewline
-\hline 
-\end{tabular}
++----------+------------+
+| Priorité | Opérateurs |
++----------+------------+
+| 1        | Opérateurs de groupement
++----------+------------+
+| 2        | Opérateurs unaires
++----------+------------+
+| 3        | &
++----------+------------+
+| 4        | - (binaire)
++----------+------------+
+| 5        | /
+
 
 
 ## Synonymie
@@ -159,13 +165,25 @@ Opérateurs & Opérateurs de groupement & Opérateurs unaires & \& & | & - (2) &
 Pour des raisons de clarté, les opérateurs natifs ont les synonymes
 suivants:
 
-\begin{tabular}{|c||c|c|c|c|c|c|c|}
-\hline 
-Opérateur & : & :: & \& & | & - & \textbackslash{} & {*}\tabularnewline
-\hline 
-Synonymes & in &  & and & or & andnot & xor & all\tabularnewline
-\hline 
-\end{tabular}
++------------+-----------+
+| Opérateurs | Synonymes |
++============+===========+
+| :          | in
++------------+-----------+
+| ::         | 
++------------+-----------+
+| &          | and 
++------------+-----------+
+| |          | or
++------------+-----------+
+| -          | andnot
++------------+-----------+
+| \          | xor
++------------+-----------+
+| *          | all
++------------+-----------+
+
+
 
 Les versions localisées pourraient implémenter ces synonymes dans
 leur langue.

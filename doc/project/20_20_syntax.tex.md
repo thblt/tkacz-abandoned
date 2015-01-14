@@ -7,7 +7,7 @@ La syntaxe est dérivée de Markdown et d'autres langages de formatage rapide. I
  
  * Un paragraphe indenté de quatre espaces ou plus n'est pas traité comme un bloc de code, mais est simplement indenté d'un niveau. Les blocs de code utilisent exclusivement la syntaxe «grillagée», en encadrant le bloc de ```~~~``` et en indiquant éventuellement le langage après la première série de tildes.
 
- * La syntaxe des liens est supprimée.
+ * La syntaxe des liens est supprimée. Les URLs sont traitées comme des liens.
 
  * La syntaxe des blocs de description est modifiée.
  

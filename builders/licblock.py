@@ -3,7 +3,7 @@
 
 #                                                                 [licblock]
 # This file is part of Tkacz. 
-# Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
+# Copyright (c) 2012-2015 Thibault Polge. All rights reserved.
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -64,9 +64,9 @@ ws = re.compile("\s+")
 
 def usage(cmdName):
     print("Usage:\n\t{0} license file […file]\n".format(cmdName))
-    print("Options:")
+    print("Arguments:")
     print("\tlicense\tThe license text to insert.")
-    print("\tfile\tThe files to process. If the given file is a directory,\n\t\tit will be search recursively.")
+    print("\tfile\tThe files to process. If the given file is a directory,\n\t\tit will be searched recursively.")
 
 def readFile(path):
     ret = []
