@@ -8,8 +8,6 @@ par ailleurs.
 
 ## Termes employés dans ce document
 
-%\begin{multicols}{2}
-
 #### Attribut
 
 #### Dépôt
@@ -41,11 +39,8 @@ L'équivalent pour une relation du type d'une fiche.
 
 #### Type
 
-%\end{multicols}
-
 ## Termes anglais du code source 
 
-\begin{multicols}{3}
 attribute
 :   \cf{attribut}
 
@@ -67,5 +62,3 @@ repository
 schema
 :   A Schema implements a factory and a visitor. 
 
-
-\end{multicols}
