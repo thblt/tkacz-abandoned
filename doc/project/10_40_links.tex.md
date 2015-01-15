@@ -1,15 +1,8 @@
 
 # Organisation en graphe : liens et relations
 
-\newglossaryentry{relation}{ 
-  name=relation,
-  plural=relations,
-  description={is a programmable machine that receives input,
-               stores and manipulates data, and provides
-               output in a useful format}
-}
 
-Une fonction fondamentale et originale de Tkacz est sa capacité à décrire des \glspl{relation} complexes entre des fiches. Ces relations sont sémantiques, et organisent un dépôt Tkacz sous la forme d'un graphe. 
+Une fonction fondamentale et originale de Tkacz est sa capacité à décrire des relations complexes entre des fiches. Ces relations sont sémantiques, et organisent un dépôt Tkacz sous la forme d'un graphe. 
 
 Au plus simple, une relation est un simple pointeur d'une fiche vers une fiche cible. L'auteur d'un document, par exemple, est un lien vers une fiche personne, et pas une chaîne de caractères. Certaines relations sont plus élaborées : un texte publié sous pseudonyme verra l'auteur attribué par un lien vers la fiche de personne, mais ce lien stockera aussi le pseudonyme retenu. Une attribution d'auteur peut-être douteuse, ou au contraire certaine pour un texte publié anonymement. Ces informations sont stockées au niveau de la relation.
 

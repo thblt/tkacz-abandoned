@@ -61,25 +61,3 @@ du nom. Ce type a aussi du code qui lui permet de lire et de mettre
 en forme un nom.
 
  -  Il peut être un **lien** vers une autre fiche d'un type donné. 
-
-## La notion de type {#sub:Type}
-
-
-## Les types de fiche standards {#sub:Types}
-
-La description formelle de ces types est donnée en \vref{CoreSchema}.
-
-
-### Simple
-
-Il s'agit d'une fiche a minima : titre et notes.
-
-
-### Référence bibliographique
-
-Ce type de fiche peut représenter différents types d'objets entrant
-dans une bibliographie, qu'il s'agisse de sources primaires ou de
-sources secondaires, de supports imprimés ou audiovisuels. 
-
-
-### Personne (physique ou morale)

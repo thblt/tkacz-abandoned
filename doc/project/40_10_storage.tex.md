@@ -14,8 +14,9 @@ Un dépôt combine un dépôt git[^depot] et une base de données SQLite qui ser
 .1 .git.
 .2 …\DTcomment{Dossier git, non géré par Tkacz}.
 .1 .tkacz.
-.2 cache\DTcomment{Fichiers de cache (non gérés par git)}.
+.2 cache\DTcomment{Fichiers de cache}.
 .3 db\DTcomment{Fichiers SQLite}.
+.2 schemas\DTcomment{Code Python des schémas}
 .2 ….
 .2 manifest\DTcomment{Déclarations Tkacz de base (JSON)}.
 }

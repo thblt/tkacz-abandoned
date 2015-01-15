@@ -1,3 +1,4 @@
+
 # Organisation en arbre : la taxinomie
 
 Cette organisation se fait sous la forme de **taxinomies**. Une

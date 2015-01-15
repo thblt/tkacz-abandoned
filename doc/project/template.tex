@@ -1,10 +1,8 @@
-\documentclass[french]{book}
+\documentclass[11pt,french]{book}
+%\usepackage[a4paper, verbose, margin=2.5cm]{geometry}
+\usepackage[a4paper]{geometry}
 
-% Geometry
-% \usepackage[a4paper]{geometry}
-% \geometry{verbose,margin=2.5cm}
-
-\usepackage[frenchb]{babel}
+\usepackage{babel}
 \frenchbsetup{og=«, fg=»}
 
 \usepackage{ifxetex,ifluatex}
@@ -40,7 +38,7 @@
 \usepackage{dirtree}
 \usepackage{float}
 \usepackage{framed}
-\usepackage[toc,xindy]{glossaries}
+%\usepackage[toc,xindy]{glossaries}
 \usepackage{graphicx}
 \usepackage[os=mac, mackeys=symbols]{menukeys}
 \usepackage{microtype}
@@ -94,7 +92,8 @@
 \newcommand\deprecated{\fbox{\textbf{OBSOLÈTE}}\hspace{1em}}
 
 \setcounter{tocdepth}{2}
-\makeglossaries
+\setcounter{secnumdepth}{1}
+%\makeglossaries
 
 
 
@@ -115,20 +114,15 @@
 \title{Tkacz}
 %\subtitle{Un~système de~gestion de~connaissances}
 \author{Thibault Polge%
-%\thanks{Doctorant contractuel chargé d'enseignement en philosophie (PhiCo/EXeCO, ED
-%280, EA 3562, Paris 1 Panthéon Sorbonne). \protect\href{http://mailto:thibault.polge@univ-paris1.fr}{thibault.polge@univ-paris1.fr}%}
+\thanks{Doctorant contractuel chargé d'enseignement en philosophie (PhiCo/EXeCO, ED
+280, EA 3562, Paris 1 Panthéon Sorbonne). \href{mailto:thibault.polge@univ-paris1.fr}{thibault.polge@univ-paris1.fr}
+}
 }
 
-%\date{Révision: \today{} à \currenttime.}
+\date{Révision: \today{} à \currenttime.}
 \date{}
 
 \maketitle
-
-\clearpage
-
-\null\vfill
-
-Copyright © 2012--2015 Thibault Polge. Tous droits réservés. Ce document est distribué selon les termes de la licence Creative Commons BY-SA, qui peut être consultée à l'adresse \url{https://creativecommons.org/licenses/by-sa/2.0/fr/}. 
 
 %\begin{center}\includegraphics[width=1in]{../../icons/Tkacz.iconset/icon_512x512@2x.png}\end{center}
 
