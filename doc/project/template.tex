@@ -1,4 +1,4 @@
-\documentclass[11pt, french, oneside]{memoir}
+\documentclass[11pt, french, oneside]{book}
 %\usepackage[a4paper, verbose, margin=2.5cm]{geometry}
 \usepackage[a4paper]{geometry}
 
@@ -38,7 +38,6 @@
 \usepackage{dirtree}
 \usepackage{float}
 \usepackage{framed}
-%\usepackage[toc,xindy]{glossaries}
 \usepackage{graphicx}
 \usepackage[os=mac, mackeys=symbols]{menukeys}
 \usepackage{microtype}
@@ -93,9 +92,12 @@
 
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{1}
-%\makeglossaries
 
+% Glossaries
 
+\usepackage[xindy, nonumberlist]{glossaries}
+\makeglossaries
+\input {glossary.tex}
 
 % Document commands
 
@@ -136,9 +138,5 @@
 %\newcommand\chapter[1]{\part{#1}}
 
 $body$
-
-\listoftables
-\tableofcontents
-
 
 \end{document}

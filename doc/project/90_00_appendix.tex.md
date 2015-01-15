@@ -1,1 +1,5 @@
 \appendix
+\part{Annexes}
+
+\printglossaries
+
