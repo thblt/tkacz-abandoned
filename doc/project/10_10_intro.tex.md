@@ -16,7 +16,7 @@ notes peu structurées, directement à la lecture du document. Ces notes
 peuvent porter sur le document lui-même s'il constitue une source
 primaire, mais aussi potentiellement renvoyer vers d'autres sources
 à consulter, apporter des informations sur un objet tiers (une personne,
-un évènement, un autre document…), etc. Elles peuvent donc prendre
+un évènement, un autre document…), *etc*. Elles peuvent donc prendre
 différentes formes, comme une référence bibliographique, une citation,
 un évènement ou toute autre forme. Ensuite, 2) l'organisation et la
 mise au propre des points importants, et notamment la recopie de certaines

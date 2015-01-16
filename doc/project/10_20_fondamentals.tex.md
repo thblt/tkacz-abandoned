@@ -1,6 +1,9 @@
 
-# Principes fondamentaux
-## L'objet fondamental : la fiche {#chap:Fiches}
+# Principes fondamentaux {#chap:Fondamentaux}
+
+Tkacz manipule trois entités fondamentales : des *fiches*, organisées dans des *taxinomies*, et reliées par un système de *relations*.
+
+## Fiches {#sec:Fiches}
 
 ### L'objet fiche
 
@@ -64,7 +67,7 @@ en forme un nom.
 
  -  Il peut être un **lien** vers une autre fiche d'un type donné. 
  
-## Organisation en arbre : la taxinomie
+## Taxinomies
 
 Cette organisation se fait sous la forme de **taxinomies**. Une
 taxinomie est une structure hiérarchique, comparable à un système
@@ -118,7 +121,7 @@ au même niveau.
 Les taxinomies ne sont pas fortement indépendantes ; elles sont gérées
 en interne comme un unique arbre hiérarchique. 
 
-## Organisation en graphe : liens et relations
+## Relations
 
 
 Une fonction fondamentale et originale de Tkacz est sa capacité à décrire des relations complexes entre des fiches. Ces relations sont sémantiques, et organisent un dépôt Tkacz sous la forme d'un graphe. 

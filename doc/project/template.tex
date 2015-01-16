@@ -43,6 +43,7 @@
 \usepackage{microtype}
 % \usepackage[lof,toc]{multitoc}
 %     \setlength{\columnseprule}{0.5pt}
+\usepackage{multicol}
 \usepackage{scrtime}
 % \usepackage{setspace}
 \usepackage[normalem]{ulem}
@@ -90,12 +91,12 @@
 
 \newcommand\deprecated{\fbox{\textbf{OBSOLÈTE}}\hspace{1em}}
 
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{1}
 \setcounter{secnumdepth}{1}
 
 % Glossaries
 
-\usepackage[xindy, nonumberlist]{glossaries}
+\usepackage[toc, xindy, nonumberlist]{glossaries}
 \makeglossaries
 \input {glossary.tex}
 
@@ -113,8 +114,12 @@
 
 \begin{document}
 
-\title{Tkacz}
-%\subtitle{Un~système de~gestion de~connaissances}
+\title{%
+\vspace{-3cm}
+\includegraphics{tkacz.pdf}
+\\
+Un~système de~gestion de~connaissances
+}
 \author{Thibault Polge%
 \thanks{Doctorant contractuel chargé d'enseignement en philosophie (PhiCo/EXeCO, ED
 280, EA 3562, Paris 1 Panthéon Sorbonne). \href{mailto:thibault.polge@univ-paris1.fr}{thibault.polge@univ-paris1.fr}
@@ -126,17 +131,25 @@
 
 \maketitle
 
-%\begin{center}\includegraphics[width=1in]{../../icons/Tkacz.iconset/icon_512x512@2x.png}\end{center}
-
-% \bigskip\begin{spacing}{.7}
-% \makeatletter
-%     \setcounter{tocdepth}{2}
-%     \@starttoc{toc}
-% \makeatother
-% \end{spacing}
 
 %\newcommand\chapter[1]{\part{#1}}
 
 $body$
+
+\listoftables
+% \listoffigures
+
+% \chapter*{Table des matières}
+%
+% \begin{multicols}{2}
+% \bigskip%\begin{spacing}{.7}
+% \makeatletter
+%     \setcounter{tocdepth}{2}
+%     \@starttoc{toc}
+% \makeatother
+% %\end{spacing}
+% \end{multicols}
+
+\tableofcontents
 
 \end{document}

@@ -1,2 +1,2 @@
 
-\part{Utilisation et interface utilisateur}
+\part{Utilisation}

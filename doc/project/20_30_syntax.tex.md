@@ -1,6 +1,8 @@
 
 # Syntaxe des fiches
 
+Une fois un modèle de données décrit (même si cette opération est en pratique rare, puisque le modèle de données standard devrait généralement suffire), la construction d'un répertoire de fiches peut commencer.
+
 La syntaxe est dérivée de Markdown et d'autres langages de formatage rapide. Il y a néanmoins quelques différences dans le comportement standard du parser:
 
  * Tkacz utilise les \__tirets de soulignement\__ pour la mise en italiques, et \***une seule étoile**\* pour le gras. 
@@ -9,7 +11,7 @@ La syntaxe est dérivée de Markdown et d'autres langages de formatage rapide. I
  
  * Les blocs de code utilisent exclusivement la syntaxe «grillagée», en encadrant le bloc de ```~~~``` et en indiquant éventuellement le langage après la première série de tildes.
 
- * La syntaxe des liens est supprimée. Les URLs sont traitées comme des liens.
+ * La syntaxe des liens est supprimée. Les URLs sont automatiquement converties en liens.
 
  * La syntaxe des blocs de description est modifiée.
  
@@ -18,7 +20,6 @@ La syntaxe est dérivée de Markdown et d'autres langages de formatage rapide. I
  * Tkacz pourrait gèrer plusieurs tables des matières dans un seul document.
  
 De plus, un certain nombre d'extensions spécifiques sont ajoutées.
-
 
 ## Association clé-valeur
 
