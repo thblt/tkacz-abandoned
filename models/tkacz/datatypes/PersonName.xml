@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model id="core" xmlns="http://www.tkacz.app/ns/model">
+
+<datatype id="personName" abstract="true" />
+    <exportable type="string" />
+    <exportable type="fstring" />
+</datatype>
+
+<datatype id="naturalPersonName" extends="personName">
+    
+    <datatype id="naturalPersonNameString" extends="string">
+        <properties>
+            <bool id="unused" />
+        </properties />
+    </datatype>
+    
+    <alias type="string" as="corestring" />
+    <override type="string" with=".naturalPersonNameString" />
+    
+    <string id="prefix" />
+    <string id="firstName" />
+    <set type="string" ordered="true" id="middleName" />
+    <string id="vonPart" />
+    <string id="lastName" />
+    <string id="suffix" />
+</datatype>
+
+<datatype id="simplePersonName" extends="personName">
+    <string id="name" />
+</datatype>
+
+</model>
