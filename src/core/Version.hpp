@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                                                                [/licblock] */
 
+#pragma once
+
 #include <string>
 #include <iostream>
 #include <boost/format.hpp>
