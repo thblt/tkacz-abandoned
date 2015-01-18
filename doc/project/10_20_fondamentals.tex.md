@@ -1,71 +1,48 @@
 
 # Principes fondamentaux {#chap:Fondamentaux}
 
-Tkacz manipule trois entités fondamentales : des *fiches*, organisées dans des *taxinomies*, et reliées par un système de *relations*.
+Tkacz manipule trois types d'entités fondamentaux : des *fiches*, liées entre elles par un mécanisme de *relations*, et organisées dans des *taxinomies*.
 
 ## Fiches {#sec:Fiches}
 
-### L'objet fiche
+La fiche est l'unité atomique de Tkacz. Une fiche peut représenter n'importe quoi, bien qu'elle représente en général une (et une seule) entité objective. Une fiche a un *type*, qui est le type d'entité qu'elle représente :  : une personne, une publication, un évènement, *etc*. Ces types sont définis par le schéma en cours d'utilisation (cf. \autoref{chap:DataModels}). Chaque fiche a un *titre*, ainsi généralement que d'autres métadonnées, et peut contenir des *notes*. Les métadonnées exactes qui peuvent être contenues dans une fiche sont déterminées par son type. 
 
-La **fiche** est l'unité atomique de Tkacz. Une fiche a un **type**
-(cf. \vref{sub:Types}); la liste complète des types n'est pas fixée
-*a priori*. Chaque fiche a un **titre**, permet la prise
-de notes, et est identifiée par un numéro unique attribué séquententiellement
-à la création. 
+Les *notes* liées à une fiche sont celles que prend l'utilisateur sur l'objet représenté par la fiche. Leur forme est libre, leur syntaxe est inspirée de Markdown. La syntaxe des notes est exposée \autoref{chap:CardsSyntax}.
 
-Le titre devrait être unique et identifie la fiche de façon pour l'utilisateur.
-Sa forme est par défaut libre, mais peut être imposée par certains
-types. Par exemple, une fiche d'entrée bibliographique produit son
-titre automatiquement (mais de façon configurable) par rapport aux
-données structurées qu'elle contient. Un tel titre peut prendre la
-forme:
+Les métadonnées d'une fiche décrivent l'entité qu'elles représentent. Le titre est un de ces métadonnées, même si la plupart des types n'ont pas *stricto sensu* de titre[^emptypage] : celui-ci est calculé à partir des métadonnées (une fiche représentant une personne ou une publication n'a pas besoin de titre : le nom de cette personne ou le titre, les auteurs et la date de cette publication représentent son contenu). Ainsi, une fiche d'entrée bibliographique produit son titre automatiquement (mais de façon configurable) par rapport aux données structurées qu'elle contient. Un tel titre peut prendre la forme:
 
-\tzcard{\textbf{The efficacy of AZT in the treatment of patients
-with AIDS…}\hfill1987
+\tzcard{\textbf{The efficacy of AZT in the treatment of patients with AIDS…}\hfill1987
 
-\textsc{\uline{Fischl}}, \textsc{\uline{Richman}}, \textsc{\uline{Grieco}} \textit{et \uline{al}}.\hfill \uline{N
-Engl J Med}}
+\textsc{\uline{Fischl}}, \textsc{\uline{Richman}}, \textsc{\uline{Grieco}} \textit{et \uline{al}}.\hfill \uline{N Engl J Med}}
 
-Automatiquement calculée à partir des noms des auteurs, de l'année
-et du titre (éventuellement, comme ici, abrégé) d'une entrée bibliographique.
-Le titre d'une fiche personne prendra une forme du type:
+Automatiquement calculée à partir des noms des auteurs, de l'année et du titre (éventuellement, comme ici, abrégé) d'une entrée bibliographique. Le titre d'une fiche personne prendra une forme du type:
 
 \tzcard{\textbf{FOUCAULT, Michel}\hfill1926--1984}
-
-Des notes, écrites dans un format inspiré de Markdown.
-
-### Attributs et liens
-
-Une fiche, à l'exception du type minimal (qui modélise réellement
-une feuille blanche avec un titre), contient un certain nombre d'attributs,
-qui sont les données sémantiques, et de relations.
-
-#### Attributs {#par:attributs}
-
-Les attributs sont les propriétés sémantiques qui décrivent l'objet
-modélisé par une fiche. Certains attributs sont des liens vers d'autres
-fiches. L'auteur d'un livre (dans une fiche de notice bibliographique)
-est manipulé comme un lien vers une fiche personne; si cette fiche
-n'existe pas, elle est créée automatiquement avec les valeurs disponibles.
-
-Il existe trois espèces d'attributs:
- -  Il peut être un objet primitif, comme une chaîne, un nombre ou une
-date, ou un ensemble d'objets primitifs, comme une liste ou un ensemble.
+ 
+[^emptypage]: Il existe un type «page blanche», qui a bien une métadonnée titre, et aucune autre. Mais ce type est une exception.
 
 
-Dans une entrée de type \og notice bibliographique \fg{}, le numéro
-d'édition est un tel attribut. Ils sont relativement rares.
+## Relations
 
- -  Il peut être d'un type complexe, lui-même composé d'autres attributs
-(voir \vref{sub:Types}).
+Une fonction fondamentale et originale de Tkacz est sa capacité à décrire des relations complexes entre des fiches. Ces relations sont sémantiques, et font d'un dépôt Tkacz une sorte de graphe. Les relations entre fiches ont quelques propriétés importantes :
 
+ 1. Elles peuvent être fixées dans les métadonnées (attribution d'un auteur, par exemple) ou directement dans les notes. Ce ne sont généralement pas les mêmes relations qui sont décrites de l'une ou de l'autre façon.
+ 
+ 2. Elles sont nettement plus complexes qu'une simple relation au sens de ce terme dans un SGBDR. Une relation contient elle-même des métadonnées, et elle peut être annotée. Au sens strict, *une relation est elle-même une fiche d'un type particulier*.
 
-Dans une entrée de type \og personne \fg{}, le nom de la personne
-est un type complexe formé de chaînes qui distingue les composants
-du nom. Ce type a aussi du code qui lui permet de lire et de mettre
-en forme un nom.
+Les relations les plus simples sont fixées dans les métadonnées : par exemple, l'auteur d'une publication n'est pas une chaîne de caractères, comme «W. V. O. Quine» : c'est une personne, qui est donc représentée par sa propre fiche. La métadonnée «auteur» est donc une relation vers une (ou des) fiches de type «personne». S'il n'existe pas de fiche pour cet auteur, elle est créée à la volée.
 
- -  Il peut être un **lien** vers une autre fiche d'un type donné. 
+Mais même une relation comme «être auteur de» peut-être plus complexe qu'un lien simple entre deux fiches, comme on pourrait le concevoir dans un SGBDR : il n'est pas rare par exemple de trouver une publication sous pseudonyme. La fiche cible peut bien contenir le(s) pseudonyme(s) en plus du nom légal (voire des noms légaux). Mais c'est le modèle de la relation «auteur» qui prévoit qu'elle puisse non seulement pointer sur la fiche cible, mais aussi préciser quel nom est utilisé (ou quelle graphie, ou même avec quelle faute il est copié). Ce modèle permet aussi de préciser que l'attribution est douteuse, ou bien fausse. On peut même modéliser une situation telle que «publié sous le pseudonyme qui peut correspondre à telle personne ou telle autre personne»). Dans la mesure où le modèle de données de Tkacz est extensible par l'utilisateur (cf. \autoref{chap:DataModels}), une relation permet en fait de préciser potentiellement n'importe quoi.
+
+Qu'une relation soit une fiche est ici un avantage considérable : il peut être très utile, dans les cas d'attribution douteuse par exemple, de prendre des notes sur l'attribution elle-même (qui prétend que c'est *x*, qui prétend que c'est *y*, *etc.*)
+
+### Corollaires, corollaires purs et relations symétriques
+
+Une relation peut avoir un *corollaire*, c'est-à-dire que la relation de A et B implique une relation (de même nature ou d'une autre nature) de B vers A. Dans l'exemple de l'auteur, le lien «a pour auteur» a pour corollaire «est auteur de». Un corollaire est toujours attribué automatiquement, puisqu'il est comme une conséquence logique de la relation dont le corollaire : $Ax,y \iff Bx,y$. 
+
+Une relation est un pur corollaire lorsqu'elle ne peut pas être assignée directement : «est l'auteur de» est un pur corollaire, qui ne peut être affecté à une fiche personne, mais dérive de l'affectation de la relation «auteur» d'une fiche document à une fiche personne.
+
+Une relation dont le corollaire est la même relation dans l'autre sens est une relation symétrique. 
  
 ## Taxinomies
 
@@ -121,47 +98,6 @@ au même niveau.
 Les taxinomies ne sont pas fortement indépendantes ; elles sont gérées
 en interne comme un unique arbre hiérarchique. 
 
-## Relations
+## Synthèse
 
-
-Une fonction fondamentale et originale de Tkacz est sa capacité à décrire des relations complexes entre des fiches. Ces relations sont sémantiques, et organisent un dépôt Tkacz sous la forme d'un graphe. 
-
-Au plus simple, une relation est un simple pointeur d'une fiche vers une fiche cible. L'auteur d'un document, par exemple, est un lien vers une fiche personne, et pas une chaîne de caractères. Certaines relations sont plus élaborées : un texte publié sous pseudonyme verra l'auteur attribué par un lien vers la fiche de personne, mais ce lien stockera aussi le pseudonyme retenu. Une attribution d'auteur peut-être douteuse, ou au contraire certaine pour un texte publié anonymement. Ces informations sont stockées au niveau de la relation.
-
-
-
-### Le lien simple 
-
-
-### La relation
-
-est un attribut complexe, qui permet de lier des fiches entre elles
-de façon moins formelle et plus fine. Une relation a une **nature**,
-qui est l'équivalent du type d'une fiche. Dans certains cas, un lien
-peut être remplacé par une relation. Par exemple, dans un document
-historique, l'attribution de l'auteur peut être douteuse — «auteur
-probable» est une relation, car le lien simple ne suffit pas
-— il faut sans doute préciser la nature du doute, les différentes
-sources, etc.
-
-Une relation peut aussi décrire des relations entre entités : «membre
-de» ou «ami de», «frère de», etc.
-
-Une relation peut être réciproque ou non. Dans l'exemple qui précède,
-les deux dernières sont nécessairement réciproques. Une relation peut
-aussi avoir un **corollaire**. La relation «A est membre de B»
-(dans cet exemple, B est par exemple une personne morale) a pour corollaire
-«B a comme membre A»
-
-Une relation est de type «cite»  ou «évoque» , qui
-permet de commenter un livre en le liant à ce qui fait son objet. 
-
-Formellement, une relation est toujours un prédicat à deux places et représente un nœud d'un graphe. Lorsque une fiche présente la même relation a plusieurs autres fiches, la relation est assignée autant de fois qu'il y a de fiches cibles.
-
-### Corollaires, corollaires purs et relations symétriques
-
-Une relation peut avoir un *corollaire*, c'est-à-dire que la relation de A et B implique une relation (de même nature ou d'une autre nature) de B vers A. Dans l'exemple de l'auteur, le lien «a pour auteur» a pour corollaire «est auteur de». Un corollaire est toujours attribué automatiquement, puisqu'il est comme une conséquence logique de la relation dont le corollaire : $Ax,y \iff Bx,y$. 
-
-Une relation est un pur corollaire lorsqu'elle ne peut pas être assignée directement : «est l'auteur de» est un pur corollaire, qui ne peut être affecté à une fiche personne, mais dérive de l'affectation de la relation «auteur» d'une fiche document à une fiche personne.
-
-Une relation dont le corollaire est la même relation dans l'autre sens est une relation symétrique. 
+Tout est fiche.

@@ -1,5 +1,5 @@
 
-# Schémas et modèles de données
+# Schémas et modèles de données {#chap:DataModels}
 
 Tkacz est conçu selon un modèle de données à deux niveaux : le premier niveau est celui du noyau du logiciel, décrit \autoref{chap:Fondamentaux}. Ce noyau, qui connaît les notions de fiches, taxinomies et relations, est encore insuffisant pour les manipuler effectivement : des modèles de données, extérieurs, décrivent les types de fiches, les taxinomies où elles peuvent entrer et les relations possibles entre elles. Ainsi, c'est le modèle standard, et pas le noyau Tkacz, qui définit les types de fiches «personne» ou «publication».
 

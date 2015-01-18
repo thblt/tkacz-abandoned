@@ -1,5 +1,5 @@
 
-# Syntaxe des fiches
+# Syntaxe des fiches {#chap:CardsSyntax}
 
 Une fois un modèle de données décrit (même si cette opération est en pratique rare, puisque le modèle de données standard devrait généralement suffire), la construction d'un répertoire de fiches peut commencer.
 
