@@ -2,7 +2,16 @@
 
 Un dépôt Tkacz est un répertoire du système de fichiers, qui n'est pas destiné à être manipulé par l'utilisateur. Il peut être présenté comme un bundle (sur OS X) ou stocké zippé (sur les autres systèmes) pour empêcher toute manipulation destructrice. 
 
-## Format d'un dépôt
+Ce répertoire contient la totalité des ressources internes de Tkacz (les fiches, la structure, etc.) et les fichiers liés. 
+
+## Format des fiches
+
+Les fiches sont stockées comme des fichiers textes et organisées dans des dossiers correspondant à leurs types et à leur identifiant interne. La fiche 627 de type personne physique sera stockée dans ```/cards/person/natural/627/```. Chaque dossier contient :
+
+ - Une description XML des métadonnées et des relations de la fiche (```record.xml```)
+ - Les différentes séries notes associées à la fiche ()
+
+## Format des dépôts
 
 Un dépôt combine un dépôt git[^depot] et une base de données SQLite qui sert de cache. Un dépôt vide a donc la structure suivante:
 
@@ -16,16 +25,19 @@ Un dépôt combine un dépôt git[^depot] et une base de données SQLite qui ser
 .1 .tkacz.
 .2 cache\DTcomment{Fichiers de cache}.
 .3 db\DTcomment{Fichiers SQLite}.
-.2 schemas\DTcomment{Code Python des schémas}
+.2 schemas\DTcomment{Code Python des schémas}.
 .2 ….
 .2 manifest\DTcomment{Déclarations Tkacz de base (JSON)}.
 }
+
+\caption{Organisation des fichiers d'un dépôt Tkacz}
+
 \end{figure}
 
 [^depot]: Dans ce document, le mot «dépôt» seul fait *toujours* référence à un dépôt Tkacz.
 
-Le fichier \directory{.tkacz / manifest} est une représentation JSON
-de la structure détaillée ci-dessous. évidemment 
+Le fichier \directory{.tkacz / manifest} est une représentation XML
+de la structure détaillée ci-dessous.
 
 ~~~ json
 {
@@ -35,6 +47,11 @@ de la structure détaillée ci-dessous. évidemment
         "schemaId":         "core",
         "schemaVersion":    [0,1,0]
     },
+	"schemas": {
+		"core.historian": {
+			"version" :		[0,1,0]
+		}
+	},
     "repository": {
         "uuid":             "03095EEF-6C87-430B-A00E-440616196C31",
         "name":             "As set by the user"

@@ -1,8 +1,6 @@
 
 # Syntaxe des fiches {#chap:CardsSyntax}
 
-\deprecated
-
 Une fois un modèle de données décrit (même si cette opération est en pratique rare, puisque le modèle de données standard devrait généralement suffire), la construction d'un répertoire de fiches peut commencer.
 
 La syntaxe est dérivée de Markdown et d'autres langages de formatage rapide. Il y a néanmoins quelques différences dans le comportement standard du parser:
@@ -52,4 +50,3 @@ Toute fiche commence généralement par un préambule qui expose formellement so
 <> friend [Didier.Éribon]
 <> founder GIP
 ~~~
-

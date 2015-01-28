@@ -6,6 +6,7 @@ est écrit dans le cadre de ma thèse, c'est-à-dire qu'il vise à couvrir
 tout particulièrement les besoins d'un historien des sciences qui
 travaille sur la période moderne.
 
+
 Tkacz veut modéliser les différentes activités d'organisation des
 données trouvées en bibliothèque ou aux archives. Il présuppose que
 ces activités consistent principalement en la prise en notes d'informations

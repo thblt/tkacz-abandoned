@@ -1,5 +1,5 @@
-\documentclass[11pt, french, oneside]{book}
-%\usepackage[a4paper, verbose, margin=2.5cm]{geometry}
+\documentclass[11pt, french]{book} %, oneside
+% \usepackage[a5paper, verbose, margin=2.5cm]{geometry}
 \usepackage[a4paper]{geometry}
 
 \usepackage{babel}
@@ -20,9 +20,14 @@
 \fi
 
 % Fonts
-\usepackage{mathpazo}
-\usepackage{berasans}
+\usepackage{charter}
+% \usepackage{opensans}
+\usepackage[defaultsans,osfigures,scale=0.95]{opensans}
 \usepackage{inconsolata}
+
+% \setmainfont{Palatino}
+% \setsansfont{Helvetica Neue}
+% \setmonofont{Menlo}
 
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -39,6 +44,7 @@
 \usepackage{float}
 \usepackage{framed}
 \usepackage{graphicx}
+\usepackage[htt]{hyphenat}
 \usepackage[os=mac, mackeys=symbols]{menukeys}
 \usepackage{microtype}
 % \usepackage[lof,toc]{multitoc}
@@ -64,7 +70,7 @@
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
 \newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\small}
 % Add ',fontsize=\small' for more characters per line
 \newenvironment{Shaded}{}{}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
@@ -100,9 +106,25 @@
 \makeglossaries
 \input {glossary.tex}
 
+% A single list for figures and tables 
+% (from https://tex.stackexchange.com/questions/120644/combined-list-of-figures-and-tables)
+
+\makeatletter
+\renewcommand*{\ext@figure}{lot}
+\let\c@figure\c@table
+\let\ftype@figure\ftype@table
+\let\listoftableandfigures\listoftables
+\makeatother
+
+% Single-digit figure and table number
+
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
 % Document commands
 
-\newcommand\tzcard[1]{%
+\newcommand\tzcard[1]{% @DEPRECATED
     \begin{minipage}[t]{1\columnwidth}\small%
     \begin{shaded}%
     \sffamily #1
@@ -130,11 +152,11 @@ Un~système de~gestion de~connaissances
 
 \maketitle
 
-
 %\newcommand\chapter[1]{\part{#1}}
 
 $body$
 
+\renewcommand*\listtablename{Tableaux et figures}
 \listoftables
 % \listoffigures
 
