@@ -1,3 +1,4 @@
+
 # Introduction
 
 Ce document présente les fonctions fondamentales d'un outil d'organisation
@@ -33,3 +34,5 @@ sur un document sur de nouveaux supports, en en facilitant l'organisation et le 
 de maintenir «vivant» le graphe des relations entre informations, autrement
 dit de ne pas disposer que de fiches isolées mais toujours un «répertoire»
 vivant et organisé.
+
+\mainmatter
