@@ -15,5 +15,5 @@ On OSX with Python3.4 installed:
 ~~~bash
 mkdir build
 cd build
-cmake .. -DPYTHON_INCLUDE_DIR=/Library/Frameworks/Python.framework/Versions/3.4/include/ -DPYTHON_LIBRARY=/Library/Frameworks/Python.framework/Versions/3.4/lib/libpython3.4m.dylib
+cmake .. -DPYTHON_INCLUDE_DIR=/Library/Frameworks/Python.framework/Versions/3.4/include/python3.4m/ -DPYTHON_LIBRARY=/Library/Frameworks/Python.framework/Versions/3.4/lib/libpython3.4m.dylib
 ~~~
