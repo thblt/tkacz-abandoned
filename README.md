@@ -3,7 +3,7 @@ Tkacz
 
 **Tkacz is unstable, unfinished software. There is nothing working actually, and the notes below refer to the project and no to the actual software**
 
-The Tkacz project is described (in French) on my [personal website](thb.lt/projects/tkacz.html).
+The Tkacz project is described (in French) on my [personal website](http://thb.lt/projects/tkacz.html).
 
 Random notes on building
 ------------------------
