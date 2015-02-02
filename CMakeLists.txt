@@ -83,7 +83,11 @@ include_directories(${LIBGIT2_INCLUDE_DIR})
 
 # Python
 # ------
-set(PythonLibs_FIND_VERSION 3)
+
+# set(PYTHON_LIBRARY "/Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4")
+# set(PYTHON_INCLUDE_DIR "/Library/Frameworks/Python.framework/Versions/3.4/include/python3.4m")
+
+set(PythonLibs_FIND_VERSION 3.0)
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 

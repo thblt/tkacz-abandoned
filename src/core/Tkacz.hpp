@@ -50,9 +50,7 @@ namespace tkacz {
             TZ_VERSION_NAME };
 
         static void init();
-
-
-        
+		       
     };
     
 }

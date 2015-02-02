@@ -18,14 +18,14 @@
 
 #include <exception>
 
-#define TZ_BASIC_EXCEPTION(NAME, PARENT) class NAME : public PARENT { public: NAME(const char * what = #NAME) : PARENT(wtf) {} };
+#define TZ_BASIC_EXCEPTION(NAME, PARENT) class NAME : public PARENT { public: NAME(const char * what = #NAME) : PARENT(what) {} };
 
 namespace tkacz {
 	class Exception : public std::exception {
     public:
-		const char * wtf;
+		const char * what;
 
-        Exception(const char * wtf) : wtf (wtf) {};
+        Exception(const char * what) : what (what) {};
 	};
 
     /*************************
