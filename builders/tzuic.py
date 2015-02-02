@@ -134,8 +134,6 @@ class MenuCompiler( AbstractCompiler ):
 	_lastNumber = None
 	_lastTitle = None
 
-	disambiguationString = "Generated menu code"
-
 	MENU_INSERT = "{parent}->addAction({menu}->menuAction());"
 	MENU = 'QMenu* {menu} = new QMenu(mainMenu);\n{menu}->setObjectName(QStringLiteral("{menu}")); {menu}->setTitle(mainWindow->trUtf8("{title}","{disamb}"));'
 	ACTION = '{menu}->addAction({id});'
@@ -157,14 +155,14 @@ class MenuCompiler( AbstractCompiler ):
 				for s in [x.strip() for x in attrs['inStates'].split( ',' )]:
 					self.addStatePropertySetter( s, menuName + ".menuAction()", "visible" )
 			
-			self._output.appendLine( self.MENU.format( menu=menuName, title = attrs['title'], disamb=self.disambiguationString ) )
+			self._output.appendLine( self.MENU.format( menu=menuName, title = attrs['title'], disamb=disambiguationString ) )
 			self._output.appendLine(self.MENU_INSERT.format(menu = menuName, parent=self._menus[-1]))
 			
 			self._menus.append( menuName )
 		elif name == "action":
 			self._output.appendLine( self.ACTION.format( id=mkName("action", attrs['name']), menu=parentMenu ) )
 		elif name == "title":
-			self._output.appendLine( self.TITLE.format( number = self._lastTitle, title=attrs['title'], menu=parentMenu, disamb=self.disambiguationString ) )
+			self._output.appendLine( self.TITLE.format( number = self._lastTitle, title=attrs['title'], menu=parentMenu, disamb=disambiguationString ) )
 			self._lastTitle += 1;
 		elif name == "separator":
 			self._output.appendLine( self.SEPARATOR.format( menu=parentMenu ) )
