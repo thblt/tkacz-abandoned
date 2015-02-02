@@ -72,6 +72,24 @@ file(
 )
 
 
+file(
+        GLOB_RECURSE
+        GUI_FORMS
+        *.ui
+)
+
+file(
+        GLOB_RECURSE
+        GUI_RESOURCES
+        *.qrc
+)
+
+file(
+        GLOB_RECURSE
+        GUI_HEADERS_MOC
+        ${PROJECT_SOURCE_DIR}/gui/forms/*.hpp
+)
+
 ####################
 # Libraries        #
 ####################
@@ -141,6 +159,11 @@ target_link_libraries(CLI LibTkacz)
 # --------------
 
 ADD_EXECUTABLE(GUI ${GUI_SOURCES})
+
+
+QT5_WRAP_UI(GUI_FORMS_HEADERS ${GUI_FORMS})
+QT5_WRAP_CPP(GUI_HEADERS_MOC ${GUI_HEADERS_MOC})
+QT5_ADD_RESOURCES(GUI_RESOURCES_RCC ${GUI_RESOURCES})
 
 target_link_libraries( GUI ${Boost_FILESYSTEM_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ) 
 
