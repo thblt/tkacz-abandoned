@@ -17,8 +17,11 @@ configure_file (
 	"${PROJECT_BINARY_DIR}/tzbuild.h"
   )
 
-include_directories (  
+include_directories (   
 	"${PROJECT_SOURCE_DIR}/core" 
+	"${PROJECT_SOURCE_DIR}/gui"
+	"${PROJECT_SOURCE_DIR}/gui/forms"
+	"${PROJECT_SOURCE_DIR}/gui/perspectives"
 	"${PROJECT_BINARY_DIR}"
 )
  
@@ -56,6 +59,19 @@ file(
         ${PROJECT_SOURCE_DIR}/cli/*.hpp
 )
 
+file(
+        GLOB_RECURSE
+        GUI_SOURCES
+        ${PROJECT_SOURCE_DIR}/gui/*.cpp
+)
+
+file(
+        GLOB_RECURSE
+        GUI_INCLUDES
+        ${PROJECT_SOURCE_DIR}/gui/*.hpp
+)
+
+
 ####################
 # Libraries        #
 ####################
@@ -88,6 +104,11 @@ set(PythonLibs_FIND_VERSION 3.0)
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 
+# Qt
+# --
+
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+
 ####################
 # Targets          #
 ####################
@@ -115,6 +136,17 @@ target_link_libraries( CLI ${Boost_FILESYSTEM_LIBRARY} ${Boost_PROGRAM_OPTIONS_L
 
 SET_TARGET_PROPERTIES(CLI PROPERTIES OUTPUT_NAME "tkacz")
 target_link_libraries(CLI LibTkacz)
+
+# GUI Executable
+# --------------
+
+ADD_EXECUTABLE(GUI ${GUI_SOURCES})
+
+target_link_libraries( GUI ${Boost_FILESYSTEM_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ) 
+
+SET_TARGET_PROPERTIES(GUI PROPERTIES OUTPUT_NAME "Tkacz")
+target_link_libraries(GUI LibTkacz)
+TARGET_LINK_LIBRARIES(GUI ${Qt5Core_LIBRARIES} ${Qt5Widgets_LIBRARIES} )
 
 ########
 # Misc #
