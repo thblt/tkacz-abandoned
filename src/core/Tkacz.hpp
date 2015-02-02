@@ -21,11 +21,12 @@
 #include <boost/log/trivial.hpp>
 
 #include "tzbuild.h"
-#include "Version.hpp"
 
 using namespace std;
 
 namespace tkacz {
+	class Version;
+	
     class Tkacz {
 
     public:
@@ -41,16 +42,9 @@ namespace tkacz {
             _ALL    =   1024
         };
 
-        const Version version {
-            TZ_VERSION_MAJOR,
-            TZ_VERSION_MINOR,
-            TZ_VERSION_PATCH,
-            Version::Maturity::TZ_VERSION_MATURITY,
-            TZ_VERSION_PREVERSION,
-            TZ_VERSION_NAME };
+        static const Version version;
 
         static void init();
 		       
     };
-    
 }

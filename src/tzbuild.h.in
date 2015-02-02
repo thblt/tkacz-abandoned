@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                                                                [/licblock] */
 
+#define TZ_APP_NAME "Tkacz"
+
 // Tkacz version
 #define TZ_VERSION_MAJOR @Tkacz_VERSION_MAJOR@
 #define TZ_VERSION_MINOR @Tkacz_VERSION_MINOR@
@@ -24,4 +26,4 @@
 #define TZ_VERSION_PREVERSION @Tkacz_VERSION_PREVERSION@
 #define TZ_VERSION_NAME "@Tkacz_VERSION_NAME@"
 
-#define TZ_VERSION_STRING "@Tkacz_VERSION_MAJOR@.@Tkacz_VERSION_MINOR@.@Tkacz_VERSION_PATCH@ @Tkacz_VERSION_MATURITY@ @Tkacz_VERSION_PREVERSION@ “@Tkacz_VERSION_NAME@”"
+#define TZ_VERSION_STRING "@Tkacz_VERSION_MAJOR@.@Tkacz_VERSION_MINOR@.@Tkacz_VERSION_PATCH@ “@Tkacz_VERSION_NAME@” @Tkacz_VERSION_MATURITY@ @Tkacz_VERSION_PREVERSION@ "

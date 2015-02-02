@@ -29,7 +29,7 @@ namespace bpo = boost::program_options;
 
 namespace tkacz {
 
-Command::Command(const void (*callback)(boost::program_options::variables_map),
+Command::Command(const bool (*callback)(boost::program_options::variables_map),
                  bool metacommand)
     : callback(callback), metacommand(metacommand) {
     if (metacommand) {
@@ -118,11 +118,16 @@ bool Command::execute(int argc, char* argv[]) const {
     return execute(args, invoc);
 }
 
+bool Command::execute(char * command) const {
+}
+
 bool Command::execute(vector<string>& args, vector<string>& invocation) const {
     bpo::options_description all;
     bpo::variables_map parsed_args;
     bpo::command_line_parser parser{args};
 
+	bool execResult = true;
+		
     // FOr metacommand only
     string subcom;
     vector<string> forwardedArgs;
@@ -140,6 +145,14 @@ bool Command::execute(vector<string>& args, vector<string>& invocation) const {
     bpo::parsed_options parse_result = parser.run();
     bpo::store(parse_result, parsed_args);
 
+    if (callback != nullptr) {
+        if (parsed_args.count("help")) {
+            printHelp(invocation);
+        } else {
+            execResult = callback(parsed_args);
+        }
+    }
+
     if (metacommand) {
         forwardedArgs = bpo::collect_unrecognized(parse_result.options,
                                                   bpo::include_positional);
@@ -152,16 +165,8 @@ bool Command::execute(vector<string>& args, vector<string>& invocation) const {
             // Append to invocation
             invocation.push_back(subcom);
         } else {
-            printHelp(invocation);
-            return false;
-        }
-    }
-
-    if (callback != nullptr) {
-        if (parsed_args.count("help")) {
-            printHelp(invocation);
-        } else {
-            callback(parsed_args);
+            if (!execResult) { printHelp(invocation); }
+            return execResult;
         }
     }
 
@@ -187,16 +192,16 @@ void Command::printHelp(vector<string> invocation, string errorMsg) const {
         cout << "ERROR: " << errorMsg << endl << endl;
     } // else {
     cout << (name.empty() ? invocationString(invocation) : name) << " — "
-         << description << "." << endl << endl;
+         << description << "." << endl;
 
     if (!longDesc.empty())
         cout << longDesc << endl << endl;
     //}
 
     if (metacommand) {
-        cout << "Subcommands:\n";
+        cout << "\nSubcommands:\n";
         for (auto command : subcommands) {
-            cout << command.first << "\t\t" << command.second->description
+            cout << "  " << command.first << "\t\t" << command.second->description
                  << endl;
         }
     }
@@ -204,7 +209,7 @@ void Command::printHelp(vector<string> invocation, string errorMsg) const {
     for (uint i = 0; i < optionGroups.size(); i++) {
         if (hiddenOptionGroups.find(i) == hiddenOptionGroups.end() and
             optionGroups[i].options().size())
-            cout << optionGroups[i] << "\n";
+            cout << "\n" << optionGroups[i] << "\n";
     }
 
     if (!onError and !lastWords.empty())

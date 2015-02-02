@@ -26,36 +26,52 @@
 #include "Exception.hpp"
 #include "Repository.hpp"
 #include "Tkacz.hpp"
+#include "Version.hpp"
+#include "tzbuild.h"
 
 using namespace tkacz;
 namespace bpo = boost::program_options;
 namespace bfs = boost::filesystem;
 
-#include <memory>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/python.hpp>
-using namespace boost::python;
-namespace bp = boost::python;
+const Version cliVersion {
+	TZ_VERSION_MAJOR,
+    TZ_VERSION_MINOR,
+	TZ_VERSION_PATCH,
+	Version::Maturity::TZ_VERSION_MATURITY,
+	TZ_VERSION_PREVERSION,
+	TZ_VERSION_NAME };
 
 bool shell_mode = false;
 
 Tkacz::LogLevel logLevel = Tkacz::LogLevel::INFO;
 
-const void cmd_repo_init(bpo::variables_map args) {
-    Repository::initialize(args["path"].as<bfs::path>());
+const bool cmd_root(bpo::variables_map args) {
+	if (args.count("version")) {
+		std::cout << TZ_APP_NAME << " " << Tkacz::version << " (CLI " << cliVersion << ")." << endl;
+		return true;
+	}
+	
+	return false;
 }
 
-const void cmd_shell(bpo::variables_map args) { shell_mode = true; }
+const bool cmd_repo_init(bpo::variables_map args) {
+    Repository::initialize(args["path"].as<bfs::path>());
+	return false;
+}
+
+const bool cmd_shell(bpo::variables_map args) { 
+	shell_mode = true; 
+	return true; 
+}
 
 int main(int argc, char* argv[]) {
 
-    Command root{};
+    Command root{ &cmd_root, true };
     int globalOption = root.addOptionGroup("Global options");
     root.name = "Tkacz";
     root.description = "A weird reference and knowledge management system";
     root.lastWords =
-        "invoke with:\t-h [command [subcommand]]\tto get help on a "
+        "invoke with:\n\t-h [command [subcommand]]\nto get help on a "
         "specific command.";
 
     root.addOption(globalOption, "verbose,v",
@@ -63,6 +79,9 @@ int main(int argc, char* argv[]) {
     root.addOption(globalOption, "quiet", "Completely disable output");
     root.addOption(globalOption, "no-interaction",
                    "No interaction (script) mode");
+    root.addOption(globalOption, "version",
+                   "Print version number and exit");
+
 
     // Root level commands
     Command shell{&cmd_shell, false};
@@ -83,10 +102,15 @@ int main(int argc, char* argv[]) {
         root.execute(argc, argv);
     } catch (Exception& e) {
         std::cout << "Fatal error (uncaught exception): ";
-        std::cout << e.what() << std::endl;
+        std::cout << e.what << std::endl;
     }
 
     if (shell_mode) {
-        std::cout << "Will do shell\n";
+		char command[65536];
+		while(true) {
+			cout << ">> ";
+			cin.getline(command, 65536);
+			cout << "Shell not implemented." << endl;
+		}
     }
 }

@@ -17,6 +17,16 @@
  *                                                                [/licblock] */
 
 #include "Tkacz.hpp"
+#include "Version.hpp"
 
 namespace tkacz {
+	
+    const Version Tkacz::version = Version {
+               TZ_VERSION_MAJOR,
+               TZ_VERSION_MINOR,
+               TZ_VERSION_PATCH,
+               Version::Maturity::TZ_VERSION_MATURITY,
+               TZ_VERSION_PREVERSION,
+               TZ_VERSION_NAME };
+
 }

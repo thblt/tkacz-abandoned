@@ -36,9 +36,8 @@ class Command {
         Hidden = 3
     };
 
-    Command(const void (*callback)(boost::program_options::variables_map),
+    Command(const bool (*callback)(boost::program_options::variables_map),
             bool metacommand = false);
-    Command(bool metacommand) : Command(nullptr, metacommand) {}
     Command() : Command(nullptr, true) {}
 
     void addSubcommand(const char* name, Command* command);
@@ -49,7 +48,7 @@ class Command {
     void initialize();
 
     bool execute(int argc, char* argv[]) const;
-    bool execute(std::string cmdline) const;
+    bool execute(char * cmdline) const;
     bool execute(std::vector<std::string>& args,
                  std::vector<std::string>& invocation) const;
 
@@ -97,7 +96,7 @@ class Command {
 
     std::map<std::string, Command*> subcommands;
 
-    const void (*callback)(boost::program_options::variables_map) = nullptr;
+    const bool (*callback)(boost::program_options::variables_map) = nullptr;
 
     const bool metacommand;
 };
