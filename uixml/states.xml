@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                            [licblock]
+This file is part of Tkacz. 
+Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+                                                               [/licblock]-->
+
+	<state name="tkacz" parallel="true" initial="true">
+		<state name="repository" parallel="true">
+			<state name="modification">
+				<state name="modified" />
+				<state name="unmodified" initial="true" />
+			</state>
+			<state name="saving">
+				<state name="saved" />
+				<state name="unsaved" initial="true" />
+			</state>
+		</state>
+		<state name="modes">
+			<state name="configure" />
+			<state name="page" initial="true">
+				<assign object="target.views" property="currentIndex"
+					value="1" />
+					
+				<state name="browse" initial="true" />
+				<state name="edit">
+					<assign object="target.pageView.pageEditor" property="visible"
+						value="True" />
+					<state name="meta" initial="true" />
+					<state name="contents" />
+				</state>
+			</state>
+			<state name="collection">
+				<state name="browse" initial="true" transitions="page.browse" />
+				<state name="edit">
+				</state>
+			</state>
+		</state>
+	</state>
+</states>

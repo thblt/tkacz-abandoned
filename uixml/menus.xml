@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                            [licblock]
+This file is part of Tkacz. 
+Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+                                                               [/licblock]-->
+
+<menubar locale="en">
+	<menu title="&amp;File">
+		<action name="repository.create" />
+		<action name="repository.open" />
+		<separator />
+		<title title="Add page" />
+		<action name="page.create.simple" />
+		<action name="page.create.templated" />
+		<separator />
+		<title title="Add collection" />
+		<action name="collection.create.empty" />
+		<action name="collection.create.fromRules" />
+		<action name="collection.create.withPages" />
+		<separator />
+		<action name="repository.close" />
+		<action name="repository.save" />
+		<action name="repository.saveAs" />
+		<action name="repository.export" />
+		<separator />
+		<action name="repository.configure" />
+		<separator />
+		<action name="page.print" />
+		<separator />
+		<action name="app.quit" />
+	</menu>
+
+	<menu title="&amp;Edit">
+		<action name="edition.undo" />
+		<action name="edition.redo" />
+		<separator />
+		<action name="edition.cut" />
+		<action name="edition.copy" />
+		<action name="edition.paste" />
+		<action name="edition.pasteSpecial" />
+		<separator />
+		<action name="search.find" states="page" />
+		<action name="search.replace" states="edition" />
+		<action name="search.findNext" states="page" />
+		<action name="search.findPrevious" states="page" />
+		<separator />
+		<action name="app.preferences" />
+	</menu>
+
+	<menu title="&amp;Format" inStates="page.edit.contents">
+		<action name="format.character.emphasis" />
+		<action name="format.character.strongEmphasis" />
+		<action name="format.character.strongEmphasis" />
+	</menu>
+
+	<menu title="&amp;View">
+		<action name="window.fullscreen" />
+	</menu>
+
+	<menu title="&amp;Help">
+		<action name="app.documentation" />
+		<separator />
+		<action name="app.shConsole" />
+		<action name="app.reportbug" />
+		<separator />
+		<action name="app.update" />
+		<action name="app.about" />
+	</menu>
+</menubar>
