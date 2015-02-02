@@ -95,7 +95,7 @@ include_directories(${PYTHON_INCLUDE_DIRS})
 # Library
 # -------
 
-add_library(LibTkacz ${LibTkacz_SOURCES} ${LibTkacz_INCLUDES})
+add_library(LibTkacz SHARED ${LibTkacz_SOURCES} ${LibTkacz_INCLUDES})
 
 target_link_libraries(LibTkacz ${PYTHON_LIBRARIES})
 target_link_libraries(LibTkacz ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY} ${Boost_PYTHON3_LIBRARY}) 
