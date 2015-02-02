@@ -44,7 +44,12 @@ namespace tkacz {
 
         static const Version version;
 
-        static void init();
+        static Tkacz getInstance();
 		       
     };
 }
+
+#define TZ_LOG std::cout
+#define TZ_TRACE std::cout
+#define TZ_FINE std::cout
+#define TZ_WARN std::cout

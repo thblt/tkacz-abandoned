@@ -50,8 +50,7 @@ namespace tkacz {
 
         Version(int major, int minor, int patch, Maturity maturity,
                 int preversion, std::string name)
-        : major(major), minor(minor), patch(patch), preversion(preversion), maturity(
-                                                                                     maturity), name(name) {
+        : major(major), minor(minor), patch(patch), preversion(preversion), maturity(maturity), name(name) {
         }
 
         bool operator==(Version &o) const {
@@ -144,7 +143,7 @@ namespace tkacz {
         
     };
     
-    std::ostream & operator<<(std::ostream &os, const Version &v) {
+    inline std::ostream & operator<<(std::ostream &os, const Version &v) {
         os << (std::string) v;
         return os;
     }

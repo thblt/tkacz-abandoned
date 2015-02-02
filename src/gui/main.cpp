@@ -19,8 +19,6 @@
 #include <iostream>
 #include <string>
 
-#include <boost/filesystem.hpp>
-
 #include "Tkacz.hpp"
 #include "MainWindow.hpp"
 #include "Repository.hpp"
@@ -30,7 +28,7 @@ using namespace tkacz;
 
 int main(int argc, char* argv[]) {
 
-	debug_msg() << "Tkacz " << Tkacz::version << " “" << Tkacz::version.name << "“"
+	TZ_TRACE << "Tkacz " << Tkacz::version << " “" << Tkacz::version.name << "“"
 			<< std::endl;
 
 	QApplication app(argc, argv);
@@ -39,10 +37,10 @@ int main(int argc, char* argv[]) {
 	MainWindow mw;
 	mw.showMaximized();
 
-	fine("Initializing core");
-	Tkacz::getInstance(); // Forces core initialization
+	TZ_FINE << "Initializing core";
+	// Tkacz::getInstance(); // Forces core initialization
 
-	fine("Running application");
+	TZ_FINE << "Running application";
 	return (app.exec());
 	return 0;
 }

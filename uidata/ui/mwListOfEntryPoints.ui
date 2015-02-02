@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--                                                            [licblock]
+This file is part of Tkacz. 
+Copyright (c) 2012-2014 Thibault Polge. All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+                                                               [/licblock]-->
+
+<ui version="4.0">
+ <class>ListOfEntryPoints</class>
+ <widget class="QFrame" name="ListOfEntryPoints">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>200</width>
+    <height>483</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* ================================================
+ * ListOfEntryPoints - This is the leftmost sidebar
+ * ================================================ */
+
+QFrame {
+	border : none;
+	background: #282828;
+	color: white; 
+	padding :4px 0;
+}
+
+QTreeView {
+	background: #282828;
+ 	selection-background-color: qlineargradient(spread:reflect, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0.08 rgba(50, 50, 50, 255), stop:0.92 rgba(50, 50, 50, 255), stop:1 rgba(0, 0, 0, 255)); 
+	selection-color :#cf3;
+	border-top : 1px solid rgba(255,255,255,48);
+	border-bottom : 1px solid rgba(255,255,255,48);
+	margin : 4px 0;
+	padding :4px 0;
+}
+
+QTreeView::item {
+	padding : .25em 0;
+}
+
+QPushButton {
+	border : none;
+	background : transparent;
+	padding : .5em;
+}
+
+QPushButton:checked {
+	background-color: qlineargradient(spread:reflect, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0.08 rgba(50, 50, 50, 255), stop:0.92 rgba(50, 50, 50, 255), stop:1 rgba(0, 0, 0, 255));
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QPushButton" name="collectionsButton">
+     <property name="toolTip">
+      <string>Browse collections</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../qrc/icons.qrc">
+       <normaloff>:/actions/viewCollections-off</normaloff>
+       <normalon>:/actions/viewCollections-on</normalon>:/actions/viewCollections-off</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTreeView" name="collectionsTV">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="animated">
+      <bool>false</bool>
+     </property>
+     <property name="headerHidden">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QToolButton" name="fakeButton">
+     <property name="text">
+      <string notr="true">...</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="settingsButton">
+     <property name="toolTip">
+      <string>Repository settings</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../qrc/icons.qrc">
+       <normaloff>:/actions/repositoryConfigure-off</normaloff>
+       <normalon>:/actions/repositoryConfigure-on</normalon>:/actions/repositoryConfigure-off</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <attribute name="buttonGroup">
+      <string notr="true">buttonGroup</string>
+     </attribute>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../qrc/icons.qrc"/>
+ </resources>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
+</ui>

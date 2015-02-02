@@ -71,11 +71,10 @@ file(
         ${PROJECT_SOURCE_DIR}/gui/*.hpp
 )
 
-
 file(
         GLOB_RECURSE
         GUI_FORMS
-        *.ui
+        uidata/ui/*.ui
 )
 
 file(
@@ -158,12 +157,31 @@ target_link_libraries(CLI LibTkacz)
 # GUI Executable
 # --------------
 
-ADD_EXECUTABLE(GUI ${GUI_SOURCES})
-
+message(${GUI_FORMS})
 
 QT5_WRAP_UI(GUI_FORMS_HEADERS ${GUI_FORMS})
 QT5_WRAP_CPP(GUI_HEADERS_MOC ${GUI_HEADERS_MOC})
 QT5_ADD_RESOURCES(GUI_RESOURCES_RCC ${GUI_RESOURCES})
+
+SET(GUI_SOURCES ${GUI_SOURCES} ${GUI_FORMS_HEADERS} ${GUI_RESOURCES_RCC} ${GUI_HEADERS_MOC})
+
+IF(APPLE)
+    set(CMAKE_INSTALL_PREFIX "." )
+    SET(GUI_SOURCES ${GUI_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/icons/Tkacz.icns)
+    SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/icons/Tkacz.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+    SET(MACOSX_BUNDLE_ICON_FILE Tkacz.icns)
+    
+    # copy schemas in bundle
+    # @fixme potentially buggy…
+    # file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/schema/ DESTINATION Tkacz.app/Contents/Resources/schema)
+    
+    # Link to CoreFoundation
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework CoreFoundation")
+
+ADD_EXECUTABLE(GUI MACOSX_BUNDLE ${GUI_SOURCES}) # This must be invoked last, or else icon/bundle name won't be set correctly
+ELSE(APPLE)
+	ADD_EXECUTABLE(GUI ${GUI_SOURCES})
+ENDIF(APPLE)
 
 target_link_libraries( GUI ${Boost_FILESYSTEM_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ) 
 
