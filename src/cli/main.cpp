@@ -81,6 +81,7 @@ int main(int argc, char* argv[]) {
                    "No interaction (script) mode");
     root.addOption(globalOption, "version",
                    "Print version number and exit");
+	root.addOption(globalOption, "help,h", "Display this help");
 
 
     // Root level commands
@@ -97,6 +98,8 @@ int main(int argc, char* argv[]) {
 
     root.addSubcommand("shell", &shell);
     root.addSubcommand("init", &repo_init);
+
+	Tkacz::init();
 
     try {
         root.execute(argc, argv);

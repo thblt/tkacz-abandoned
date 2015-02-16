@@ -42,7 +42,7 @@ public:
 	AboutDialog() {
 		setupUi(this);
 		setModal(true);
-		setWindowFlags(Qt::Popup);
+		//setWindowFlags(Qt::Popup);
 		versionLabel->setText(
 				versionLabel->text().arg(
 						QString(((std::string) tkacz::Tkacz::version).c_str()),

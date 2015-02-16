@@ -15,5 +15,5 @@ On OSX with Python3.4 installed:
 ~~~bash
 mkdir build
 cd build
-cmake .. -DPYTHON_INCLUDE_DIR=/Library/Frameworks/Python.framework/Versions/3.4/include/python3.4m/ -DPYTHON_LIBRARY=/Library/Frameworks/Python.framework/Versions/3.4/lib/libpython3.4m.dylib
+cmake .. -DPYTHON_INCLUDE_DIR=/usr/local/Cellar/python3/3.4.2_1/Frameworks/Python.framework/Versions/3.4/include/python3.4m -DPYTHON_LIBRARY=/usr/local/Cellar/python3/3.4.2_1/Frameworks/Python.framework/Versions/3.4/lib/libpython3.4m.dylib -DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt5/5.4.0/lib/cmake
 ~~~

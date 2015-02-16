@@ -28,19 +28,15 @@ using namespace tkacz;
 
 int main(int argc, char* argv[]) {
 
-	TZ_TRACE << "Tkacz " << Tkacz::version << " “" << Tkacz::version.name << "“"
-			<< std::endl;
+	TZ_TRACE ("Initializing core");
+	Tkacz::init();
 
 	QApplication app(argc, argv);
 	app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
 	MainWindow mw;
-	mw.showMaximized();
+	// mw.showMaximized();
 
-	TZ_FINE << "Initializing core";
-	// Tkacz::getInstance(); // Forces core initialization
-
-	TZ_FINE << "Running application";
+	TZ_FINE("Running application");
 	return (app.exec());
-	return 0;
 }
