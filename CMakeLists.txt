@@ -9,6 +9,7 @@ set (Tkacz_VERSION_PREVERSION 1)
 set (Tkacz_VERSION_NAME "Avogadro")
 
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 
 set (PROJECT_SOURCE_DIR src)
 
