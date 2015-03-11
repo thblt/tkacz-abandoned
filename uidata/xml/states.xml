@@ -17,7 +17,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                                                [/licblock]-->
-
+<states>
 	<state name="tkacz" parallel="true" initial="true">
 		<state name="repository" parallel="true">
 			<state name="modification">
@@ -32,13 +32,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		<state name="modes">
 			<state name="configure" />
 			<state name="page" initial="true">
-				<assign object="target.views" property="currentIndex"
-					value="1" />
+				<!-- assign object="target.views" property="currentIndex"
+					value="1" / -->
 					
 				<state name="browse" initial="true" />
 				<state name="edit">
-					<assign object="target.pageView.pageEditor" property="visible"
-						value="True" />
+					<!--assign object="target.pageView.pageEditor" property="visible"
+						value="True" /-->
 					<state name="meta" initial="true" />
 					<state name="contents" />
 				</state>

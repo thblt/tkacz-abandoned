@@ -32,9 +32,9 @@ namespace tkacz {
     public:
 
         enum class LogLevel : int {
-            _NONE  =   0,
-            TRACE  =   10,
-            DEBUG  =   20,
+            _NONE   =   0,
+            TRACE   =   10,
+            DEBUG   =   20,
             INFO    =   30,
             WARNING =   50,
             SEVERE  =   60,
@@ -44,12 +44,17 @@ namespace tkacz {
 
         static const Version version;
 
-        static Tkacz getInstance();
-		       
+        static void init();
+		static void finalize();
+
+	private:
+		
+		Tkacz();
+				       
     };
 }
 
-#define TZ_LOG std::cout
-#define TZ_TRACE std::cout
-#define TZ_FINE std::cout
-#define TZ_WARN std::cout
+#define TZ_LOG(msg) std::cout << msg << std::endl;
+#define TZ_TRACE(msg) std::cout << msg << std::endl;
+#define TZ_FINE(msg) std::cout << msg << std::endl;
+#define TZ_WARN(msg) std::cout << msg << std::endl;

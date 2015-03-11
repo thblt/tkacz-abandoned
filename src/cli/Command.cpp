@@ -35,10 +35,6 @@ Command::Command(const bool (*callback)(boost::program_options::variables_map),
     if (metacommand) {
         addPositionalArg("subcom", 1);
         addPositionalArg("forwardedArgs", -1);
-    } else {
-        if (callback) {
-            addBasicOption("help,h", "Display this help");
-        }
     }
 }
 

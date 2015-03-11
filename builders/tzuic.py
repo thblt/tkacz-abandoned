@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #                                                                 [licblock]
@@ -28,7 +28,7 @@ import sys
 disambiguationString = "Core actions and menus (generated from XML)"
 
 def mkName(typeName, path):
-	if type(path) is str or type(path) is unicode:
+	if type(path) is str:
 		path = path.split(".")
 	return typeName + camelCase(path, True)
 
@@ -141,7 +141,7 @@ class MenuCompiler( AbstractCompiler ):
 	SEPARATOR = '{menu}->addSeparator();'
 
 	def startDocument( self ):
-		self._output.addAttribute("QMenuBar* mainMenu;", CPPClass.PUBLIC)
+		self._output.addAttribute("QMenuBar *mainMenu;", CPPClass.PUBLIC)
 		self._output.appendLine("mainMenu = new QMenuBar(mainWindow);")
 		self._menus.append( "mainMenu" )
 
@@ -153,7 +153,7 @@ class MenuCompiler( AbstractCompiler ):
 			self._lastNumber += 1
 			if 'inStates' in attrs.keys():
 				for s in [x.strip() for x in attrs['inStates'].split( ',' )]:
-					self.addStatePropertySetter( s, menuName + ".menuAction()", "visible" )
+					self.addStatePropertySetter( s, menuName + "->menuAction()", "visible" )
 			
 			self._output.appendLine( self.MENU.format( menu=menuName, title = attrs['title'], disamb=disambiguationString ) )
 			self._output.appendLine(self.MENU_INSERT.format(menu = menuName, parent=self._menus[-1]))
@@ -265,9 +265,11 @@ class StatesCompiler( AbstractCompiler ):
 		return state
 
 	def _doFindState( self, identifier, root ):
+		
 		""" See findState(rawId) """
 		ret = list()
 		for st in root.children:
+		
 			if st.name == identifier[0]:
 				if len( identifier ) == 1:
 					ret.append( st )
@@ -283,11 +285,12 @@ class StatesCompiler( AbstractCompiler ):
 		a new global parent, etc) without having to modify every state attribute in actions 
 		and menus XML files. """
 
-		if type( rawId ) is str:
+		if type( rawId ) is str :
 			identifier = rawId.split( '.' )
 		else: identifier = rawId  # We expect an iterable.
 
 		ret = self._doFindState( identifier, self._states )
+		
 		if len( ret ) == 0:
 			raise Exception( 'No such state "{0}".'.format( rawId ) )
 		if len( ret ) > 1:
@@ -309,9 +312,11 @@ class StatesCompiler( AbstractCompiler ):
 		return ret
 
 	def startDocument( self ):
-		self._output.appendLine( "target.{smName} =  QStateMachine()".
-			format( smName=self._states.cppName() ) )
-		self._output.appendLine( "target.{smName}.setGlobalRestorePolicy(QStateMachine.RestoreProperties)".
+		self._output.addAttribute( "QStateMachine *{smName};".
+			format( smName=self._states.cppName() ), CPPClass.PUBLIC )
+		self._output.appendLine( "{smName} = new QStateMachine();".
+				format( smName=self._states.cppName() ) )
+		self._output.appendLine( "{smName}->setGlobalRestorePolicy(QStateMachine::RestoreProperties);".
 			format( smName=self._states.cppName() ) )
 
 	def endDocument( self ):
@@ -322,19 +327,19 @@ class StatesCompiler( AbstractCompiler ):
 		self._output.appendLine( " */" )
 		self._output.appendLine( "\n// States properties setter\n" )
 
-
 		for item, props in self._stateDependantProperties.items():
 			properties = dict()  # properties[propName] = list(state id as tuple)
 
 			for prop in props:
 				if not prop[1] in properties.keys():
 					properties[prop[1]] = set()
+				
 				properties[prop[1]].add( self.findState( prop[0] ) )
 
 			for propertyName, statesTrue in properties.items():
 # 				statesFalse = self.reverseStateList( statesTrue )
 
-				self._output.appendLine( '{item}.set{property}( False )'
+				self._output.appendLine( '{item}->set{property}( false );'
 					.format
 					( item=item
 					, property=propertyName.capitalize()
@@ -342,19 +347,19 @@ class StatesCompiler( AbstractCompiler ):
 
 				for st in statesTrue:
 					self._output.appendLine( 
-						'target.{stateName}.assignProperty({item}, "{property}", True)'.format
+						'{stateName}->assignProperty({item}, "{property}", true);'.format
 						( item=item
 						, stateName=st.cppName()
 						, property=prop[1] ) )
 
-		self._output.appendLine( "\n# Transitions\n" )
+		self._output.appendLine( "\n// Transitions\n" )
 
 		for state, props in self._stateChangingSignals.items():
 			state = self.findState( state )
 
 			for obj, signal in props:
 				for st in self.reverseStateList( {state} ):
-					self._output.appendLine( 'target.{fromState}.addTransition({object}, SIGNAL("{signal}"), target.{toState})'.format( 
+					self._output.appendLine( '{fromState}->addTransition({object}, SIGNAL("{signal}"), {toState});'.format( 
 						fromState=st.cppName(),
 						object=obj,
 						signal=signal,
@@ -364,7 +369,7 @@ class StatesCompiler( AbstractCompiler ):
 		# for item in visible:
 		# 		print(item)
 
-		self._output.appendLine( "target.{smName}.start()".format( smName=self._states.cppName() ) )
+		self._output.appendLine( "{smName}->start();".format( smName=self._states.cppName() ) )
 
 		return True
 
@@ -374,24 +379,24 @@ class StatesCompiler( AbstractCompiler ):
 			state = self.State( name=stateId )
 			self._parent.addChild( state )
 
-			self._output.appendLine( "target.{state} = QState(target.{parent})".format( 
+			self._output.appendLine( "QState *{state} = new QState({parent});".format( 
 				state=state.cppName(),
 				parent=self._parent.cppName() ) )
 
-			self._output.appendLine( 'target.{state}.setObjectName("{name}")'.format( 
+			self._output.appendLine( '{state}->setObjectName("{name}");'.format( 
 				state=state.cppName(),
 				name=state ) )
 
 			if 'parallel' in attrs.keys():
 				state.parallel = True
-				self._output.appendLine( "target.{state}.setChildMode(QState.ParallelStates)".
+				self._output.appendLine( "{state}->setChildMode(QState::ParallelStates);".
 					format( state=state.cppName() ) )
 			if 'initial' in attrs.keys():
 				assert attrs['initial'] == 'true'
-				self._output.appendLine( 'target.{parent}.setInitialState(target.{this})'.format( parent=self._parent.cppName(), this=state.cppName() ) )
+				self._output.appendLine( '{parent}->setInitialState({this});'.format( parent=self._parent.cppName(), this=state.cppName() ) )
 			self._parent = state
 		elif name == 'assign':
-			self._output.appendLine( 'target.{state}.assignProperty({object}, "{property}", {value})'
+			self._output.appendLine( '{state}->assignProperty({object}, "{property}", {value});'
 					.format( state=self._parent.cppName(),
 						object=attrs['object'],
 						property=attrs['property'],
@@ -433,6 +438,8 @@ except IOError:
 tpl = CPPFile("tzgui")
 tpl.addInclude( "QtCore/QObject" )
 tpl.addInclude( "QtCore/QString" )
+tpl.addInclude( "QtCore/QState" )
+tpl.addInclude( "QtCore/QStateMachine" )
 tpl.addInclude( "QtCore/QVariant" )
 tpl.addInclude( "QtWidgets/QAction" )
 tpl.addInclude( "QtWidgets/QMenuBar" )
@@ -446,7 +453,7 @@ compilerS = StatesCompiler( os.path.join( xmlpath, "states.xml" ), clazz )
 compilerA = ActionsCompiler( os.path.join( xmlpath, "actions.xml" ), clazz )
 compilerM = MenuCompiler( os.path.join( xmlpath, "menus.xml" ), clazz )
 
-if compilerA.run() & compilerM.run(): # compilerS.run()  
+if compilerA.run() & compilerM.run() & compilerS.run():
 	clazz.endMethod()
 
 	out.write( "\n".join( tpl.lines() ) )

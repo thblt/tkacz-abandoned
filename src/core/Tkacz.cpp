@@ -16,10 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                                                                [/licblock] */
 
+#include <boost/python.hpp>
+
 #include "Tkacz.hpp"
 #include "Version.hpp"
 
 namespace tkacz {
+	
+	void Tkacz::init() {
+		TZ_TRACE("In Tkacz::init().");
+		Py_Initialize();
+	}
+
+	void Tkacz::finalize() {
+		TZ_TRACE("In Tkacz::finalize().");
+		Py_Finalize();
+	}
 	
     const Version Tkacz::version = Version {
                TZ_VERSION_MAJOR,
