@@ -3,7 +3,7 @@
 BasedOnStyle: LLVM
 IndentWidth: 4
 TabWidth: 4
-UseTab: Never
+UseTab: Always
 SpaceBeforeParens: ControlStatements
 SpaceInEmptyParentheses: false
 ---
