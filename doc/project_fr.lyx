@@ -1,0 +1,3288 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\providecommand{\LyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+
+\usepackage{microtype}
+\usepackage[runin]{abstract}
+\usepackage[compact]{titlesec}
+\usepackage[lof,toc]{multitoc}
+\setlength{\columnseprule}{0.5pt}
+\usepackage{setspace}
+\usepackage{dirtree}
+\usepackage{datetime}
+\usepackage[os=mac, mackeys=symbols]{menukeys}
+
+\usepackage{framed,color}
+\definecolor{shadecolor}{gray}{0.80}
+
+\newcommand\tzcard[1]{%
+\begin{minipage}[t]{1\columnwidth}%
+\begin{shaded}%
+\sffamily #1
+\end{shaded}%
+\end{minipage}
+}
+
+\reversemarginpar
+\usepackage{inconsolata}
+\end_preamble
+\use_default_options true
+\begin_modules
+logicalmkup
+fixltx2e
+\end_modules
+\maintain_unincluded_children false
+\language french
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman charter
+\font_sans berasans
+\font_typewriter lmtt
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf true
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format pdf4
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 2.5cm
+\rightmargin 3cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 2
+\paragraph_separation skip
+\defskip smallskip
+\quotes_language french
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "basicstyle={\ttfamily\small},frame=none,numbers=left,numberstyle={\ttfamily\small},tabsize=4"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Tkacz: un
+\begin_inset space ~
+\end_inset
+
+système de
+\begin_inset space ~
+\end_inset
+
+gestion de
+\begin_inset space ~
+\end_inset
+
+connaissances
+\end_layout
+
+\begin_layout Author
+Thibault Polge
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Doctorant contractuel et enseignant en philosophie (PhiCo/EXeCO, ED 280,
+ EA 3562, Paris 1 Panthéon Sorbonne).
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+Ce document présente les fonctions fondamentales d'un outil d'organisation
+ de données en recherche en histoire.
+ Ce logiciel, en cours de conception, est écrit dans le cadre de ma thèse,
+ c'est-à-dire qu'il vise à couvrir tout particulièrement les besoins d'un
+ historien des sciences qui travaille sur la période moderne.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+bigskip
+\backslash
+begin{spacing}{.7}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+setcounter{tocdepth}{4}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+makeatletter
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+@starttoc{toc}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+makeatother
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{spacing}
+\backslash
+clearpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Présentation générale
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement O
+overhang 0in
+width "2in"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+center 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/tehboii/Documents/Coderies/workspace/tkacz-ui/images/icon_full.png
+	lyxscale 25
+	width 2in
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Le logo Tkacz
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tkacz veut modéliser les différentes activités d'organisation des données
+ trouvées en bibliothèque ou aux archives.
+ Il présuppose que ces activités consistent principalement en la prise en
+ notes d'informations trouvées sur des sources papier ou numérisées.
+ Il suppose que la prise de notes sur des livres ou des documents d'archives
+ s'organise selon un flux de travail à (au moins) deux temps : 1) La prise
+ rapide de notes peu structurées, directement à la lecture du document.
+ Ces notes peuvent porter sur le document lui-même s'il constitue une source
+ primaire, mais aussi potentiellement renvoyer vers d'autres sources à consulter
+, apporter des informations sur un objet tiers (une personne, un évènement,
+ un autre document…), etc.
+ Elles peuvent donc prendre différentes formes, comme une référence bibliographi
+que, une citation, un évènement ou toute autre forme.
+ Ensuite, 2) l'organisation et la mise au propre des points importants,
+ et notamment la recopie de certaines informations sur des fiches spécifiques.
+ Ces informations peuvent être une liste de sources à consulter citées ou
+ évoquées dans le document, des données nouvelles sur une personne, etc.
+\end_layout
+
+\begin_layout Standard
+Tkacz a pour objectifs:
+\end_layout
+
+\begin_layout Enumerate
+De faciliter la manipulation de données sémantiquement structurées, sans
+ que cette structure ne soit un obstacle à l'enregistrement d'informations
+ complexes.
+\end_layout
+
+\begin_layout Enumerate
+De réduire la nécessité d'une reprise (temps 2) des informations acquises
+ sur un document sur de nouveaux supports, en facilitant l'orga
+\end_layout
+
+\begin_layout Enumerate
+De maintenir vivant le graphe des relations entre informations, autrement
+ dit de ne pas disposer que de fiches isolées mais toujours un 
+\begin_inset Quotes fld
+\end_inset
+
+répertoire
+\begin_inset Quotes frd
+\end_inset
+
+ vivant et organisé.
+\end_layout
+
+\begin_layout Section
+L'objet fondamental : la fiche
+\end_layout
+
+\begin_layout Subsection
+L'objet fiche
+\end_layout
+
+\begin_layout Standard
+La 
+\series bold
+fiche
+\series default
+ est l'unité atomique de Tkacz.
+ Une fiche a un 
+\series bold
+type
+\series default
+ (cf.
+ 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "sub:Types"
+
+\end_inset
+
+); la liste complète des types n'est pas fixée 
+\emph on
+a priori
+\emph default
+.
+ Chaque fiche a un 
+\series bold
+titre
+\series default
+, permet la prise de notes, et est identifiée par un numéro unique attribué
+ séquententiellement à la création.
+ 
+\end_layout
+
+\begin_layout Standard
+Le titre devrait être unique et identifie la fiche de façon pour l'utilisateur.
+ Sa forme est par défaut libre, mais peut être imposée par certains types.
+ Par exemple, une fiche d'entrée bibliographique produit son titre automatiqueme
+nt (mais de façon configurable) par rapport aux données structurées qu'elle
+ contient.
+ Un tel titre peut prendre la forme:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tzcard{
+\end_layout
+
+\end_inset
+
+
+\series bold
+The efficacy of AZT in the treatment of patients with AIDS…
+\series default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+1987
+\end_layout
+
+\begin_layout Standard
+
+\shape smallcaps
+\bar under
+Fischl
+\bar default
+, 
+\bar under
+Richman
+\bar default
+, 
+\bar under
+Grieco
+\shape default
+\bar default
+ 
+\emph on
+et 
+\bar under
+al
+\emph default
+\bar default
+.
+\lang french
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hfill 
+\end_layout
+
+\end_inset
+
+
+\bar under
+N Engl J Med
+\bar default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Automatiquement calculée à partir des noms des auteurs, de l'année et du
+ titre (éventuellement, comme ici, abrégé) d'une entrée bibliographique.
+ Le titre d'une fiche personne prendra une forme du type:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tzcard{
+\end_layout
+
+\end_inset
+
+
+\series bold
+FOUCAULT, Michel
+\series default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+1926--1984
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Des notes, écrites dans un format inspiré de Markdown.
+\end_layout
+
+\begin_layout Subsection
+Attributs et liens
+\end_layout
+
+\begin_layout Standard
+Une fiche, à l'exception du type minimal (qui modélise réellement une feuille
+ blanche avec un titre), contient un certain nombre d'attributs, qui sont
+ les données sémantiques, et de relations.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Attributs
+\series default
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "par:attributs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Les attributs sont les propriétés sémantiques qui décrivent l'objet modélisé
+ par une fiche.
+ Certains attributs sont des liens vers d'autres fiches.
+ L'auteur d'un livre (dans une fiche de notice bibliographique) est manipulé
+ comme un lien vers une fiche personne; si cette fiche n'existe pas, elle
+ est créée automatiquement avec les valeurs disponibles.
+\end_layout
+
+\begin_layout Standard
+Il existe trois espèces d'attributs:
+\end_layout
+
+\begin_layout Itemize
+Il peut être un objet primitif, comme une chaîne, un nombre ou une date,
+ ou un ensemble d'objets primitifs, comme une liste ou un ensemble.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Dans une entrée de type 
+\begin_inset Quotes fld
+\end_inset
+
+notice bibliographique
+\begin_inset Quotes frd
+\end_inset
+
+, le numéro d'édition est un tel attribut.
+ Ils sont relativement rares.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Il peut être d'un type complexe, lui-même composé d'autres attributs (voir
+ 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "sub:Types"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Dans une entrée de type 
+\begin_inset Quotes fld
+\end_inset
+
+personne
+\begin_inset Quotes frd
+\end_inset
+
+, le nom de la personne est un type complexe formé de chaînes qui distingue
+ les composants du nom.
+ Ce type a aussi du code qui lui permet de lire et de mettre en forme un
+ nom.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Il peut être un 
+\series bold
+lien
+\series default
+ vers une autre fiche d'un type donné.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+L
+\series bold
+iens et relations
+\end_layout
+
+\begin_layout Standard
+Il y a deux façons de lier une fiche à une autre : le lien simple et l'expressio
+n d'une relation.
+\end_layout
+
+\begin_layout Paragraph
+Le lien simple 
+\end_layout
+
+\begin_layout Standard
+est un 
+\begin_inset Quotes fld
+\end_inset
+
+pointeur
+\begin_inset Quotes frd
+\end_inset
+
+ vers la fiche cible.
+ L'auteur d'un document, par exemple, est un lien vers une fiche personne,
+ et pas une simple séquence de caractères.
+ Le lien peut avoir un 
+\series bold
+corollaire
+\series default
+, c'est-à-dire que la liaison de A et B implique une relation d'une autre
+ nature de B vers A.
+ Dans l'exemple de l'auteur, le lien 
+\begin_inset Quotes fld
+\end_inset
+
+a pour auteur
+\begin_inset Quotes frd
+\end_inset
+
+ a pour corollaire 
+\begin_inset Quotes fld
+\end_inset
+
+est auteur de
+\begin_inset Quotes frd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Le corollaire est généralement implicite.
+ Il peut n'être fixable que depuis un seul des membres de la relation possible.
+ Le lien d'auteur, par exemple, n'est manipulable que depuis la chose dont
+ 
+\emph on
+x
+\emph default
+ est l'auteur, et pas depuis 
+\emph on
+x
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Paragraph
+La relation
+\end_layout
+
+\begin_layout Standard
+est un attribut complexe, qui permet de lier des fiches entre elles de façon
+ moins formelle et plus fine.
+ Une relation a une 
+\series bold
+nature
+\series default
+, qui est l'équivalent du type d'une fiche.
+ Dans certains cas, un lien peut être remplacé par une relation.
+ Par exemple, dans un document historique, l'attribution de l'auteur peut
+ être douteuse — 
+\begin_inset Quotes fld
+\end_inset
+
+auteur probable
+\begin_inset Quotes frd
+\end_inset
+
+ est une relation, car le lien simple ne suffit pas — il faut sans doute
+ préciser la nature du doute, les différentes sources, etc.
+\end_layout
+
+\begin_layout Standard
+Une relation peut aussi décrire des relations entre entités : 
+\begin_inset Quotes fld
+\end_inset
+
+membre de
+\begin_inset Quotes frd
+\end_inset
+
+ ou 
+\begin_inset Quotes fld
+\end_inset
+
+ami de
+\begin_inset Quotes frd
+\end_inset
+
+, 
+\begin_inset Quotes fld
+\end_inset
+
+frère de
+\begin_inset Quotes frd
+\end_inset
+
+, etc.
+\end_layout
+
+\begin_layout Standard
+Une relation peut être réciproque ou non.
+ Dans l'exemple qui précède, les deux dernières sont nécessairement réciproques.
+ Une relation peut aussi avoir un 
+\series bold
+corollaire
+\series default
+.
+ La relation 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A est membre de B
+\end_layout
+
+\end_inset
+
+ (dans cet exemple, B est par exemple une personne morale) a pour corollaire
+ 
+\begin_inset Quotes fld
+\end_inset
+
+B a comme membre A
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Une relation est de type 
+\begin_inset Quotes fld
+\end_inset
+
+cite
+\begin_inset Quotes frd
+\end_inset
+
+ ou 
+\begin_inset Quotes fld
+\end_inset
+
+évoque
+\begin_inset Quotes frd
+\end_inset
+
+, qui permet de commenter un livre en le liant à ce qui fait son objet.
+ 
+\end_layout
+
+\begin_layout Subsection
+La notion de type
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Type"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Les types de fiche standards
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Types"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La description formelle de ces types est donnée en 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:CoreSchema"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Simple
+\end_layout
+
+\begin_layout Standard
+Il s'agit d'une fiche a minima : titre et notes.
+\end_layout
+
+\begin_layout Subsubsection
+Référence bibliographique
+\end_layout
+
+\begin_layout Standard
+Ce type de fiche peut représenter différents types d'objets entrant dans
+ une bibliographie, qu'il s'agisse de sources primaires ou de sources secondaire
+s, de supports imprimés ou audiovisuels.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Personne (physique ou morale)
+\end_layout
+
+\begin_layout Section
+L'organisation des fiches : la taxinomie
+\end_layout
+
+\begin_layout Standard
+Cette organisation se fait sous la forme de
+\series bold
+ taxinomies
+\series default
+.
+ Une taxinomie est une structure hiérarchique, comparable à un système de
+ fichiers, dans les entrées duquel les fiches prennent place.
+ Contrairement à un système de fichiers, par définition unique, plusieurs
+ taxinomies peuvent cohabiter, aucune fiche ne réside nécessairement dans
+ une taxinomie quelconque, et une fiche peut se trouver associée à plusieurs
+ taxons.
+\end_layout
+
+\begin_layout Standard
+Une taxinomie peut être créee manuellement ou automatiquement.
+ Les types de fiche sont eux-mêmes des taxons, et créent une taxinomie automatiq
+ue et non modifiable (ie, associer une fiche à un type revient à la faire
+ rentrer dans une taxinomie)
+\end_layout
+
+\begin_layout Standard
+Les taxons peuvent se voir associés un certain nombre de règles d'affectation:
+\end_layout
+
+\begin_layout Itemize
+un taxon peut contenir la totalité du contenu (ie, les fiches) de ses enfants.
+ Comme dans une taxinomie biologique, toutes les sous-classes de mammifères
+ (theria et prototheria) 
+\emph on
+sont
+\emph default
+ des mammifères ; ou au contraire ne contenir que ce qui y est explicitement
+ ajouté.
+\end_layout
+
+\begin_layout Itemize
+Un taxon peut se voir ajouter directement (manuellement) du contenu, ou
+ ne le recevoir que par affectation automatique (par le contenu de ses enfants
+ ou d'autres moyens).
+ 
+\end_layout
+
+\begin_layout Itemize
+Un taxon peut être incompatible avec un autre, ie la présence d'une fiche
+ dans ce taxon rend impossible sa présence dans un autre.
+ Par exemple, un mammifère ne peut pas être un poisson ; ou au contraire
+ un taxon peut en impliquer automatiquement un ou plusieurs autres.
+ 
+\end_layout
+
+\begin_layout Standard
+Un taxon peut fixer des règles pour lui-même et/ou ses enfants à un niveau
+ 
+\emph on
+n
+\emph default
+ ou aux niveaux 
+\emph on
+n 
+\emph default
+à 
+\emph on
+m
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Le lien d'une fiche à un taxon est lui-même une fiche, qui peut donc être
+ commenté.
+ 
+\end_layout
+
+\begin_layout Standard
+Le fait qu'une taxinomie est forcément hiérarchique n'implique pas nécessairemen
+t qu'elle soit manipulée comme telle.
+ Il est possible de créer des taxinomies de 
+\begin_inset Quotes fld
+\end_inset
+
+tags
+\begin_inset Quotes frd
+\end_inset
+
+ ou tous les tags sont au même niveau.
+\end_layout
+
+\begin_layout Standard
+Les taxinomies ne sont pas fortement indépendantes ; elles sont gérées en
+ interne comme un unique arbre hiérarchique.
+ 
+\end_layout
+
+\begin_layout Section
+Sélection et recherche
+\end_layout
+
+\begin_layout Standard
+La sélection et la recherche utilisent le mécanisme de la taxinomie pour
+ rechercher des notes.
+ Chaque taxon peut être conçu comme un ensembl de fiches.
+ Les expressions de recherche prennent la forme suivante:
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+[Publications] 'Michel Foucault' date < {3 jan 1950}
+\end_layout
+
+\begin_layout Standard
+La recherche répond à une logique globalement ensembliste ; les opérations
+ fondamentales de la théorie des ensembles (intersection, union, différence,
+ différence symétrique) forment les opérateurs principaux du mécanisme de
+ recherche.
+ 
+\end_layout
+
+\begin_layout Standard
+À terme, il est prévu de faciliter l'usage de ce mécanisme de recherche
+ par une interface graphique d'élaboration des requêtes et/ou une formulation
+ des requêtes dans un langage formalisé proche du langage naturel.
+\end_layout
+
+\begin_layout Subsection
+Syntaxe
+\end_layout
+
+\begin_layout Standard
+La totalité des opérateurs peuvent manipuler quatre types de propriétés,
+ soit les trois types d'ensembles :
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+set
+\end_layout
+
+\end_inset
+
+ Un ensemble de fiches ou de taxons (c'est pareil, un taxon n'est qu'un
+ ensemble de fiches)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+strset
+\end_layout
+
+\end_inset
+
+ Un ensemble de chaînes.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+attrset
+\end_layout
+
+\end_inset
+
+ Un ensemble de noms d'attributs ou de relations.
+\end_layout
+
+\begin_layout Standard
+Et un type complexe, repéré par les accolades, spécifiques à certain type
+ d'attributs, par exemple les dates.
+\end_layout
+
+\begin_layout Standard
+Il n'existe pas de type 
+\begin_inset Quotes fld
+\end_inset
+
+fiche unique
+\begin_inset Quotes frd
+\end_inset
+
+ ou 
+\begin_inset Quotes fld
+\end_inset
+
+chaîne
+\begin_inset Quotes frd
+\end_inset
+
+ : tout est un ensemble, qui peut ne contenir qu'un élément.
+\end_layout
+
+\begin_layout Subsubsection
+Opérateurs de groupement
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+[
+\begin_inset space \quad{}
+\end_inset
+
+] Sélectionne un taxon par son nom : 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+[str]
+\end_layout
+
+\end_inset
+
+.
+ Les ambiguités peuvent être résolues en donnant un parent du taxon au format
+ 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+[parent/taxon]
+\end_layout
+
+\end_inset
+
+, un parent plus lointain 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+[parent/…/taxon]
+\end_layout
+
+\end_inset
+
+ ou le nom de la taxinomie 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+[@taxinomie: taxon]
+\end_layout
+
+\end_inset
+
+ ou une combinaison : 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+[@taxinomie: parent/…/taxon]
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+'
+\begin_inset space \quad{}
+\end_inset
+
+' Sélectionne une fiche par son nom.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Une fiche peut être aussi sélectionnée directement par son numéro.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Ces deux premiers opérateurs utilisent la virgule comme séparateur.
+ [taxon1, taxon2] est un ensemble de taxons, et donc renvoie une valeur
+ de type 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+set
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+() Les parenthèses augmentent la priorité d'une expression (cf.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sub:OperateursPriorite"
+
+\end_inset
+
+).
+ Rien de très original.
+ L'expression 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A+B*C
+\end_layout
+
+\end_inset
+
+ sera évaluée implicitement comme l'union de 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+
+ et de l'intersection de 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+ et 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+C
+\end_layout
+
+\end_inset
+
+.
+ Avec des parenthèses telles que 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+(A+B)*C
+\end_layout
+
+\end_inset
+
+ elle renverra l'intersection de 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+C
+\end_layout
+
+\end_inset
+
+ et de l'union de 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+
+ et 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Opérateurs binaires
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+: 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+attribut:set
+\end_layout
+
+\end_inset
+
+ ou 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+attribut:str
+\end_layout
+
+\end_inset
+
+ retourne l'ensemble des fiches dont l'attribut 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+a
+\end_layout
+
+\end_inset
+
+ a au moins une valeur dans 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+expr
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+:: 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+a::expr
+\end_layout
+
+\end_inset
+
+ retourne l'ensemble des fiches dont l'attribut 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+a
+\end_layout
+
+\end_inset
+
+ a toutes ses valeurs dans expr.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+< Strictement inférieur à, pour les attributs où cela à un sens.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+<= Inférieur ou égal où, pour les attributs où cela à un sens.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+> Strictement supérieur à, pour les attributs où cela à un sens.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+>= Supérieur ou égal où, pour les attributs où cela à un sens.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+& intersection (
+\begin_inset Formula $\cap$
+\end_inset
+
+).
+ c'est l'opérateur implicite.
+ 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A&B
+\end_layout
+
+\end_inset
+
+ ou 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+AB
+\end_layout
+
+\end_inset
+
+ retournent l'intersection des taxons 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+
+ et 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+.
+ L'intersection est symétrique; 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A&B == B&A
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+| union (
+\begin_inset Formula $\cup$
+\end_inset
+
+).
+ 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A|B
+\end_layout
+
+\end_inset
+
+ retourne l'ensemble des fiches de 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+
+ et de 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+.
+ L'union est symétrique; 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A|B = B|A
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+- différence (
+\begin_inset Formula $\backslash$
+\end_inset
+
+).
+ 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A-B
+\end_layout
+
+\end_inset
+
+ renvoie l'ensemble 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+
+ moins l'ensemble 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+.
+ La différence n'est pas symétrique; 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A-B ≠ B-A
+\end_layout
+
+\end_inset
+
+ ; l'intersection de 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A-B
+\end_layout
+
+\end_inset
+
+ et 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+B-A
+\end_layout
+
+\end_inset
+
+ est vide : 
+\begin_inset Formula $(A\backslash B)\cap(B\backslash A)=\emptyset$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+/ différence symétrique (
+\begin_inset Formula $\bigtriangleup$
+\end_inset
+
+).
+ 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A/B
+\end_layout
+
+\end_inset
+
+ renvoie la totalité des fiches de 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A
+\end_layout
+
+\end_inset
+
+ ou 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+ mais pas les deux.
+ 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+A/B = (A+B)-(B*A)
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Opérateurs unaires
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+- Inverse.
+ 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+-expr
+\end_layout
+
+\end_inset
+
+ renvoie la totalité des fiches non contenues dans 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+expr
+\end_layout
+
+\end_inset
+
+.
+ 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+-expr = *-expr
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+: équivalent approximatif de 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+:
+\end_layout
+
+\end_inset
+
+ sans spécifier le nom de l'attribut : 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+*:expr
+\end_layout
+
+\end_inset
+
+ renvoie toutes les fiches liées à expr.
+ 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+*:expr
+\end_layout
+
+\end_inset
+
+ doit être un ensemble.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+:* 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+expr
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Autres termes
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+* L'ensemble des fiches du dépôt.
+ 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+{
+\begin_inset space \quad{}
+\end_inset
+
+} Délimite une construction complexe spécifique à un type de données, par
+ exemple une date.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+"
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+"
+\end_layout
+
+\end_inset
+
+ Délimite une chaîne pour la recherche en plein texte.
+ Isolé, il renvoie l'ensemble des fiches dans lesquelles ce texte a été
+ trouvé ; sinon il peut être utilisé pour la recherche par attributs (
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+:
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+::
+\end_layout
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\backslash
+ Caractère d'échappement.
+\end_layout
+
+\begin_layout Subsubsection
+Priorité
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:OperateursPriorite"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Les expressions sont évaluées avec les priorités suivantes.
+ (1) et (2) précisent qu'il s'agit, respectivement, de la version unaire
+ ou binaire d'un opérateur.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="7">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<column alignment="left" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Priorité
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Opérateurs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Opérateurs de groupement
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Opérateurs unaires
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+&
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+|
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+- (2)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+/
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Synonymie
+\end_layout
+
+\begin_layout Standard
+Pour des raisons de clarté, les opérateurs natifs ont les synonymes suivants:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="8">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Opérateur
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+::
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+&
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+|
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\backslash
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+*
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Synonymes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+in
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+and
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+or
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+andnot
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+xor
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+all
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Les versions localisées pourraient implémenter ces synonymes dans leur langue.
+\end_layout
+
+\begin_layout Section
+Opérations du logiciel
+\end_layout
+
+\begin_layout Subsection
+Mode de consultation
+\end_layout
+
+\begin_layout Subsection
+Mode de recueil 
+\end_layout
+
+\begin_layout Standard
+Le mode de recueil suppose une source d'information (ou plusieurs ?) représentée
+ par une fiche, d'où on recueille un certain nombre de données sur elle-même
+ ou sur d'autres objets, représentés par d'autres fiches, qui peuvent être
+ déjà existantes ou créées à la volée.
+\end_layout
+
+\begin_layout Standard
+Il verrouille sur la source d'origine et associe toute information entrée
+ à cette source.
+\end_layout
+
+\begin_layout Section
+Fonctions étendues
+\end_layout
+
+\begin_layout Subsection
+Export de bibliographies
+\end_layout
+
+\begin_layout Standard
+Les fiches de types 
+\begin_inset Quotes fld
+\end_inset
+
+référence bibliographiques
+\begin_inset Quotes frd
+\end_inset
+
+ doivent pouvoir être exportées dans des formats manipulables par un gestionnair
+e de bases de données, en réduisant la complexité intrinsèque à Tkacz.
+\end_layout
+
+\begin_layout Part
+Utilisation et interface utilisateur
+\end_layout
+
+\begin_layout Standard
+La fenêtre principale de Tkacz se présente de différentes façons selon le
+ mode en cours.
+ Le mode de consultation (par défaut, ou accessible via 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+menu{Meta>Data} (
+\backslash
+keys{
+\backslash
+cmd+
+\backslash
+Alt+A,C})
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Syntaxe des schémas
+\end_layout
+
+\begin_layout Standard
+Le schéma global Tkacz définit un certain nombre d'entités.
+ Les types racines sont 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+entity
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+relationship
+\end_layout
+
+\end_inset
+
+ et 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+taxonomy
+\end_layout
+
+\end_inset
+
+.
+ La définition d'un type de fiche se fait en créant un type d'entité avec
+ l'attribut 
+\begin_inset Flex Code
+status collapsed
+
+\begin_layout Plain Layout
+cardtype=true
+\end_layout
+
+\end_inset
+
+.
+ Les types peuvent être imbriqués, mais un type n'est visible qu'au niveau
+ d'imbrication où il a été créé et aux niveaux inférieurs.
+ L'imbrication est utile pour définir des types utilitaires ponctuels qui
+ ne sont pas destinés à être réutilisés.
+ 
+\end_layout
+
+\begin_layout Standard
+Le parser compile d'abord les types en objets C++, puis 
+\end_layout
+
+\begin_layout Section
+Types d'entité
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<?xml version="1.0" encoding="UTF-8"?>
+\end_layout
+
+\begin_layout Plain Layout
+
+<tkacz version="0,1,0"> 
+\end_layout
+
+\begin_layout Plain Layout
+
+<entity name="example" schema="core"> 	
+\end_layout
+
+\begin_layout Plain Layout
+
+	<subtype taxonomy="subtypes" />
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\end_layout
+
+\begin_layout Plain Layout
+
+	<entity name="name">
+\end_layout
+
+\begin_layout Plain Layout
+
+		<attribute type="string" name="first" />
+\end_layout
+
+\begin_layout Plain Layout
+
+		<attribute type="string" name="last" />
+\end_layout
+
+\begin_layout Plain Layout
+
+	</entity>
+\end_layout
+
+\begin_layout Plain Layout
+
+	<attribute type="string" name="something">
+\end_layout
+
+\begin_layout Plain Layout
+
+	<attribute type="name" name="name" />
+\end_layout
+
+\begin_layout Plain Layout
+
+</entity>
+\end_layout
+
+\begin_layout Plain Layout
+
+</tkacz>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Implémentation
+\end_layout
+
+\begin_layout Section
+Types primitifs
+\end_layout
+
+\begin_layout Section
+Schéma de base
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:CoreSchema"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Le type 
+\begin_inset Quotes fld
+\end_inset
+
+personne
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ce type de fiche représente une personne, physique ou morale; elle contient
+ les données suivantes
+\end_layout
+
+\begin_layout Section
+Format de stockage
+\end_layout
+
+\begin_layout Standard
+Un dépôt Tkacz est un point de l'arborescence d'un système de fichiers.
+ Du point de vue utilisateur, il se présente comme un fichier simple qui
+ contient le dossier tkacz compressé en zip, qui est décompressé dans un
+ dossier temporaire à l'ouverture (sauf sous MacOS X où il s'agit d'un paquet
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Quotes fld
+\end_inset
+
+Bundle
+\begin_inset Quotes frd
+\end_inset
+
+, c'est-à-dire un dossier qui apparaît au niveau de l'interface graphique
+ comme un simple fichier.
+\end_layout
+
+\end_inset
+
+) ou comme un simple répertoire, structuré comme suit :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+dirtree{%
+\end_layout
+
+\begin_layout Plain Layout
+
+.0 
+\backslash
+hspace{-1.2em}/.
+ % Dirty dirtree hack 
+\end_layout
+
+\begin_layout Plain Layout
+
+%                      to align correctly 
+\end_layout
+
+\begin_layout Plain Layout
+
+%                      to left edge.
+\end_layout
+
+\begin_layout Plain Layout
+
+.1 .tkacz.
+\end_layout
+
+\begin_layout Plain Layout
+
+.2 db
+\backslash
+DTcomment{Fichiers de MongoDB}.
+\end_layout
+
+\begin_layout Plain Layout
+
+.3 
+\backslash
+dots.
+\end_layout
+
+\begin_layout Plain Layout
+
+.2 manifest
+\backslash
+DTcomment{Déclarations Tkacz de base (Yaml)}.
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cette structure à répertoire système caché permet d'envisager de modifier
+ ultérieurement le format de fichier pour y permettre le stockage automatisé
+ de documents, par exemple des versions PDF ou EPUB de références électroniques,
+ etc., en le présentant alors comme un simple dossier et n'utiliser la version
+ zippée que pour l'échange entre machines.
+\end_layout
+
+\begin_layout Standard
+Le fichier 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+directory{.tkacz / manifest}
+\end_layout
+
+\end_inset
+
+ est une représentation JSON de la structure détaillée ci-dessous:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="4">
+<features tabularvalignment="middle" tabularwidth="100col%">
+<column alignment="left" valignment="top" width="0pt">
+<column alignment="left" valignment="top" width="0pt">
+<column alignment="left" valignment="top" width="0">
+<column alignment="right" valignment="top" width="0">
+<row>
+<cell multicolumn="1" alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+tkacz {
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Données fondamentales (compatibilité)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+frameworkVersion
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+(0,1,0)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Version de Tkacz (majeure, mineure, révision)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+formatVersion
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+(0,1,0)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Version du format de fichier (idem)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+schemaVersion
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+(0,1,0)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Version du schéma de données (idem)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+schemaId
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+“core”
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Identifiant du schéma de données
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+repository {
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Données utilisateur
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+uuid
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+[uuid]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Un identifiant unique
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+repoName
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+null
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Nom du dépôt (défini par l'utilisateur)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\start_of_appendix
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+clearpage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Annexes
+\end_layout
+
+\begin_layout Section
+Définitions
+\end_layout
+
+\begin_layout Standard
+Ce lexique décrit les termes employés dans la présent document, le lexique
+ anglais équivalent pour l'implémentation, et le lexique anglais et français
+ l'interface graphique quand ils divergent des termes retenus par ailleurs.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newcommand*
+\backslash
+cf[1]{$
+\backslash
+to$ 
+\backslash
+textit{#1}.}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Termes employés dans ce document
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Attribut
+\end_layout
+
+\begin_layout Paragraph
+Dépôt
+\end_layout
+
+\begin_layout Paragraph
+Fiche
+\end_layout
+
+\begin_layout Paragraph
+Lien 
+\end_layout
+
+\begin_layout Standard
+Un lien est un type particulier d'attribut qui, au lieu d'être une donnée
+ stockée en place, est un renvoi vers une autre fiche.
+ L'attribut 
+\emph on
+auteur 
+\emph default
+d'une fiche 
+\emph on
+notice bibliographique
+\emph default
+ est un lien vers une fiche de type 
+\emph on
+personne
+\emph default
+.
+\end_layout
+
+\begin_layout Paragraph
+Nature 
+\end_layout
+
+\begin_layout Standard
+L'équivalent pour une relation du type d'une fiche.
+\end_layout
+
+\begin_layout Paragraph
+Relation
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "par:relations"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Schéma
+\end_layout
+
+\begin_layout Paragraph
+Taxinomie
+\end_layout
+
+\begin_layout Paragraph
+Type
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Termes anglais du code source 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{3}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+attribute 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cf{attribut}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+card 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cf{fiche}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+link 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cf{link}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+nature 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cf{nature}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+relationship 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cf{relation}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+repository 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cf{dépôt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+vfill
+\backslash
+tiny
+\backslash
+center
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+newtimeformat{htime}{
+\backslash
+THEHOUR h
+\backslash
+twodigit{
+\backslash
+THEMINUTE}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+settimeformat{htime}
+\end_layout
+
+\begin_layout Plain Layout
+
+Révision: 
+\backslash
+today{} à 
+\backslash
+currenttime.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

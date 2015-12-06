@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taxonomy id="core.bib.entry.subtype" exposed=false editable="false">
+	<taxon id="article" type="set" editable="false">
+		<taxon id="journal_article" />
+		<taxon id="newspaper_article" />
+		<taxon id="magazine_article" />
+	</taxon>
+
+	<taxon id="book" type="set" editable="false">
+		<taxon id="book" />
+		<taxon id="booklet" />
+		<taxon id="manuscript" />
+	</taxon>
+</taxonomy>

@@ -1,39 +1,69 @@
-# Eclipse project data
-.project
-.cproject
-.pydevproject
-.externalToolBuilders/
 *.pydevproject
+.project
 .metadata
-.settings/**
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
 
-# Build files
-.qmake.cache
-Makefile
-Makefile.*
-build/**/*
-Base_*.*
-*.qrc
+# External tool builders
+.externalToolBuilders/
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
+# Locally stored "Eclipse launch configurations"
+*.launch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
+# CDT-specific
+.cproject
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+# PDT-specific
+.buildpath
 
-# Python artifacts
 *.py[cod]
 
-# OS stuff
-.DS_Store
+# C extensions
+*.so
 
-# Doxygen files
-doc/api/**/*
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+.DS_Store
+*_rc.py
+_*.py
+!__*.py
+build/
+dist/

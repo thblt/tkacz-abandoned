@@ -1,0 +1,61 @@
+defaults:
+  block : standard
+  character: standard
+
+character:
+  _defaults: # The defaults settings for all character styles.
+    combinable : true # Determines if the character styles can be combine. Can be either:
+              # - true : yes for all.
+              # - false : no for all.
+              # - with: a list of character styles.
+              # - notWith: a list of character styles.
+    fullWordsOnly: true # Style may not be applied to partial words.
+    trimSpaces: true
+  standard:
+  emphasis:
+    togglable: true # togglable: emphasis can be added *into* emphasis, and cancels itself.
+           # Normal (non-toggling) behavior is that when enabling a character 
+           # format where it is already enabled simply removes it.
+  strong:
+    togglable: true
+  noun: 
+    
+fragment:
+  quoteSource: 
+  link:
+  
+block:
+  standard: 
+  header: 
+    abstract : true
+    nextFormat: standard
+  h1:
+    extends: header
+    translators:
+      xml:
+        tag: h1
+  h2:
+    extends: header
+    translators:
+      xml:
+        tag: h2
+  h3:
+    extends: header
+    translators:
+      xml:
+        tag: h3
+  h4:
+    extends: header
+    translators:
+      xml:
+        tag: h4
+  h5:
+    extends: header
+    translators:
+      xml:
+        tag: h5
+  h6:
+    extends: header
+    translators:
+      xml:
+        tag: h6

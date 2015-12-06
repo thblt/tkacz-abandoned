@@ -1,0 +1,28 @@
+<RCC>
+	<qresource prefix="actions">
+		<file alias="_next">icons/default/actions/_next.svg</file>
+		<file alias="_previous">icons/default/actions/_previous.svg</file>
+		<file alias="collectionCreateFromRules-off">icons/default/actions/collectionCreateFromRules-off.svg</file>
+		<file alias="collectionCreateFromRules-on">icons/default/actions/collectionCreateFromRules-on.svg</file>
+		<file alias="formatCharacterEmphasis">icons/default/actions/formatCharacterEmphasis.svg</file>
+		<file alias="formatCharacterStrongEmphasis">icons/default/actions/formatCharacterStrongEmphasis.svg</file>
+		<file alias="pageCreatePopup">icons/default/actions/pageCreatePopup.svg</file>
+		<file alias="repositoryConfigure-off">icons/default/actions/repositoryConfigure-off.svg</file>
+		<file alias="repositoryConfigure-on">icons/default/actions/repositoryConfigure-on.svg</file>
+		<file alias="searchFind">icons/default/actions/searchFind.svg</file>
+		<file alias="viewCollections-off">icons/default/actions/viewCollections-off.svg</file>
+		<file alias="viewCollections-on">icons/default/actions/viewCollections-on.svg</file>
+		<file alias="windowFullscreen">icons/default/actions/windowFullscreen.svg</file>
+	</qresource>
+	<qresource prefix="collections">
+		<file alias="books">icons/default/collections/books.svg</file>
+		<file alias="collection-dynamic">icons/default/collections/collection-dynamic.svg</file>
+		<file alias="collection-static">icons/default/collections/collection-static.svg</file>
+		<file alias="persons">icons/default/collections/persons.svg</file>
+	</qresource>
+	<qresource prefix="types">
+		<file alias="book">icons/default/types/book.svg</file>
+		<file alias="box">icons/default/types/box.svg</file>
+		<file alias="person">icons/default/types/person.svg</file>
+	</qresource>
+</RCC>

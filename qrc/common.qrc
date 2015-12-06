@@ -1,0 +1,27 @@
+<RCC>
+  <qresource prefix="tkacz">
+    <file alias="credits">common/tkacz/credits.html</file>
+    <file alias="license">common/tkacz/license.html</file>
+    <file alias="icon64">../images/icon64.png</file>
+    <file alias="icon128">../images/icon128.png</file>
+    <file alias="icon256">../images/icon256.png</file>
+    <file alias="icon512">../images/icon512.png</file>
+    <file alias="splash">../images/splash.png</file>
+  </qresource>
+  <qresource prefix="i18n">
+    <file alias="tkacz_fr">common/i18n/tkacz_fr.qm</file>
+  </qresource>
+	<qresource prefix="laf">
+		<file alias="bg">common/laf/bg.png</file>
+		<file alias="font-Bold">common/laf/OpenSans-Bold.ttf</file>
+		<file alias="font-BoldItalic">common/laf/OpenSans-BoldItalic.ttf</file>
+		<file alias="font-ExtraBoldItalic">common/laf/OpenSans-ExtraBold.ttf</file>
+		<file alias="font-ExtraBoldItalic">common/laf/OpenSans-ExtraBoldItalic.ttf</file>
+		<file alias="font-Italic">common/laf/OpenSans-Italic.ttf</file>
+		<file alias="font-Light">common/laf/OpenSans-Light.ttf</file>
+		<file alias="font-LightItalic">common/laf/OpenSans-LightItalic.ttf</file>
+		<file alias="font-Regular">common/laf/OpenSans-Regular.ttf</file>
+		<file alias="font-Semibold">common/laf/OpenSans-Semibold.ttf</file>
+		<file alias="font-SemiboldItalic">common/laf/OpenSans-SemiboldItalic.ttf</file>
+	</qresource>
+</RCC>

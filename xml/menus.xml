@@ -1,0 +1,59 @@
+<menubar locale="en">
+	<menu text="&amp;File">
+		<action id="repository.create" />
+		<action id="repository.open" />
+		<separator />
+		<title text="Add page" />
+		<action id="page.create.simple" />
+		<action id="page.create.templated" />
+		<separator />
+		<title text="Add collection" />
+		<action id="collection.create.empty" />
+		<action id="collection.create.fromRules" />
+		<action id="collection.create.withPages" />
+		<separator />
+		<action id="repository.close" />
+		<action id="repository.save" />
+		<action id="repository.saveAs" />
+		<action id="repository.export" />
+		<separator />
+		<action id="repository.configure" />
+		<separator />
+		<action id="page.print" />
+		<separator />
+		<action id="app.quit" />
+	</menu>
+
+	<menu text="&amp;Edit">
+		<action id="edition.undo" />
+		<action id="edition.redo" />
+		<separator />
+		<action id="edition.cut" />
+		<action id="edition.copy" />
+		<action id="edition.paste" />
+		<action id="edition.pasteSpecial" />
+		<separator />
+		<action id="search.find" states="page" />
+		<action id="search.replace" states="edition" />
+		<action id="search.findNext" states="page" />
+		<action id="search.findPrevious" states="page" />
+	</menu>
+
+	<menu text="&amp;Format" inStates="page.edit.contents">
+		<action id="format.character.emphasis" />
+		<action id="format.character.strongEmphasis" />
+		<action id="format.character.strongEmphasis" />
+	</menu>
+
+	<menu text="&amp;View">
+		<action id="window.fullscreen" />
+	</menu>
+
+	<menu text="&amp;Help">
+		<action id="app.documentation" />
+		<separator />
+		<action id="app.reportbug" />
+		<separator />
+		<action id="app.about" />
+	</menu>
+</menubar>
